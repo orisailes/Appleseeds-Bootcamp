@@ -1,0 +1,32 @@
+.card{
+    height: 50vh;
+    width: 20vw;
+    border: 2px solid coral;
+    filter: drop-shadow(0 0 0.2rem rgb(66, 66, 66));
+    background: snow;
+
+}
+
+.card img{
+    height: 60%;
+    width: 100%;
+}
+
+.card h1,p{
+    margin-left:1rem ;
+}
+.card a{
+    text-decoration: none;
+    color: coral;
+    margin: 0.1rem;
+}
+
+a:hover{
+    opacity: 0.8;
+}
+
+.flex{
+    display: flex;
+    margin: 0.5rem;
+    justify-content: space-around;
+}

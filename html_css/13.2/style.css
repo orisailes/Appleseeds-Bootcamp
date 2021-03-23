@@ -1,0 +1,118 @@
+* {
+  text-decoration: none;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url(/img/background.JPG);
+  background-size: cover;
+  text-align: center;
+}
+
+/* landing page */
+
+.landing-page {
+  height: 100vh;
+}
+
+.landing-page h1 {
+  color: snow;
+  margin: auto;
+  margin-top: 20vh;
+  font-size: 4rem;
+}
+
+.landing-page h2{
+    color: rgba(51, 51, 51, 0.856);
+    margin-top: 6vh;
+}
+
+
+
+#follow {
+  color: rgb(4, 25, 44);
+  font-weight: bold;
+}
+
+#container {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.904);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+  background: rgb(129, 188, 207, 0.9);
+  border-radius: 5px 5px 5px 5px;
+  display: inline-block;
+  width: 30%;
+  text-align: left;
+  height: 320px;
+}
+
+#profile {
+  float: right;
+}
+
+#languages {
+  color: snow;
+}
+
+.li {
+  float: left;
+}
+
+.mainNav {
+  font-family: Arial, Helvetica, sans-serif;
+  list-style: none;
+  background-color: rgb(129, 188, 207, 0.9);
+  border-radius: 3px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.397);
+  border-radius: 3px;
+  line-height: 3em;
+  display: flex;
+  float: left;
+  width: 95%;
+  /* overflow: auto; */
+}
+
+.mainNav li a {
+  padding: 15px;
+  color: black;
+}
+
+.mainNav li a:hover {
+  color: snow;
+  background-color: rgba(15, 65, 82, 0.9);
+}
+
+.li a:hover {
+  color: snow;
+}
+
+.li a {
+  color: black;
+}
+
+.btn {
+  margin-left: 110px;
+  padding: 10px 20px;
+  border-color: rgb(129, 188, 207, 0.582);
+  position: relative;
+  bottom: 15px;
+}
+
+.btn button {
+  width: 110px;
+  padding: 8px;
+  background-color: rgba(129, 188, 207, 0.582);
+  border: 1px solid #fff;
+  text-align: center;
+}
+
+.btn:hover {
+  background: (129, 188, 207);
+}
+
+.container ul {
+  display: ;
+}

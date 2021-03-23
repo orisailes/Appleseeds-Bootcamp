@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+        form > input{
+            max-width: 20%;
+        }
+        form > button{
+            max-width: 10%;
+        }
+    </style>
+    <form action="">
+        <input placeholder="Your name here" type="text" name="name" value="Ori">
+        <input placeholder="Your mail" type="email" name="email" value="ori@gmail.com">
+        <input placeholder="Your age" type="number" maxlength="2" name="age" value="24">
+        <button type="submit">Send details</button>
+    </form>
+    <script src="./index.js"></script>
+</body>
+</html>

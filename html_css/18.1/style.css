@@ -1,0 +1,151 @@
+* {
+  text-decoration: none;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url(/img/background.JPG);
+  background-size: cover;
+  text-align: center;
+}
+
+:root{
+  --my-color: rgb(129, 188, 207, 0.9);
+  --card-max-width: 320px;
+}
+
+/* before::background opacity needed here */
+
+/* landing page */
+
+.landing-page {
+  height: 100vh;
+}
+
+.landing-page h1 {
+  color: snow;
+  margin: auto;
+  margin-top: 20vh;
+  font-size: 4rem;
+}
+
+.landing-page h2 {
+  color: rgba(51, 51, 51, 0.856);
+  margin-top: 6vh;
+}
+
+/* first section */
+
+.first-page{
+  max-height: 100vh;
+}
+
+
+/* follow me span */
+#follow {
+  color: rgb(4, 25, 44);
+  font-weight: bold;
+}
+
+/* my card */
+
+#container {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.904);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+  background: var(--my-color);
+  border-radius: 5px 5px 5px 5px;
+  display: inline-block;
+  width: 30%;
+  text-align: left;
+  height: 320px;
+  max-height: 290px;
+  max-width: var(--card-max-width);
+}
+
+#profile {
+  float: right;
+}
+
+#languages {
+  color: snow;
+}
+
+.li {
+  float: left;
+}
+
+/* navbar */
+
+.mainNav {
+  font-family: Arial, Helvetica, sans-serif;
+  list-style: none;
+  background-color: var(--my-color);
+  border-radius: 3px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.397);
+  border-radius: 3px;
+  line-height: 3em;
+  display: flex;
+  max-width: 30%;
+  justify-content: center;
+  margin: auto;
+  max-width: var(--card-max-width);
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+li {
+  list-style: none;
+
+}
+
+.mainNav li a {
+  padding: 15px;
+  color: black;
+}
+
+.mainNav li a:hover {
+  color: snow;
+  background-color: rgba(15, 65, 82, 0.9);
+}
+
+.li a:hover {
+  color: snow;
+}
+
+.li a {
+  color: black;
+}
+
+/* card button */
+
+.bottom-btn{
+  position: relative;
+  top: -15px;
+}
+.btn {
+  margin-left: 110px;
+  padding: 10px 20px;
+  border-color: rgb(129, 188, 207, 0.582);
+}
+
+.btn button {
+  width: 110px;
+  padding: 8px;
+  background-color: rgba(129, 188, 207, 0.582);
+  border: 1px solid #fff;
+  text-align: center;
+}
+
+.btn:hover {
+  background: (129, 188, 207);
+}

@@ -1,0 +1,769 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-family: GothamMedium, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: -webkit-fill-available;
+}
+
+body {
+  /* transform: translate3d(0px, 0px, 0px);
+  transition: all 700ms ease; */
+}
+p {
+  font-family: GothamBook, sans-serif;
+  opacity: 0.6;
+}
+
+h2 {
+  font-family: GothamMedium, sans-serif;
+  opacity: 0.6;
+}
+h1 {
+  font-family: GothamMedium, sans-serif;
+  opacity: 0.8;
+}
+
+/* link color */
+a {
+  color: rgba(114, 111, 111, 0.836);
+}
+
+/* nav bar */
+
+#navbar a {
+  color: #ffffff;
+}
+
+#navbar {
+  background: rgba(255, 255, 255, 0);
+  overflow: auto;
+}
+
+.tesla-logo img {
+  width: 150px;
+  height: 10px;
+}
+
+.tesla-logo {
+  float: left;
+  padding-right: 155px;
+  padding-top: 15px;
+  padding-left: 10px;
+  filter: invert(1);
+}
+
+.navbar-models-list {
+  display: inline-flex;
+  text-align: center;
+  font-weight: bolder;
+  padding-top: 15px;
+  padding-left: 130px;
+}
+
+.navbar-right-list {
+  float: right;
+  display: inline-flex;
+  font-weight: bold;
+  margin: 0;
+  float: right;
+  padding-top: 15px;
+  padding-right: 20px;
+}
+
+#navbar ul li {
+  letter-spacing: 5px;
+  padding-top: 5px;
+}
+#navbar li {
+  padding: 10px;
+}
+
+#navbar ul h1 {
+  float: left;
+  padding: 20px 40px;
+}
+
+/* model3 background */
+
+header {
+  background: url(/img/model3-bg.jfif) no-repeat center center/cover;
+  height: 100vh;
+  max-width: 100%;
+}
+
+/* model 3 header*/
+
+.model3 h1 {
+  font-size: 40px;
+  position: relative;
+  text-align: center;
+  color: white;
+  font-weight: ;
+  padding-top: 45px;
+  font-family: Gotham;
+}
+
+/* performance cards */
+
+.performance-card {
+  color: white;
+  text-align: center;
+  width: 160px;
+  height: 70px;
+}
+
+.performance-card h1 {
+  font-size: 35px;
+}
+
+.performance-card h2 {
+  font-size: 15px;
+  font-weight: lighter;
+}
+
+.zero-to-sixty {
+  position: relative;
+  border-right: 1px solid;
+  left: 430px;
+  top: 480px;
+}
+
+.dual-motor {
+  position: relative;
+  left: 758px;
+  top: 363px;
+}
+
+.range {
+  position: relative;
+  border-right: 1px solid;
+  left: 599px;
+  top: 421px;
+}
+
+/* button */
+.order-now {
+  position: relative;
+  left: 916px;
+  top: 313px;
+  width: 165px;
+  height: 40px;
+  color: white;
+  border: 3px solid white;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0);
+}
+.order-now:hover {
+  background: white;
+  color: #333;
+}
+
+/* left side current menu */
+
+/* doesnt work. js neede!  */
+
+/* .current {
+  line-height: 25px;
+  padding-left: 5px;
+  color: rgba(114, 111, 111, 0.836);
+  position: fixed;
+}
+
+.current a:hover {
+  color: white;
+}
+
+.current a:focus {
+  color: white;
+  opacity: 0.6;
+}
+
+.current p:focus{
+    color: white;
+    opacity:0.6;
+}
+
+.current p {
+  display: inline-block;
+  opacity: 0.8;
+}
+.current p:hover {
+  display: inline-block;
+  opacity: 0.6;
+} */
+
+/* end of visible trick */
+
+/* swiper */
+
+.swiper-1 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+  background-size: cover;
+}
+
+/* Section 2 - safety */
+
+/* up arrow right side */
+
+.up-arrow {
+  max-height: 18px;
+  max-width: 22px;
+  z-index: 1;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+/* down arrow bottom middle */
+
+.down-arrow {
+  max-height: 18px;
+  max-width: 22px;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  left: 50%;
+  bottom: 10px;
+  opacity: 0.7;
+}
+
+.down-arrow a {
+  height: 200vh;
+}
+
+/* left side */
+
+#safety-tesla-logo {
+  padding: 0;
+  margin: 0;
+}
+
+.left-info {
+  float: left;
+  width: 30%;
+  background: #ffffff;
+  height: 100vh;
+}
+
+#safety p {
+  top: 100px;
+  left: 10px;
+  position: relative;
+  padding: 0px 20px;
+}
+
+.safety-title {
+  left: 20px;
+  position: relative;
+  top: 60px;
+}
+
+#safety-top-title {
+  font-weight: lighter;
+  position: relative;
+  top: 50px;
+  left: -125px;
+}
+
+#safety-bottom-title {
+  font-size: 16px;
+  position: relative;
+  font-size: 24px;
+  top: 50px;
+  left: 25px;
+}
+
+/* buttuns */
+
+#bottom-btn {
+  position: relative;
+  left: 30px;
+  top: 440px;
+  max-width: 500px;
+}
+
+#bottom-btn a {
+  color: #333;
+}
+
+.order-now-safety {
+  position: relative;
+  width: 165px;
+  height: 40px;
+  color: #333;
+  border: 3px solid black;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0);
+  left: 140px;
+  bottom: 5px;
+}
+.order-now-safety:hover {
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+#learn-more {
+  position: relative;
+  right: 154px;
+  bottom: 2px;
+  font-family: GothamMedium, sans-serif;
+}
+
+/* right side */
+.right-info {
+  float: right;
+  width: 70%;
+  background-color: #f2f2f2;
+  height: 100vh;
+}
+
+.right-info img {
+  width: 800px;
+  height: 400px;
+  position: relative;
+  top: 115px;
+}
+
+/* vertical lines */
+.vl {
+  border-left: 3px solid black;
+  height: 180px;
+  width: 3px;
+  margin: 0;
+}
+
+#l1 {
+  position: relative;
+  left: 264px;
+  bottom: 276px;
+}
+#l2 {
+  position: relative;
+  left: 481px;
+  bottom: 251px;
+}
+#l3 {
+  position: relative;
+  left: 472px;
+  bottom: 726px;
+}
+
+#l1,
+#l2,
+#l3 {
+  margin: 0;
+  padding: 0;
+}
+
+.pv1,
+.pv2,
+.pv3 {
+  position: relative;
+  font-weight: lighter;
+  display: inline;
+}
+.pv1 {
+  left: 178px;
+  top: 122px;
+}
+.pv2 {
+  left: 288px;
+  top: 36px;
+}
+.pv3 {
+  left: 153px;
+  top: 530px;
+}
+
+/* points */
+.point {
+  display: table;
+  position: relative;
+}
+
+#point1 {
+  left: 475px;
+  bottom: 627px;
+}
+#point2 {
+  left: 466px;
+  bottom: 744px;
+}
+
+#point3 {
+  left: 258px;
+  bottom: 671px;
+}
+
+/*safety Table */
+#table {
+  height: 100vh;
+}
+
+.bg-table {
+  height: 245px;
+  width: 75px;
+  background: white;
+  left: 355px;
+  position: relative;
+  top: 390px;
+  z-index: 1;
+}
+
+#customers {
+  position: relative;
+  bottom: 350px;
+  left: 30px;
+  table-layout: fixed;
+  width: 400px;
+  background: #f2f2f2;
+  border-radius: 1px;
+  background-position-x: 10px;
+  padding-left: 3px;
+}
+
+.table-font {
+  font-size: 12px;
+}
+
+.table-header {
+  font-size: 25px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+}
+
+.table-primary {
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 600;
+}
+
+.rollover {
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+/* performance new page */
+
+.swiper-2 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+  background-size: cover;
+}
+
+#performance-bg {
+  background: url(/img/performance-bg.jfif) center center/cover;
+  height: 62vh;
+}
+
+/* performance-page-cards */
+
+/* cards fixing */
+.performance-card-fixing {
+  position: relative;
+  bottom: 600px;
+  text-align: left;
+}
+
+#speed-performace {
+  width: 300px;
+  left: 200px;
+  top: 450px;
+  padding-right: 25px;
+}
+
+#range-performace {
+  width: 320px;
+  left: 500px;
+  top: 375px;
+  padding-left: 25px;
+}
+
+#awd-performace {
+  width: 400px;
+  left: 800px;
+  top: 295px;
+  padding-left: 45px;
+}
+#card-performace-h2 {
+  padding-top: 8px;
+}
+
+/* performance page buttuns */
+
+#performance-bottom {
+  display: contents;
+}
+.performance-btn {
+  position: relative;
+  left: 125px;
+  bottom: 555px;
+  color: #333;
+  max-width: 500px;
+}
+
+/* performance page content */
+
+#performance-content {
+  max-width: fit-content;
+}
+
+#performance-h1,
+#performance-h2,
+#performance-p {
+  position: relative;
+}
+
+#performance-p {
+  left: 600px;
+  bottom: 70px;
+  width: 550px;
+}
+
+#performance-h1 {
+  bottom: 20px;
+  left: 125px;
+  font-size: 40px;
+}
+
+#performance-h2 {
+  bottom: 85px;
+  left: 120px;
+  font-size: 22px;
+  font-weight: lighter;
+}
+
+/* all wheel drive page */
+
+#all-bg {
+  background: url(/img/allwheeldrive-bg.jfif) center center/cover;
+  height: 62vh;
+}
+
+/* awd cards fixing */
+
+.awd-card-fixing {
+  position: relative;
+  bottom: 600px;
+  text-align: left;
+}
+
+#right-performace {
+  width: 300px;
+  left: 200px;
+  top: 450px;
+  padding-right: 25px;
+}
+
+#mid-performace {
+  width: 320px;
+  left: 500px;
+  top: 355px;
+  padding-left: 25px;
+}
+
+#weather-performace {
+  width: 400px;
+  left: 800px;
+  top: 250px;
+  padding-left: 45px;
+}
+#card-performace-h2 {
+  padding-top: 8px;
+}
+
+#weather {
+  width: 50px;
+  height: 50px;
+}
+
+#order-now-awd {
+  left: 10px;
+}
+
+/* awd content fix */
+
+#awd-content {
+  max-width: fit-content;
+}
+
+#awd-h1,
+#awd-h2,
+#awd-p {
+  position: relative;
+}
+
+#awd-p {
+  left: 600px;
+  bottom: 70px;
+  width: 550px;
+}
+
+#awd-h1 {
+  bottom: 20px;
+  left: 200px;
+  font-size: 38px;
+}
+
+#awd-h2 {
+  bottom: 85px;
+  left: 200px;
+  font-size: 22px;
+  font-weight: lighter;
+}
+
+/* awd button */
+
+#bottom-btn-awd {
+  position: relative;
+  left: 80px;
+  top: 440px;
+  color: #333;
+  max-width: 500px;
+}
+
+/* range page */
+
+.swiper-3 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+  background-size: cover;
+}
+
+#range-bg {
+  background: url(/img/range-bg.jfif) center center/cover;
+  height: 100vh;
+  width: 70%;
+}
+
+/* range cards fixing */
+
+.performance-card-range {
+  color: white;
+  text-align: center;
+  width: 160px;
+  height: 70px;
+  display: contents;
+}
+
+.range-card-fixing {
+  position: relative;
+  bottom: 600px;
+  text-align: left;
+}
+
+#left-performace {
+  width: 300px;
+  left: 100px;
+  top: 450px;
+  padding-right: 25px;
+}
+
+#mid-performace {
+  width: 260px;
+  left: 400px;
+  top: 360px;
+  padding-left: 25px;
+}
+
+#side-performace {
+  width: 300px;
+  left: 630px;
+  top: 270px;
+  padding-left: 45px;
+}
+
+.range-h1-card {
+  font-size: 25px;
+}
+
+#card-performace-h2 {
+  padding-top: 8px;
+}
+
+#weather {
+  width: 50px;
+  height: 50px;
+}
+
+#order-now-awd {
+  left: 10px;
+}
+
+/* range content fix */
+
+#range-content {
+  max-width: fit-content;
+  height: fit-content;
+  float: right;
+  bottom: 728px;
+  position: relative;
+  height: 520px;
+  right: 50px;
+}
+
+#range-h1,
+#range-h2,
+#range-p {
+  position: relative;
+}
+
+#range-p {
+  width: 337px;
+}
+
+#range-h1 {
+  font-size: 38px;
+}
+
+#range-h2 {
+  font-size: 22px;
+  font-weight: lighter;
+}
+
+/* range button */
+
+#bottom-btn-range {
+  position: relative;
+  color: #333;
+  max-width: 500px;
+  bottom: 180px;
+  float: right;
+  left: 17%;
+}
+
+/* range pic right side */
+
+#range-map {
+  height: 270px;
+  max-width: 360px;
+  position: relative;
+}
+
+#range-pic {
+  height: 100vh;
+}

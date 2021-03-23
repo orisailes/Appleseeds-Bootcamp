@@ -1,0 +1,38 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5rem;
+}
+
+.item {
+  padding: 2rem;
+  border-radius: 5px;
+}
+.item1 {
+  background: #793a2b;
+grid-column: 1 / span 2;
+
+}
+.item2 {
+  background: #864d40;
+  grid-column: 3 / span 2;
+}
+
+.item3 {
+  background: #936155;
+}
+.item4 {
+  background: #a1756a;
+  grid-column: 2 / span 3;
+}
+
+.item5 {
+  background: #ae887f;
+  grid-column: 1 / span 4;
+}

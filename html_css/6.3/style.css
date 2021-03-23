@@ -1,0 +1,22 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url(/img/background.JPG);
+    background-size: cover;
+}
+#follow{
+    color: rgb(25, 119, 207);
+    font-weight: bold;
+}
+#me{
+background:rgb(194, 162, 120);
+}
+#container {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    padding: 2px 16px;
+    background:rgb(129, 188, 207, 0.9);
+    width: 20%;
+    border-radius: 5px 5px 5px 5px;
+
+}

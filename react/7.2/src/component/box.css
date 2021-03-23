@@ -1,0 +1,28 @@
+.box {
+    height: 50%;
+    width: 50%;
+    background: orange;
+    align-self: center;
+}
+
+.btn {
+    height: 20%;
+    width: 20%;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none;
+}
+
+.container{
+    height: 50vh;
+    width: 25vw;
+    border: 1px solid coral;
+}

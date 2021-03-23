@@ -1,0 +1,40 @@
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.box {
+  background: burlywood;
+  height: 20vh;
+  width: 90%;
+  height: 10rem;
+  text-align: center;
+  margin: auto;
+}
+
+/* static font size for less than 500px */
+
+@media(max-width: 500px) {
+  .box {
+    font-size: 1rem;
+  }
+}
+
+/* static font size for over 1750 */
+
+@media(min-width: 1750px) {
+  .box {
+    font-size: 3rem;
+  }
+}
+
+/* fluid text size from 500-1750 */
+
+@media(min-width: 700px) and (max-width: 1749px) {
+  .box {
+    color:white;
+    font-size:calc(1rem + 5vh);
+    font-size: 1.5rem;
+  }
+}

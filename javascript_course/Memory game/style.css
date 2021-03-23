@@ -1,0 +1,147 @@
+.background-1 {
+    background: url(./img/card/card-10.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+.background-2 {
+    background: url(./img/card/card-4.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+.background-3 {
+    background: url(./img/card/card-1.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+.background-4 {
+    background: url(./img/card/card-13.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+.background-5 {
+    background: url(./img/card/card-7.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+.background-6 {
+    background: url(./img/card/card-9.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: floralwhite;
+}
+
+body {
+    background: url(./img/background/background.jpg)no-repeat center center/cover;
+    height: 100vh;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 3vh;
+    text-align: center;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    top: 25%;
+    line-height: 3rem;
+    margin-left: 2rem;
+    width: 15vw;
+    background: rgb(255, 250, 240, 0.8);
+    border: 3px solid black;
+    border-radius: 5px;
+    height: 50vh;
+}
+
+.stats p,
+span {
+    color: black;
+    font-size: 1.2rem;
+}
+.incurrect-guesses{
+    color: red;
+}
+.currect-guesses{
+    color: green;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 3.5rem 17rem;
+    position: relative;
+    top: 5%;
+    background: none !important;
+}
+
+.card {
+    height: 18vh;
+    width: 10vw;
+    margin-bottom: 1rem;
+    margin: auto;
+    cursor: pointer;
+}
+
+
+.bg {
+    background: url(./img/card/back.jpg)no-repeat center center/cover;
+    background-size: contain;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 5%;
+}
+
+.btn {
+    background: transparent;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border: 1px solid snow;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: green;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.flipped {
+    animation: rotateCard 0.5s ease-out forwards;
+}
+
+@keyframes rotateCard {
+    0% {
+        transform: rotateY(0deg) rotateX(180deg);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(180deg) rotateX(180deg);
+    }
+}

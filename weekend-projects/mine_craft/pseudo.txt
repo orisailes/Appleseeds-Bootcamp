@@ -1,0 +1,12 @@
+first make the html landing page and css it up.
+then, first step in the world section should be making tool bar.
+each click shoul be listen in function and whenever user click on some tool,
+it boolianicly change.
+at the bottom of the bar i should put reset bottom and place for inventory(6 types of blocks).
+than, at the left side of the page make grid display.
+make each element be a div.
+start to creat the sky function and reender sky(about60%)
+creat the one line of grass mud,than the mud below.
+make a function to make different type of tree , rocks and clouds.
+make important conditions in each one of them(tool type and bulding conditions).
+start to spread them propertly in the world.

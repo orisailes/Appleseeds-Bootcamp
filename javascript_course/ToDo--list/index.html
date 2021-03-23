@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+    <title>TODO List</title>
+</head>
+
+<body>
+    <div class="flex-container">
+
+        <head class="heading">
+            <h1>TODO List</h1>
+            <p>By Ori Sailes</p>
+        </head>
+        <div class="add-todo">
+            <form>
+                <input class="text-input" placeholder="What's  your  task?" type="text">
+                <button class="submit-task">+</button>
+            </form>
+            <input class="text-input update-input hidden" placeholder="Update to:" type="text"><p class="update-value"></p>
+        </div>
+        <div class="tasks-container">
+            <ul class="tasks-list">
+            </ul>
+        </div>
+    </div>
+    <script src=" ./index.js"></script>
+</body>
+
+</html>

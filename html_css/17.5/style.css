@@ -1,0 +1,17 @@
+
+.vero:hover::before{
+    content: 'This is a badass reader tool';
+    position: fixed;
+    background: cornsilk;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    transform:translateY(-15px)
+}
+.molestiae:hover::before{
+    content: 'This is a badass reader tool';
+    position: fixed;
+    background: cornsilk;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    transform:translateY(-15px)
+}

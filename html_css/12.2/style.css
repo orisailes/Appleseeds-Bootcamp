@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.text-box1,
+.text-box2,
+.text-box3,
+.text-box4 {
+  display: inline-block;
+}
+
+.text-box1 {
+  height: 30vh;
+  width: 100%;
+  background: wheat;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.text-box2 {
+  height: 30vh;
+  width: 100%;
+  background: wheat;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.text-box3 {
+  height: 30vh;
+  width: 100%;
+  background: wheat;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.text-box4 {
+  height: 30vh;
+  width:100%;
+  background: wheat;
+  text-align: center;
+  padding-bottom: 10px;
+}

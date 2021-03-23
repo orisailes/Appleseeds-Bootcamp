@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars</title>
+</head>
+
+<body>
+    <div>
+        <table>
+            <tbody class="star-wars">
+                <tr>
+                    <th>name</th>
+                    <th>hair</th>
+                    <th>height</th>
+                    <th>planet name</th>
+                    <th>planet population</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+            border: 1px solid #304c00;
+        }
+
+        table tr {
+            background: #82cc00;
+            padding: 1rem;
+            margin: 1rem;
+            text-align: center;
+        }
+
+        table td {
+            padding: 0.3rem;
+        }
+
+        .tr-background {
+            background: #92e500;
+        }
+
+        table th {
+            background: #517f00;
+            padding: 1rem;
+
+        }
+    </style>
+    <script>
+        async function fetchData(types) {
+            let results = [];
+            for (let x of types) {
+                const response = await fetch(`${endpoint}${x}`)
+                const data = await response.json()
+                results.push(data)
+
+            }
+            return results
+
+
+        }
+        function addAlien(alien) {
+            for (let i = 0; i < 10; i++) {
+                let world = alien[0].results[i].homeworld.replace(/\D/g, "") - 1
+                //if world is on page 2 hack
+                if (world > 10) {
+                    world = world - 10;
+                    alien[1] = alien[2]
+                }
+                const personHTML = `
+                 <tr ${i % 2 == 0 ? 'class="tr-background"' : 'class=""'}}>
+                     <td>${alien[0].results[i].name}</td>
+                     <td>${alien[0].results[i].hair_color}</td>
+                     <td>${alien[0].results[i].height}</td>
+                     <td>${alien[1].results[world].name}</td>
+                    <td>${alien[1].results[world].population}</td>
+                     </tr >
+                    `;
+                table.innerHTML += personHTML
+            }
+            alien[1] = alien[1]
+        }
+
+
+
+        const table = document.querySelector(`.star-wars`)
+        const endpoint = `https://swapi.dev/api/`;
+        let myData = fetchData([`people`, `planets`, `planets/?page=2`])
+            .then((data) => addAlien(data));
+
+
+
+    </script>
+</body>
+
+</html>

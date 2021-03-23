@@ -1,0 +1,71 @@
+/* navbar */
+
+#navBar h1 {
+  float: none;
+  text-align: center;
+}
+
+#navBar ul,
+#navBar ul li {
+  float: none;
+  text-align: center;
+}
+
+#navBar a {
+  padding: 0;
+}
+
+/* home title */
+
+#showcase h1, h2, p{
+    padding-top: 45px;
+}
+
+/* home content */
+
+#home-info .info-img {
+    display: none;
+}
+#home-info .info-content {
+width: 100%;
+height: 480px;
+}
+
+/* feature cards */
+
+.box1, .box2, .box3{
+    float: none;
+    width: 100%;
+    /* height: 400px; */
+   
+}
+
+.box2{
+    padding: 0;
+    height: 200px;
+}
+.box1 p, .box2 p, .box3 p{
+   padding: 0;
+}
+
+/* about page */
+
+/* text */
+
+#about-info .info-right,
+#about-info .info-left{
+float:none;
+width: 100%;
+}
+
+.l-heading{
+    line-height: 2rem;
+    font-size: 2rem;
+}
+
+#contact-features .box1, .box2, .box3{
+   height: 150px;
+   line-height: 15px;
+    padding-top: 8px;
+}
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./media.css">
+    <title>Mine Craft!</title>
+</head>
+
+<body>
+    <section id="throw"><button class="btnLand">Please use landscape in order to play :)</button></section>
+    <section id="landing-page">
+        <div class="landing-container">
+            <button class="btn">Lets Go!</button>
+            <img src="./img/background/logo.png" alt="">
+            <h4 class="me">By Ori Sailes</h4>
+        </div>
+        <div class="rules">
+            <div class="rules-info">
+                <h3 class="rules-heading">The rules are: <br><br> you got these tools:</h3>
+                <div class="rules-info-tools">
+                    <ul>
+                        <li class="tool" id="axe"><img src="./img/tools/axe.png" alt="">
+                            <p class="axe-p">Axe. <br>with axe you can break<br> and work with rocks!</p>
+                        </li>
+                        <li class="tool" id="picaxe"><img src="./img/tools/picaxe.png" alt="">
+                            <p class="picaxe-p">Picaxe. <br>with picaxe you can break <br>and work with wood!</p>
+                        </li>
+                        <li class="tool" id="shovel"><img src="./img/tools/shovel.png" alt="">
+                            <p class="shovel-p">Shovel.<br> with shovel you can break <br>and work with mud!</p>
+                        </li>
+                    </ul>
+                    <h3>Your mission is to create a beautiful world.<br><br>Think you can do it?</h3>
+                    <button class="start-game btn">PLAY</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="game">
+        <div class="world"></div>
+        <div class="game-nav">
+            <ul class="game-tools">
+                <li class="tool" id="axe"><img src="./img/tools/axe.png" alt="axe"></li>
+                <li class="tool" id="picaxe"><img src="./img/tools/picaxe.png" alt="picaxe"></li>
+                <li class="tool" id="shovel"><img src="./img/tools/shovel.png" alt="shovel"></li>
+            </ul>
+            <ul class="inventory">
+                <div>
+                    <li id="grass"><img src="./img/blocks/grass.jpg" alt="grass">
+                        <p></p>
+                    </li>
+                    <li id="mud"><img src="./img/blocks/mud.jpg" alt="mud">
+                        <p></p>
+                    </li>
+                    <li id="tallGrass"><img src="./img/blocks/tallGrass.jpg" alt="tallGrass">
+                        <p></p>
+                    </li>
+                </div>
+                <div>
+                    <li id="tree"><img src="./img/blocks/tree.jpg" alt="tree">
+                        <p></p>
+                    </li>
+                    <li id="wood"><img src="./img/blocks/wood.jpg" alt="wood">
+                        <p></p>
+                    </li>
+                    <li id="rock"><img src="./img/blocks/rock.jpg" alt="rock">
+                        <p></p>
+                    </li>
+                </div>
+            </ul>
+            <div class="btn-container">
+                <button class="reset-game btn">RESTART GAME</button>
+                <button class="new-map btn">REFRESH MAP</button>
+            </div>
+        </div>
+    </section>
+    <script src="./index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  color: snow;
+  font-size: 1.3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5rem;
+}
+
+.item {
+  padding: 2rem;
+  border-radius: 5px;
+}
+.item1 {
+  background: #793a2b;
+  grid-column: 1 / span 4;
+}
+.item2 {
+  background: #864d40;
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 2;
+}
+
+.item3 {
+  background: #936155;
+  grid-column: 3 / span 2;
+}
+.item4 {
+  background: #a1756a;
+  grid-column: 3 / span 1;
+}
+
+.item5 {
+  background: #ae887f;
+  grid-column: 4 / span 1;
+}
+
+/* 
+  Device = Desktops
+  Screen = 1281px to higher resolution desktops
+*/
+
+@media screen and (min-width: 1281px) {
+  .item2{
+    grid-column: 1 / span 1;
+  }
+ .item3{
+  grid-column: 4 / span 1;
+   grid-row: 2 / span 2;
+ }
+ .item4{
+   grid-column: 2 / span 2;
+   grid-row:2 / span 2 ;
+ }
+ .item5{
+   grid-column: 1 / span 4;
+ }
+}
+
+/* 
+  Device = Laptops, Desktops
+  Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .item2{
+    grid-row: 2 / span 1;
+  }
+  .item3{
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 4;
+  }
+  .item4{
+    grid-column: 3 / span 2;
+  }
+  .item5{
+    grid-column: 1 / span 4;
+  }
+}
+
+/* 
+  Device = Phones ,Tablets, Ipads (portrait)
+  Screen = B/w 320px to 1024px
+*/
+
+@media (min-width: 320px) and (max-width: 1024px) {
+  .grid{
+    height:100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+

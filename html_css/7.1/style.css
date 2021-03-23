@@ -1,0 +1,47 @@
+*{
+    
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    line-height: 120px;
+    text-align: center;
+    max-width: 1000px;
+    
+   
+}
+
+
+
+#header
+{
+    background: red;
+    margin-bottom: 10px;
+    
+}
+.clr{
+    clear:both;
+}
+#side          
+{
+    background: blueviolet;
+    float: right;
+    width: 50%;
+    text-align: top;
+   
+}
+
+
+#main
+{
+    background: chocolate;
+    float: left;
+    width: 40%; 
+}
+#footer
+{
+    
+    background: yellow;
+}
+h2{
+    border: 1px solid black;
+}

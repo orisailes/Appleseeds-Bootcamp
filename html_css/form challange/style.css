@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 1.6em;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+}
+/* color behind the sign up container */
+body {
+    background-color: #e4e3d5
+}
+/* sing up cont */
+.container {
+    margin: auto;
+    max-width: 25%;
+    height: 460px;
+    background-color: #e3d9b2;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 80px;
+
+}
+/* links below */
+ul {
+    list-style-type: none;
+}
+
+label {
+    display: block;
+    
+}
+
+.btn {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    width: 255px;
+    padding: 7px;
+    color: snow;
+    background-color: #75383060;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-size: 1.1em;
+    
+}
+
+.btn:hover {
+    color: #000;
+    background-color: #753830;
+    
+}
+a:hover{
+    color:snow;
+}
+
+a {
+    color: #753830
+}
+
+.btn a:hover {
+    color: snow
+}

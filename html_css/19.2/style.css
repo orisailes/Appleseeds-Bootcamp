@@ -1,0 +1,124 @@
+body {
+  background: cornsilk;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 92vh;
+}
+
+.buttons {
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-1,
+.btn-2,
+.btn-3,
+.btn-4 {
+  overflow: hidden;
+}
+
+/* styling buttons */
+
+.btn-1,
+.btn-2,
+.btn-3,
+.btn-4,
+.magic-1,
+.magic-2,
+.magic-3,
+.magic-4 {
+  padding: 20px 30px;
+  background: transparent;
+  text-align: center;
+  margin: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  position: relative;
+  height: 65px;
+  width: 140px;
+}
+
+.magic-1,
+.magic-2,
+.magic-3,
+.magic-4 {
+  padding: 0;
+  margin: 0;
+  background: red;
+  line-height: 60px;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  color: white;
+}
+
+/* positioning btn 4 */
+
+.btn-4 {
+  display: block;
+  margin: auto;
+  margin-top: 25px;
+}
+
+/* individual trick + positioning outside  - step 1*/
+
+.magic-1 {
+  transform: translateX(-140px);
+}
+
+.magic-2 {
+  transform: translateY(-65px);
+  background: black;
+  opacity: 0.1;
+}
+
+.magic-3 {
+  background: lightgreen;
+  transform: rotate(180deg);
+  top: 65px;
+}
+
+.magic-4 {
+  transform: scale(2);
+  background: black;
+  opacity: 0;
+}
+
+/* hovering 'canceling' - step 2*/
+
+.btn-1:hover > .magic-1 {
+  transform: translateX(0);
+}
+.btn-2:hover > .magic-2 {
+  transform: translateY(0);
+}
+.btn-3:hover > .magic-3 {
+ transform: rotate(0);
+}
+.btn-4:hover > .magic-4 {
+  transform: scale(1);
+
+}
+
+/* transition effect - step 3 */
+
+.btn-1:hover > .magic-1 {
+  transition: transform 1s;
+}
+.btn-2:hover > .magic-2 {
+  transition: all 2s;
+  opacity: 1;
+}
+.btn-3:hover > .magic-3 {
+  transition: all 1s;
+  top: -2px;
+}
+.btn-4:hover > .magic-4 {
+    transition:all 2s;
+    opacity: 1;
+}

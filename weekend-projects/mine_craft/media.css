@@ -1,0 +1,131 @@
+@media (max-width: 767px) {
+
+    #game {
+        display: none;
+    }
+
+    #landing-page {
+        display: none;
+    }
+
+    #throw {
+        display: block;
+    }
+
+    #throw .btnLand {
+        text-align: center;
+        position: absolute;
+        bottom: 20%;
+        font-size: 1.5rem;
+        margin: auto;
+        width: 70%;
+        left: 15%;
+        background: green;
+        padding: 2rem;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+
+    .me {
+        bottom: 8%;
+    }
+
+
+    .rules {
+        font-size: 0.8rem;
+        padding: 0;
+        margin: 0;
+        height: 75vh;
+        position: relative;
+    }
+
+    .rules-info {
+        margin: 0;
+    }
+
+    .rules-info-tools {
+        margin: 0;
+    }
+
+    .rules-info .rules-heading {
+        line-height: 0.8rem;
+        margin: 0.4rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .rules-info-tools h3 {
+        margin-top: 5.5rem;
+        line-height: 0.5rem;
+        font-size: small;
+    }
+
+    .rules-info-tools ul li p {
+        display: block;
+    }
+
+    .shovel-p {
+        position: absolute;
+        left: 70%;
+    }
+
+    .axe-p {
+        position: absolute;
+        left: 42%;
+        width: 20%;
+    }
+
+    .picaxe-p {
+        position: absolute;
+        left: 7%;
+        width: 25%;
+    }
+
+    .rules-info-tools ul {
+        margin-top: 0.3rem;
+    }
+
+    .start-game {
+        height: 20px;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+        padding: 0;
+
+    }
+
+    .game-nav .tool img {
+        height: 50px;
+        width: 60px;
+        cursor: pointer;
+
+    }
+
+
+    .inventory li img {
+        height: 35px;
+        border: 2px solid white;
+        cursor: pointer;
+    }
+
+    .game-nav ul {
+        flex-direction: row;
+    }
+
+    .new-map,
+    .reset-game {
+        padding: 0.15rem;
+        margin: 0.1rem;
+    }
+
+}
+/* 
+@media (max-height:750px){
+    
+.game-nav ul,
+.game-nave .btn,
+.game-nav li{
+    max-height: 33%;
+}
+} */

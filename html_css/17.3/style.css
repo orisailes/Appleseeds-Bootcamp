@@ -1,0 +1,44 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+}
+
+.box {
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  background: cornsilk;
+}
+
+.container::after {
+  height: 100px;
+  content: "im your after pseudo";
+  width: 50px;
+  background: crimson;
+  border: 1px solid black;
+}
+
+.container::before {
+  height: 100px;
+  content: "im your before pseudo";
+  width: 50px;
+  background: crimson;
+  border: 1px solid black;
+}
+.container::before:hover {
+  background: black;
+}
+
+/* hovering trick */
+
+.container:hover::after {
+  background: darkgray;
+}
+
+.container:hover::before {
+  background: blue;
+}

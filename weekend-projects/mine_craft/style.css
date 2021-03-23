@@ -1,0 +1,252 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+li {
+    list-style: none;
+}
+
+/* throw mobiles */
+#throw {
+    display: none;
+    height: 100vh;
+    background: url(./img/background/background.jpg)no-repeat center center/cover;
+}
+
+/* landing page */
+
+#landing-page {
+    height: 100vh;
+    background: url(./img/background/background.jpg)no-repeat center center/cover;
+}
+
+.landing-container img {
+    opacity: 0.85;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+}
+
+
+.landing-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 25%;
+}
+
+.btn {
+    padding: 1rem 3rem;
+    margin: 1rem;
+    background: #005900;
+    color: white;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+#game .btn-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    position: relative;
+    left: 12%;
+    margin-bottom: 0.5rem;
+
+}
+
+.me {
+    opacity: 0.8;
+    position: absolute;
+    bottom: 10%;
+    letter-spacing: 0.4rem;
+}
+
+/* poping rules */
+.rules {
+    display: none;
+    height: 65%;
+    width: 45%;
+    border: 4px solid white;
+    position: absolute;
+    left: 28%;
+    top: 20%;
+    color: white;
+    justify-content: center;
+    background: url("./img/background/pop-up-bg.jpg")no-repeat center center/cover;
+}
+
+.rules-info {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1rem;
+    flex-direction: column;
+}
+
+.rules-info-tools ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-evenly;
+    margin-top: 2rem;
+}
+
+.rules-info-tools img {
+    height: 80%;
+    width: 80%;
+    border: 2px solid black;
+}
+
+.rules-info-tools h3 {
+    margin-top: 4rem;
+}
+
+
+.rules-info-tools img:hover {
+    cursor: pointer;
+}
+
+.rules-info-tools img:hover+p {
+    display: block;
+}
+
+.rules-info-tools ul li {
+    display: inline-flex;
+    flex-direction: column;
+    padding-left: 2rem;
+}
+
+.rules-info-tools ul li p {
+    display: none;
+    position: absolute;
+    top: 50%;
+}
+
+.tools-explain {
+    position: absolute;
+    left: 44%;
+    bottom: 40%;
+    text-align: center;
+}
+
+
+.start-game {
+    width: 30%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+
+
+/* world  */
+
+#game {
+
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    height: 100vh;
+    display: none;
+}
+
+.world {
+    border-right: 4px solid black;
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    grid-template-rows: repeat(25, 1fr);
+    grid-gap: 0;
+}
+
+.world>div:hover {
+    opacity: 0.8;
+}
+
+.game-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    height: 100vh;
+    justify-content: space-between;
+    background: url(./img/background/pop-up-bg.jpg);
+}
+
+.game-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    margin-top: 1rem
+}
+
+
+
+.game-nav .tool {
+    border: 2px solid white;
+}
+
+.game-nav .tool img {
+    height: 100px;
+    width: 150px;
+    cursor: pointer;
+
+}
+
+.game-nav .inventory {
+    flex-direction: row;
+}
+
+.inventory li img {
+    height: 60px;
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+.inventory li {
+    padding: 0.2rem 0.8rem;
+}
+
+.inventory {
+    position: relative;
+}
+
+.inventory p {
+    position: absolute;
+    transform: translate(25px, -25px);
+    color: white;
+    opacity: 0.8;
+}
+
+.redding p {
+    animation: makeRed 1s backwards;
+    transition: color 3s;
+    color: white;
+}
+
+
+@keyframes makeRed {
+    50% {
+        color: red;
+    }
+
+    100% {
+        color: white;
+    }
+}
+
+@keyframes makeBorderRed {
+    50% {
+        background: red;
+    }
+
+    100% {
+        background: none;
+    }
+}

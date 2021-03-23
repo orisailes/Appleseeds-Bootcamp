@@ -1,0 +1,47 @@
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: antiquewhite;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  height: 200px;
+  width: 300px;
+  background: black;
+}
+
+.box h1 {
+  text-align: center;
+  color: snow;
+  margin-top: 4rem;
+}
+
+/* top right border trick */
+
+.container::before {
+  content: "";
+  height: 5px;
+  width: 50px;
+  background: red;
+  position: relative;
+  bottom: 98px;
+  left: 50px;
+}
+.container::after {
+  content: "";
+  height: 50px;
+  width: 5px;
+  background: red;
+  position: relative;
+  bottom: 71px;
+  right: 300px;
+}

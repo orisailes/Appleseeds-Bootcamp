@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.carusel {
+    height: 80vh;
+    width: 70vw;
+    outline: 4px solid black;
+}
+
+.carusel ul{
+    height: 100%;
+    width: 100%;
+}
+
+.carusel ul li {
+    list-style: none;
+}
+
+.right-arrow,
+.left-arrow {
+    color: rgba(255, 250, 240, 0.9);
+    position: absolute;
+    right: 18vw;
+    top: 45vh;
+    cursor: pointer;
+    width: 5vw;
+}
+.carusel i{
+    display: table;
+}
+
+.right-arrow:hover {
+    animation: 1s moveRight ease-in-out infinite;
+}
+
+.left-arrow:hover {
+    animation: 1s moveLeft ease-in-out infinite;
+}
+
+@keyframes moveRight {
+    50% {
+        transform: translateX(2vw);
+    }
+
+    100% {
+        transform: translateX(0vw);
+    }
+}
+
+@keyframes moveLeft {
+    50% {
+        transform: translateX(-2vw);
+    }
+
+    100% {
+        transform: translateX(0vw);
+    }
+}
+
+.left-arrow {
+    left: 18vw;
+}
+
+.img-1 {
+    background: url(./img/WhatsApp\ Image\ 2021-03-09\ at\ 22.04.30.jpeg)no-repeat center center/cover;
+    height: 100%;
+    width: 100%;
+}
+
+.img-2 {
+    background: url(./img/WhatsApp\ Image\ 2021-03-09\ at\ 22.04.31.jpeg)no-repeat center center/cover;
+    height: 100%;
+    width: 100%;
+}
+
+.img-3 {
+    background: url(./img/WhatsApp\ Image\ 2021-03-09\ at\ 22.04.32.jpeg)no-repeat center center/cover;
+    height: 100%;
+    width: 100%;
+}
+
+.img-4 {
+    background: url(./img/WhatsApp\ Image\ 2021-03-09\ at\ 22.04.33.jpeg)no-repeat center center/cover;
+    height: 100%;
+    width: 100%;
+}
+
+.hidden{
+    display: none;
+}
+
+.carusel h4,
+.carusel h1 {
+    position: absolute;
+    top: 11vh;
+}
+
+.carusel h4 {
+    top: 17vh;
+}
+
+.current{
+    display: flex;
+    position: relative;
+    bottom: 5vh;
+}
+
+.location {
+    display: inline;
+    height: 1.3vh;
+    width: 5vw;
+    background: rgb(146, 146, 146);
+    position: relative;
+    margin-right: 0.5rem;
+    border: none;
+
+}
+
+.location:hover{
+    cursor: pointer;
+}
+.location:focus{
+    outline: none;
+}
+#current-location{
+    background: floralwhite;
+}

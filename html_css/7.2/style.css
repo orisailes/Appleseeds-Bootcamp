@@ -1,0 +1,19 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url(/img/background.JPG);
+    background-size: cover;
+    text-align: center;
+}
+#follow{
+    color: rgb(4, 25, 44);
+    font-weight: bold;
+}
+
+#container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.904);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    background:rgb(129, 188, 207, 0.9);
+    border-radius: 5px 5px 5px 5px;
+    display: inline-block;
+    width: 30%;
+]

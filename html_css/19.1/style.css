@@ -1,0 +1,33 @@
+body{
+    background: cornsilk;
+}
+
+.box{
+    display: flex;
+    justify-content: center;
+}
+
+.box1{
+    height: 200px;
+    width: 200px;
+    background: lightblue;
+}
+
+.box::after{
+    content: '';
+    height: 200px;
+    width: 200px;
+    background: black;
+}
+
+/* hover animation */
+
+.box:hover::after{
+    content: 'now you see me!';
+    height: 200px;
+    width: 200px;
+    background: darkgray;
+    transform: translateX(-200px);
+    /* make the transition slower  */
+    transition: all 2s ease-in-out;
+}

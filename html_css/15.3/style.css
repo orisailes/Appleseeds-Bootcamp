@@ -1,0 +1,25 @@
+.container{
+    height: 400px;
+    display: flex;
+    background:wheat;
+    align-items:flex-end;
+    justify-content: flex-end;
+    
+}
+
+.box-1{
+    height: 50px;
+    width: 50px;
+    background: red;
+}
+.box-2{
+    height: 50px;
+    width: 50px;
+    background: black;
+}
+.box-3{
+    height: 50px;
+    width: 50px;
+    background: blue;
+}
+

@@ -1,0 +1,209 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a {
+    color: #ad0a74ac;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ad0a747b;
+}
+
+html {
+    background-image: linear-gradient(to bottom right, #0aad437b, #ad0a746a);
+    height: 100%;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 15vh;
+}
+
+.search {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    width: 25%;
+    height: 40px;
+    font-size: 1.5rem;
+    border-radius: 20px;
+    padding: 1rem;
+    background: #ad0a747a;
+    border: 3px solid rgba(0, 0, 0, 0.59);
+
+}
+.btn {
+    width: 250px;
+    height: 50px;
+    font-size: 1.3rem;
+    border-radius: 20px;
+    background: #ad0a747a;
+    border: 3px solid rgba(0, 0, 0, 0.59);
+    left: 41%;
+    position: relative;
+    margin:1rem ;
+}
+.btn:hover {
+    background: #ad0a74a4;
+}
+
+.search:focus {
+    outline: none;
+    background: #ad0a7486;
+}
+
+
+.search:active {
+    opacity: 0.8;
+}
+
+.search-btn {
+    padding: 0.3rem 3rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    background: #0aad436b;
+    border: 3px solid rgba(0, 0, 0, 0.59);
+}
+
+.search-btn:focus {
+    outline: none;
+}
+
+.search-btn:hover {
+    background: #0aad438b;
+}
+
+.search-btn:active {
+    opacity: 0.8;
+}
+
+.lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: #ad0a7485;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:hover {
+    background: #ad0a7442;
+}
+
+.lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0;
+}
+
+@keyframes lds-facebook {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+
+    50%,
+    100% {
+        top: 24px;
+        height: 32px;
+    }
+}
+
+.movie-container {
+    height: 70vh;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 1rem;
+    flex-direction: column;
+    text-align: center;
+    background: #2595d183;
+    border-radius: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.59);
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    line-height: 2rem;
+    margin: 1rem;
+    overflow-y: auto;
+}
+
+.card>img {
+    margin-top: 35vh;
+}
+
+.card-rating>div {
+    margin: 0 1rem;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.flex-container img {
+    height: 6vh;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 0.1rem;
+    line-height: 1.4rem;
+}
+
+.grid-container>div {
+    background: #2595d1e9;
+    border-radius: 20px;
+}
+
+.trailer-container{
+    height: 50vh;
+    width: 50%;
+    background: #2595d183;
+    border-radius: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.59);
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    display: flex;
+}
+
+.trailer-container iframe{
+    margin: auto;
+}
+
+.hidden {
+    display: none;
+}
+
