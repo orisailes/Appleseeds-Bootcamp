@@ -1,0 +1,37 @@
+.hidden{
+    display: none;
+}
+
+.dot-1,
+.dot-2,
+.dot-3 {
+    background: lightgreen;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    position: absolute;
+    animation: coloring 1.5s infinite ease-in-out;
+}
+
+/* positioning fix & delays */
+
+.dot-2 {
+    left: 50px;
+    animation-delay: 0.5s;
+
+}
+
+.dot-1 {
+    left: 100px;
+    animation-delay: 0.75s;
+}
+
+
+@keyframes coloring {
+    50% {
+        background-color: rgba(13, 219, 192);
+    }
+}

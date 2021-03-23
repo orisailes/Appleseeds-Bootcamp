@@ -1,0 +1,21 @@
+.box {
+    transform: translateX(-500px);
+    animation: move 1s forwards;
+}
+
+.disapper {
+    animation: removeMe 0.75s forwards;
+}
+
+@keyframes move {
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes removeMe {
+    to {
+        opacity: 0;
+        display: none;
+    }
+}

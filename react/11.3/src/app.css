@@ -1,0 +1,12 @@
+.new-container{
+    height: 100vh;
+
+}
+
+.content-container{
+    height: 45vh;
+    width: 45vw;
+    background: burlywood;
+    border: 1px solid black;
+    line-height: 0.8rem;
+}

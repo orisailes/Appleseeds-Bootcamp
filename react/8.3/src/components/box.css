@@ -1,0 +1,28 @@
+.box {
+    animation: dance 5s forwards;
+}
+
+
+@keyframes dance {
+    20% {
+        background: purple;
+    }
+    40%{
+        background: lightblue;
+    }
+    60%{
+        background: coral;
+    }
+    80%{
+        background:cornflowerblue;
+    }
+    99%{
+        background: gray;
+        border-radius: 0px;
+    }
+    100%{
+        background: gray;
+        border-radius: 50%;
+    }
+}
+

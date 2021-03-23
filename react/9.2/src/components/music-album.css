@@ -1,0 +1,13 @@
+.album{
+    text-align: center;
+    font-weight: bold;
+}
+
+.album p{
+    margin: 0.5rem;
+}
+
+.container{
+    display: inline-table;
+    margin: 5rem;
+}
