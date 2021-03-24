@@ -1,0 +1,6 @@
+.ui.loader:before,
+.ui.loader:after{
+    height: 10vh !important;
+    width: 10vh !important;
+    z-index: 1;
+}

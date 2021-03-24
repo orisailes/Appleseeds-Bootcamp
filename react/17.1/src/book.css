@@ -1,0 +1,25 @@
+.item img {
+    max-height: 25vh !important;
+}
+
+.item {
+    text-align: center;
+    padding: 0.2rem 0.8rem !important;
+    margin: 0 1rem !important;
+}
+
+.item p,
+.item h5 {
+    line-height: 0.5rem !important;
+}
+
+
+.flex {
+    margin-top: 0.5rem !important;
+    display: flex !important;
+}
+
+.item i {
+    cursor: pointer;
+    margin: 0 5% !important;
+}
