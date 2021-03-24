@@ -4,13 +4,13 @@
 
 .item {
     text-align: center;
-    padding: 0.2rem 0.8rem !important;
+    padding: 0.2rem 1.2rem !important;
     margin: 0 1rem !important;
 }
 
 .item p,
 .item h5 {
-    line-height: 0.5rem !important;
+    line-height: 0.8rem !important;
 }
 
 
