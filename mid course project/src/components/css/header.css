@@ -1,0 +1,32 @@
+.header {
+    height: 25vh;
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80vw;
+    height: 12vh;
+}
+
+.header-bg {
+    height: 10vh;
+    width: 100vw;
+    background: #d8e9d8;
+    z-index: -1;
+}
+
+.sailes-compare-logo {
+    height: 25vh;
+    position: relative;
+    top: -2vw;
+    background-color: #d8e9d8;
+    right: 4vw;
+    border-radius: 50%;
+}
+
+.cart {
+    height: 15vh;
+    position: relative;
+    top: -2vh;
+}

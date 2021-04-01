@@ -1,0 +1,15 @@
+.dd{
+    display: flex;
+    flex-direction: column;
+}
+
+.dd-btn{
+    height: 6vh;
+    width: 20vw;
+    border: none;
+    outline: none;
+}
+
+.hide{
+    display: none;
+}

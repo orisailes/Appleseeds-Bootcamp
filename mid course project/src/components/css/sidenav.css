@@ -1,0 +1,55 @@
+.side-nav {
+    height: 100vh;
+    width: 15vw;
+    background: #77ab59;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    flex-direction: column;
+    position: absolute;
+}
+
+.btn-wrapper {
+    display: inline-block;
+    position: absolute;
+    left: 16vw;
+    top: 0.5vw;
+}
+
+.nav-img {
+    height: 30vh;
+    width: 15vw;
+}
+
+.side-nav ul li{
+    list-style: none;
+}
+
+.side-nav ul li a{
+    color: floralwhite;
+    font-size: 1.5rem;
+}
+
+
+
+.show-nav {
+    transform: translateX(-15vw);
+    animation: comeHere 1s forwards;
+}
+
+.hidden {
+    animation: goAway 1s forwards;
+}
+
+@keyframes comeHere {
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes goAway {
+    to {
+        transform: translateX(-15vw);
+    }
+}

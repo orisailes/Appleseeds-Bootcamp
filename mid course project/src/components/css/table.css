@@ -1,0 +1,9 @@
+.table{
+    background:floralwhite ;
+    height: 90vh;
+}
+
+.table-content{
+    margin-top: 10vh;
+    display: inline-block;
+}
