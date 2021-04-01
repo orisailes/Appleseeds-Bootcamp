@@ -6,22 +6,24 @@ import navImg from '../img/navImg.png'
 import './css/sidenav.css'
 
 function SideNav() {
-    const [checked, setChecked] = useState(false);
-    const btnWrapper = useRef();
+    const [checked, setChecked] = useState(null);
+    const navRef = useRef();
+
+
 
     return (
         <React.Fragment>
-            <nav className={`side-nav ${checked ? "show-nav" : "hidden"}`}>
+            <nav ref={navRef} className={`side-nav ${checked  ? "show-nav" : checked !==null ? "hide":""}`}>
                 <img className="nav-img" src={navImg} alt="navImg" />
-                <ul>
-                    <h1><Link to="/">Logo</Link></h1>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/table">Table</Link></li>
-                    <li><Link to="/compare">Compare</Link></li>
-                    <li><Link to="/favorite">Watch List</Link></li>
-                </ul>
+                    <div className="opt"><Link to="/"><i className="fas fa-home fa-lg"></i> Home</Link></div>
+                    <div className="opt"><Link to="/table"><i className="fas fa-table fa-lg"></i> Table</Link></div>
+                    <div className="opt"><Link to="/compare"><i className="fas fa-chart-bar fa-lg"></i> Compare</Link></div>
+                    <div className="opt"><Link to="/favorite"><i className="fas fa-heart fa-lg"></i> Watch List</Link></div>
+                <footer>
+                    i am footer
+                </footer>
             </nav>
-            <div ref={btnWrapper} className={`btn-wrapper ${checked ? "show-nav" : "hidden"}`}>       
+            <div className={`btn-wrapper ${checked ? "show-nav" : checked !==null ? "hide":""}`}>       
                     <UseAnimations
                         reverse={checked}
                         onClick={() => {

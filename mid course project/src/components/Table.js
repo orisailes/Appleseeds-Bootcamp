@@ -14,17 +14,14 @@ function Table() {
         אלטשולר: [],
     })
 
-    const myDropDown = useRef(null)
-
-    console.log(myDropDown)
-
-
-
+    const getCompanyByDropDown = (company) => {
+        console.log(company)
+    }
 
     return (
         <div className="table">
             <div className="table-content">
-                <DropDown ref={myDropDown} title="Choose a company to display" keys={Object.keys(myData)} />
+                <DropDown getCompanyByDropDown={getCompanyByDropDown} title="Choose a company to display" keys={Object.keys(myData)} />
             </div>
         </div>
     )
