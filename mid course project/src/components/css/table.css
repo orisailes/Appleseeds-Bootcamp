@@ -1,9 +1,38 @@
+:root{
+    --primary:#77ab59;
+    --secondary: #c3bfb4d0;
+}
+
 .table{
-    background:floralwhite ;
+    background:rgba(242, 242, 242, 0.508) ;
     height: 90vh;
+    border-bottom-left-radius: 25%;
+    border-bottom-right-radius: 25%;
 }
 
 .table-content{
-    margin-top: 10vh;
-    display: inline-block;
+    margin-top: 8vh;
+    display: inline-flex;
 }
+
+.inner-table-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 80vh;
+}
+
+.chosen-companies{
+    display: flex;
+    flex-direction:row ;
+}    
+.chosen-companies p{
+    margin: 0.5rem;
+    z-index: -100;
+}
+
+.company-display-p{
+    display: block;
+}
+

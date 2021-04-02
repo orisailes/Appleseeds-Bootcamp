@@ -1,3 +1,8 @@
+:root{
+    --primary:#77ab59;
+    --secondary:#c3bfb4; 
+ }
+
 .header {
     height: 25vh;
     display: flex;
@@ -6,23 +11,25 @@
     top: 0;
     right: 0;
     width: 80vw;
-    height: 12vh;
+    height: 12vh;   
 }
 
 .header-bg {
     height: 10vh;
     width: 100vw;
-    background: #d8e9d8;
-    z-index: -1;
+    background: #fff;
+    z-index: -10;
+    filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.3));
 }
 
 .sailes-compare-logo {
-    height: 25vh;
+    height: 18vh;
     position: relative;
-    top: -2vw;
-    background-color: #d8e9d8;
+    top: -1vw;
+    background-color: #fff;
     right: 4vw;
     border-radius: 50%;
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
 }
 
 .cart {

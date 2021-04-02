@@ -14,13 +14,13 @@ function SideNav() {
     return (
         <React.Fragment>
             <nav ref={navRef} className={`side-nav ${checked  ? "show-nav" : checked !==null ? "hide":""}`}>
-                <img className="nav-img" src={navImg} alt="navImg" />
+               <Link to="/"><img className="nav-img" src={navImg} alt="navImg" /></Link> 
                     <div className="opt"><Link to="/"><i className="fas fa-home fa-lg"></i> Home</Link></div>
                     <div className="opt"><Link to="/table"><i className="fas fa-table fa-lg"></i> Table</Link></div>
                     <div className="opt"><Link to="/compare"><i className="fas fa-chart-bar fa-lg"></i> Compare</Link></div>
                     <div className="opt"><Link to="/favorite"><i className="fas fa-heart fa-lg"></i> Watch List</Link></div>
                 <footer>
-                    i am footer
+                    All right are save to Ori Sailes &#169;. Every usage have to be approved.
                 </footer>
             </nav>
             <div className={`btn-wrapper ${checked ? "show-nav" : checked !==null ? "hide":""}`}>       

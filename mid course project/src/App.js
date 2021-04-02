@@ -5,6 +5,7 @@ import Table from './components/Table'
 import LandingPage from './components/LandingPage'
 import Header from './components/Header'
 import FavoriteList from './components/FavoriteList'
+import './components/css/app.css'
 
 function App() {
  

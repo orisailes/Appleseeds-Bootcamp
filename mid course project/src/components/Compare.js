@@ -16,6 +16,32 @@ function Compare() {
         return months[num-1];
     }
 
+    // const makeTable = async (companies) => {
+    //     let rawData = [];
+    //     if (!isAll) {
+    //         const dataToSearch = chosenCompanies.join('').split(' ,');
+    //         let isNextPaage = true;
+    //         let page = 0;
+    //         for (let company of dataToSearch) {
+    //             while (isNextPaage) {
+    //                 let data = await axios.get(
+    //                     `https://data.gov.il/api/3/action/datastore_search?q=${company}&resource_id=469633a2-5538-4f2c-a0ed-6ed5bc2f74c6&offset=${page}00`
+    //                 )
+    //                 data = data.data.result.records;
+    //                 console.log(data)
+    //                 rawData.push(data);
+    //                 if(data.length<100){
+    //                     isNextPaage=false;
+    //                 }
+    //                 page++;
+    //             }
+    //             rawData.flat();
+    //             console.log(rawData)
+    //         }
+
+    //     }
+    // }
+
     // useEffect(() => {
     //     let rawData = [];
     //     const dataFetch = async (term) => {
