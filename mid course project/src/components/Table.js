@@ -8,8 +8,14 @@ import UseAnimations from "react-useanimations";
 import heart from 'react-useanimations/lib/heart'
 import searchToX from 'react-useanimations/lib/searchToX'
 import loading from 'react-useanimations/lib/loading'
+import הראל from '../img/הראל.png'
+import אנליסט from '../img/אנליסט.png'
+import מגדל from '../img/מגדל.png'
+import אלטשולר from '../img/אלטשולר.png'
+import מיטב from '../img/מיטב.png'
 
-function Table() {
+
+function Table({compareWillUpdate}) {
 
     //TODO: cancel duplicate selection, make sort functions, handle options clicks
     const [myData, setData] = useState({
@@ -130,13 +136,47 @@ function Table() {
     }
 
     const handleOptionClick = (id, company, action) => {
-        console.log(id, company);
         const found = myData[company].filter(item => item.id === id);
         if (action === 'compare') {
-            found.push(company)
-            let temp = [...productsToCompare,found];
-            setProductsToCompare(temp);
-        }else if(action==='save'){
+            let temp;
+            //* validation and delete if double click.
+            switch (productsToCompare.length) {
+                case 0:
+                    found.push(company)
+                    console.log(productsToCompare)
+                    temp = [...productsToCompare, found];
+                    temp.length < 3 && setProductsToCompare(temp);
+                    break;
+                case 1:
+                    if (productsToCompare[0][0].id !== id) {
+                        found.push(company)
+                        console.log(productsToCompare)
+                        temp = [...productsToCompare, found];
+                        temp.length < 3 && setProductsToCompare(temp);
+                    } else if (productsToCompare[0][0].id === id) {
+                        setProductsToCompare([]);
+                    }
+                    break;
+                case 2:
+                    temp = productsToCompare;
+                    debugger
+                    if (temp[1][0].id === id) {
+                        temp = [...temp[0]];
+                        // temp = temp.flat()
+                        setProductsToCompare([temp]);
+                        break;
+                    }
+                    if (temp[0][0].id === id) {
+                        temp = [...temp[1]];
+                        
+                        setProductsToCompare([temp]);
+                        break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else if (action === 'save') {
             console.log(`handle save pleaseeeeeee (last day)`)
         }
     }
@@ -160,8 +200,6 @@ function Table() {
                             <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) && "red"}>{item.avgAnnualYield5Years || 'N/A'}</td>
                             <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) && "red"}>{item.past3YearsYield || 'N/A'}</td>
                             <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
-                            {/* <td>{item.desposits || 'N/A'}</td>
-                            <td>{item.withdrawls || 'N/A'}</td> */}
                             <td>
                                 <UseAnimations animation={heart} size={16} onClick={() => {
                                     // eslint-disable-next-line
@@ -200,9 +238,19 @@ function Table() {
                         <p className="company-display-p">Company display :</p>
                         <p>{chosenCompanies}</p>
                     </div>
-                    {productsToCompare.length>0 &&
+                    {productsToCompare.length > 0 &&
                         <div className="compare-products-cards">
-                            <ProductCard products={productsToCompare} />
+                            <ProductCard images={{
+                                הראל: הראל,
+                                מגדל: מגדל,
+                                אנליסט: אנליסט,
+                                אלטשולר: אלטשולר,
+                                מיטב: מיטב
+                            }} products={productsToCompare} />
+                            {productsToCompare.length === 2 && 
+                            <Link onClick={()=>compareWillUpdate(productsToCompare)} to="/compare">
+                                <button className="to-compare"><i className="fas fa-chart-bar fa-4x"> </i><br></br> Compare!</button>
+                            </Link>}
                         </div>
                     }
                     {showSpinner && <UseAnimations size={64} speed={0.5} animation={loading} />}
@@ -220,8 +268,6 @@ function Table() {
                                     <th>Annual Yield (5 Years)</th>
                                     <th>Total 3 Years Yield </th>
                                     <th>Total 5 Years Yield </th>
-                                    {/* <th>Desposits</th>
-                                    <th>Withdraws</th> */}
                                     <th colSpan="2">Options</th>
                                 </tr>
                             </thead>

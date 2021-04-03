@@ -8,7 +8,11 @@ import FavoriteList from './components/FavoriteList'
 import './components/css/app.css'
 
 function App() {
- 
+  
+  const compareWillUpdate = (array) => {
+    console.log(array)
+  }
+
  return (
     <>
       <BrowserRouter>
@@ -16,7 +20,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={LandingPage}/>
           <Route exact path='/table' component={Table}/>
-          <Route exact path='/compare' component={Compare}/>
+          <Route exact path='/compare' compareWillUpdate={compareWillUpdate} component={Compare}/>
           <Route exact path='/favorite' component={FavoriteList}/>
         </Switch>
       </BrowserRouter>

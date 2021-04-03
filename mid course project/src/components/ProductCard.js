@@ -1,20 +1,21 @@
 import React from 'react';
 
-function ProductCard({ products }) {
-    console.log(products)
 
-    return (
-        < >
-            {/* {products.map((item)=>{
-                return <div class="products-card">
-                    <img src="" alt=""/>
-                    <h4>{item.name}</h4>
-                    <h4>{item.manageBy}</h4>
-                    <h4>{item.id}</h4>
+function ProductCard({ products,images }) {
+    let cards = [] ;
+    debugger;
+            {products.forEach((item)=>{
+                console.log(item)
+                cards.push(
+                     <div key={item.id} class="products-card">
+                    <img src={images[item[1]]} alt={item[1]}/>
+                    <p>{item[0].name}</p>
+                    <p>{item[0].manageBy}</p>
                 </div>
-            })} */}
-        </>
-    )
+                )
+            })}
+       
+    return cards
 
 }
 
