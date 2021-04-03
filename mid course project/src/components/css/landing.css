@@ -3,33 +3,33 @@
     --secondary: #c3bfb4d0;
 }
 
-.landing{
-    background:rgba(242, 242, 242, 0.508) ;
-    height: 80vh;
-    border-bottom-left-radius: 25%;
-    border-bottom-right-radius: 25%;
+.landing {
+    background: url('../../img/bg.png')center center/cover;
+    height: 90vh;
+    background-position: bottom;
 }
 
-.landing-content{
+.landing-content {
     margin-top: 10vh;
     display: inline-block;
     width: 100vw;
     height: 80vh;
 }
 
-.landing-content img{
+.landing-content img {
     height: 60vh;
     display: inline;
 }
 
-.landing-content .text{
+.landing-content .text {
     display: inline-block;
     position: relative;
     top: -35vh;
     left: 2vw;
     opacity: 0.8;
 }
-.landing-content .text p{
+
+.landing-content .text p {
     font-size: larger;
 }
 
@@ -40,20 +40,44 @@
     margin: 0.5rem;
     border: none;
     outline: none;
-    background:var(--primary) ;
-    border-radius:15px;
+    background: var(--primary);
+    border-radius: 15px;
     opacity: 0.8;
 }
 
-.landing-content .btn:hover{
+.landing-content .btn:hover {
     opacity: 1;
     transform: scale(1.08);
     transition: all 0.15s ease-in-out;
 }
 
-.landing-btn-wrapper{
-    display:inline-flex;
+.landing-btn-wrapper {
+    display: inline-flex;
     position: relative;
     top: -28vh;
     left: 30vw;
+   opacity: 0;
+   transform: translateY(200px);
+   animation: come 1.2s forwards;
+   animation-delay: 3s;
+}
+
+.landing-header {
+    opacity: 0;
+    transform: translateX(-200px);
+    animation: come 2s forwards;
+}
+
+.landing-p{
+    opacity: 0;
+    transform: translateX(-200px);
+    animation: come 2s forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes come {
+    to {
+        transform: translate(0px);
+        opacity: 1;
+    }
 }

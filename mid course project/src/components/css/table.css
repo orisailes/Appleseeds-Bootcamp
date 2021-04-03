@@ -1,38 +1,98 @@
-:root{
-    --primary:#77ab59;
-    --secondary: #c3bfb4d0;
-}
-
-.table{
-    background:rgba(242, 242, 242, 0.508) ;
+.table-page {
+    background: url('../../img/bg.png')center center/cover;
     height: 90vh;
-    border-bottom-left-radius: 25%;
-    border-bottom-right-radius: 25%;
+    background-position: bottom;
 }
 
-.table-content{
+.table-content {
     margin-top: 8vh;
-    display: inline-flex;
+    display: table-caption;
+    width: 100vw;
 }
 
-.inner-table-content{
+.inner-table-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100vw;
     height: 80vh;
 }
 
-.chosen-companies{
+.chosen-companies {
     display: flex;
-    flex-direction:row ;
-}    
-.chosen-companies p{
-    margin: 0.5rem;
-    z-index: -100;
+    flex-direction: row;
 }
 
-.company-display-p{
+.chosen-companies p {
+    margin: 0.5rem;
+}
+
+.company-display-p {
     display: block;
 }
 
+.table {
+    height: 65vh;
+    display: block;
+    margin: 1rem;
+    margin-top: 2rem;
+    overflow-y: scroll;
+}
+
+th,
+td {
+    outline: 1px solid #c3bfb4d0;
+    text-align: center;
+    font-size: small;
+    max-width: 19rem;
+    max-height: 0.1rem;
+}
+
+table {
+    border-spacing: 0.3rem;
+}
+
+tbody:nth-child(odd) {
+    background: #c3bfb4c6;
+}
+
+tbody {
+
+    opacity: 0.8;
+    background: #c3bfb480;
+}
+
+tbody:hover {
+    background: #c3bfb4d0;
+    opacity: 1;
+}
+
+.green {
+    background: rgba(187, 255, 156, 0.707);
+}
+
+.red {
+    background: #ec4c4cd5;
+}
+
+.add-to-compare,
+.add-to-favorite {
+    cursor: pointer;
+    width: 4vw;
+    height: 5vh;
+    line-height: 0.7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+small {
+    font-size: 0.1rem;
+}
+
+
+.compare-products-cards {
+   display: flex;
+   justify-content: center;
+
+}

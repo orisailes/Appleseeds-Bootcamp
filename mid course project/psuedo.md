@@ -35,12 +35,15 @@ Day 4:
 
 Day 5:
 - find way to display past 12 month profits. if cant, think about another feature to add.
+- make sort option in table section
 
 Day 6:
 - add the watch list. in this section, data about the company will display and quick contact way to get detail about corrent product.
 - extra: if there is a time, add fake pop up adv and "donate us" card as well
 
 Day 7: 
+* Table header position fix 
+* nav bar fix bug 
 - risk day.
 - netlify & github.
 
