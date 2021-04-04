@@ -76,11 +76,11 @@
 
 
 .show-nav {
-    animation: comeHere 1s forwards;
+    animation: comeHere 0.5s forwards;
 }
 
 .hide {
-    animation: goAway 1s;
+    animation: goAway 0.5s;
 }
 
 @keyframes goAway {

@@ -15,7 +15,7 @@ import אלטשולר from '../img/אלטשולר.png'
 import מיטב from '../img/מיטב.png'
 
 
-function Table({compareWillUpdate}) {
+function Table() {
 
     //TODO: cancel duplicate selection, make sort functions, handle options clicks
     const [myData, setData] = useState({
@@ -91,13 +91,14 @@ function Table({compareWillUpdate}) {
                 page++;
             }
             const relevantData = [];
+            debugger;
             //* change the raw data and map it to only neww data
             rawData.forEach((item) => {
                 let itemReportMonth = item.REPORT_PERIOD.split('').slice(4);
                 if (itemReportMonth.join('') < 10) {
                     itemReportMonth = Number(itemReportMonth[1])
                 }
-                if (itemReportMonth === thisMonth) {
+                if (itemReportMonth === thisMonth && item.TOTAL_ASSETS>0) {
                     relevantData.push(
                         {
                             name: item.FUND_NAME,
@@ -105,8 +106,8 @@ function Table({compareWillUpdate}) {
                             avgAnnualYield3Years: item.AVG_ANNUAL_YIELD_TRAILING_3YRS,
                             avgAnnualYield5Years: item.AVG_ANNUAL_YIELD_TRAILING_5YRS,
                             controlledBy: item.CONTROLLING_CORPORATION,
-                            ForgeinCurrenctExposure: item.FOREIGN_CURRENCY_EXPOSURE,
-                            ForgeinExposure: item.FOREIGN_EXPOSURE,
+                            forgeinCurrencyExposure: item.FOREIGN_CURRENCY_EXPOSURE,
+                            forgeinExposure: item.FOREIGN_EXPOSURE,
                             id: item.FUND_ID,
                             inceptionAt: item.INCEPTION_DATE,
                             manageBy: item.MANAGING_CORPORATION,
@@ -119,6 +120,11 @@ function Table({compareWillUpdate}) {
                             past5YearsYield: item.YIELD_TRAILING_5_YRS,
                             desposits: item.DEPOSITS,
                             withdrawls: item.WITHDRAWLS,
+                            thisMonthDesposits:item.NET_MONTHLY_DEPOSITS,
+                            standardDeviation:item.STANDARD_DEVIATION,
+                            alpha:item.ALPHA,
+                            sharpeRatio:item.SHARPE_RATIO,
+
                         }
 
                     )
@@ -143,14 +149,12 @@ function Table({compareWillUpdate}) {
             switch (productsToCompare.length) {
                 case 0:
                     found.push(company)
-                    console.log(productsToCompare)
                     temp = [...productsToCompare, found];
                     temp.length < 3 && setProductsToCompare(temp);
                     break;
                 case 1:
                     if (productsToCompare[0][0].id !== id) {
                         found.push(company)
-                        console.log(productsToCompare)
                         temp = [...productsToCompare, found];
                         temp.length < 3 && setProductsToCompare(temp);
                     } else if (productsToCompare[0][0].id === id) {
@@ -159,16 +163,14 @@ function Table({compareWillUpdate}) {
                     break;
                 case 2:
                     temp = productsToCompare;
-                    debugger
                     if (temp[1][0].id === id) {
                         temp = [...temp[0]];
-                        // temp = temp.flat()
                         setProductsToCompare([temp]);
                         break;
                     }
                     if (temp[0][0].id === id) {
                         temp = [...temp[1]];
-                        
+
                         setProductsToCompare([temp]);
                         break;
                     }
@@ -201,13 +203,18 @@ function Table({compareWillUpdate}) {
                             <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) && "red"}>{item.past3YearsYield || 'N/A'}</td>
                             <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
                             <td>
-                                <UseAnimations animation={heart} size={16} onClick={() => {
-                                    // eslint-disable-next-line
-                                    handleOptionClick(item.id, company, 'save')
-                                }}
-                                    render={(eventProps, animationProps) => (
-                                        <button className="add-to-compare" {...eventProps}> <div {...animationProps} /> <small>Save</small> </button>)} />
-                            </td>
+                                <UseAnimations
+                                    animation={heart}
+                                    size={16}
+                                    onClick={() => {
+                                        // eslint-disable-next-line
+                                        handleOptionClick(item.id, company, 'save')
+                                    }}
+                                    render={(eventProps, animationProps) =>
+                                    (<button className="add-to-compare" {...eventProps}>
+                                        <div {...animationProps} /> <small>Save</small>
+                                    </button>)} />
+                            </td>                         
                             <td>
                                 <UseAnimations
                                     animation={searchToX}
@@ -217,9 +224,9 @@ function Table({compareWillUpdate}) {
                                         handleOptionClick(item.id, company, 'compare')
                                     }}
                                     render={(eventProps, animationProps) => (
-                                        <button className="add-to-favorite" {...eventProps}> <div {...animationProps} /><small>Compare</small></button>
-                                    )}
-                                />
+                                        <button className="add-to-favorite" {...eventProps}> 
+                                        <div {...animationProps} /><small>Compare</small>
+                                        </button>)}/>
                             </td>
                         </tr>
                     </tbody>
@@ -247,10 +254,17 @@ function Table({compareWillUpdate}) {
                                 אלטשולר: אלטשולר,
                                 מיטב: מיטב
                             }} products={productsToCompare} />
-                            {productsToCompare.length === 2 && 
-                            <Link onClick={()=>compareWillUpdate(productsToCompare)} to="/compare">
-                                <button className="to-compare"><i className="fas fa-chart-bar fa-4x"> </i><br></br> Compare!</button>
-                            </Link>}
+                            {productsToCompare.length === 2 &&
+                                <Link
+                                    to={{
+                                        pathname: '/compare',
+                                        products: productsToCompare
+                                    }}
+                                >
+                                    <button className="to-compare">
+                                        <i className="fas fa-chart-bar fa-4x"> </i>
+                                        <br></br> Compare!</button>
+                                </Link>}
                         </div>
                     }
                     {showSpinner && <UseAnimations size={64} speed={0.5} animation={loading} />}

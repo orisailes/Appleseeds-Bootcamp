@@ -109,14 +109,11 @@ small {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: 20vw;
     opacity: 0;
-    transform: translateY(50px) scale(1);
+    transform: translateY(50px);
     animation: Revel 0.5s forwards;
     transition: transform 0.2s ease-in-out;
 }
 
-.products-card:hover {
-    transform: scale(0.5);
-}
 
 .products-card>img {
     opacity: 0.8;
@@ -135,13 +132,8 @@ small {
     background: none;
     border: none;
     cursor: pointer;
-    transform: translateY(50px) scale(1);
+    transform: translateY(50px);
     animation: Revel 1s forwards;
-    animation-delay:0.75s ;
-}
-
-.to-compare:hover {
-    transform: scale(1.1);
 }
 
 @keyframes Revel {

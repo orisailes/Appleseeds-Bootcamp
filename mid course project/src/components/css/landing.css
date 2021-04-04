@@ -43,12 +43,12 @@
     background: var(--primary);
     border-radius: 15px;
     opacity: 0.8;
+    transition: all 0.15s ease-in-out;
 }
 
 .landing-content .btn:hover {
     opacity: 1;
     transform: scale(1.08);
-    transition: all 0.15s ease-in-out;
 }
 
 .landing-btn-wrapper {
@@ -57,21 +57,21 @@
     top: -28vh;
     left: 30vw;
    opacity: 0;
-   transform: translateY(200px);
-   animation: come 1.2s forwards;
-   animation-delay: 3s;
+   transform: translateY(100px);
+   animation: come 1s forwards;
+   animation-delay: 1.5s;
 }
 
 .landing-header {
     opacity: 0;
     transform: translateX(-200px);
-    animation: come 2s forwards;
+    animation: come 1.5s forwards;
 }
 
 .landing-p{
     opacity: 0;
-    transform: translateX(-200px);
-    animation: come 2s forwards;
+    transform: translateX(-100px);
+    animation: come 1s forwards;
     animation-delay: 1.5s;
 }
 

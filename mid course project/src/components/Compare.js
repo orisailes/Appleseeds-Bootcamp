@@ -1,45 +1,52 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import CompareCards from './CompareCards'
 import { Link } from 'react-router-dom'
 import './css/compare.css'
+import MainImg from '../img/navImg.png'
 
 
 // get the term and company name from table component!!
 
-function Compare() {
-
-    const whatMonth = (num) => {
-        if(num<10){
-            num=num.slice(1)
-        }
-        const months =  ["January", "February", "March",  "April", "May", "June",  "July", "August", "September", "October", "November", "December"];
-        return months[num-1];
+function Compare(props) {
+    debugger
+    let products = null;
+    const dataGet = props.location.products; // get from table
+    const dataFromLocalStorage = localStorage.getItem('products')
+    if (dataGet) {
+        products = dataGet;
+        localStorage.clear();
+        localStorage.setItem('products', JSON.stringify(dataGet));
     }
+    if (dataGet && !localStorage.products) {
+        // if there is new data from table
+        localStorage.setItem('products', JSON.stringify(dataGet));
+    }
+    if(!dataGet && localStorage.products){
+        products = dataFromLocalStorage;
+    }
+    useEffect(() => {
+        // debugger;
+        // try {
+        //     let data = window.localStorage.getItem('products');
+        //     data = JSON.parse(data);
+        //     products = data;
+        // } catch (error) {
+        //     console.log(error)
+        // }
+        const dataFetch = async (term) => {
+            // geting data from last year.
+            let rawData = [];
 
-    // const makeTable = async (companies) => {
-    //     let rawData = [];
-    //     if (!isAll) {
-    //         const dataToSearch = chosenCompanies.join('').split(' ,');
-    //         let isNextPaage = true;
-    //         let page = 0;
-    //         for (let company of dataToSearch) {
-    //             while (isNextPaage) {
-    //                 let data = await axios.get(
-    //                     `https://data.gov.il/api/3/action/datastore_search?q=${company}&resource_id=469633a2-5538-4f2c-a0ed-6ed5bc2f74c6&offset=${page}00`
-    //                 )
-    //                 data = data.data.result.records;
-    //                 console.log(data)
-    //                 rawData.push(data);
-    //                 if(data.length<100){
-    //                     isNextPaage=false;
-    //                 }
-    //                 page++;
-    //             }
-    //             rawData.flat();
-    //             console.log(rawData)
-    //         }
+        }
+    }, [])
 
+    // const whatMonth = (num) => {
+    //     if(num<10){
+    //         num=num.slice(1)
     //     }
+    //     const months =  ["January", "February", "March",  "April", "May", "June",  "July", "August", "September", "October", "November", "December"];
+    //     return months[num-1];
     // }
 
     // useEffect(() => {
@@ -78,19 +85,37 @@ function Compare() {
     //                 name: item.FUND_NAME
     //             }
     //         )})
-            
-        
+
+
     //     }
-    //     //!only for my tests
-    //     dataFetch("מגדל");
-    //     // dataFetch("הראל");
-    //     // dataFetch("אלטשולר");
-    //     // dataFetch("מיטב");
-    //     // dataFetch("אנליסט");
     // }, [])
 
-
-    return (<div className="compare"><h1>compare</h1></div>)
+    console.log(products)
+    console.log(dataGet)
+    console.log(localStorage)
+    return (
+        <>
+            <div className="compare-page">
+                {products == null ?
+                    <div className="oops-div">
+                        <Link to="/"><img src={MainImg} alt="Sailes Compare" /></Link>
+                        <div className="text">
+                            <h2 className="landing-header">Looks like you need to choose products to compare!</h2>
+                            <h3 className="landing-header">Go back to Table and pick two products.</h3>
+                            <div className="compare-btn-wrapper">
+                                <Link to="/table"><button className="btn">Table page</button></Link>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    <div className="product-cards">
+                        <CompareCards />
+                        <CompareCards />
+                    </div>
+                }
+            </div>
+        </>
+    )
 }
 
 export default Compare

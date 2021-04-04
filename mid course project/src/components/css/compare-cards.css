@@ -1,0 +1,16 @@
+.flex {
+    display: flex;
+}
+
+.compare-cards{
+    display: flex;
+}
+
+.line-graph{
+    margin-top: 7vh;
+    display: block;
+}
+
+.columns{
+    flex-direction: column;
+}
