@@ -5,7 +5,9 @@ import Table from './components/Table'
 import LandingPage from './components/LandingPage'
 import Header from './components/Header'
 import FavoriteList from './components/FavoriteList'
+import NotFound from './components/NotFound'
 import './components/css/app.css'
+import './normalize.css'
 
 function App() {
 
@@ -15,10 +17,10 @@ function App() {
         <Header />
         <Switch>
           <Route exact path='/' component={LandingPage} />
-          {/* <Route exact path='/table' component={Table} /> */}
-          <Route exact path='/table'><Table/></Route>
+          <Route exact path='/table' component={Table}/>
           <Route exact path='/compare' component={Compare}/>
           <Route exact path='/favorite' component={FavoriteList} />
+          <Route exact path='*' component={NotFound} />
         </Switch>
       </BrowserRouter>
     </>

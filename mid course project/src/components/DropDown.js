@@ -14,20 +14,19 @@ function DD({ title, keys , getCompanyByDropDown}) {
     }
 
     useEffect(()=>{
-    
        userDidClick && getCompanyByDropDown(myTitle);
     },[myTitle])
     return (
         <div onMouseLeave={()=>setListOpen(false)} ref={ref} className="dd">
             <div className="dd-header">
-                <button onClick={() => { setListOpen(prev => !prev) }} className="dd-btn">{myTitle} {isListOpen ? <i className="fas fa-angle-up"></i> : <i className="fas fa-angle-down fa-1x"></i>}</button>
+                <button onClick={() => { setListOpen(prev => !prev) }} className="dd-btn">{isListOpen ? <i className="fas fa-angle-up"></i> : <i className="fas fa-angle-down fa-1x"></i>} {myTitle}  </button>
             </div>
             <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>הכל</button>
-            <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{keys[0]}</button>
-            <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{keys[1]}</button>
-            <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{keys[2]}</button>
-            <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{keys[3]}</button>
-            <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{keys[4]}</button>
+            {keys.map((company)=>{
+                return(
+                    <button key={company} onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{company}</button>
+                )
+            })}
         </div>
     )
 

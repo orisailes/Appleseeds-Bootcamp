@@ -5,7 +5,9 @@ function myPie({ product, color }) {
 
 
     const { totalAssets, stockExposure } = product[0]
-    console.log(product)
+
+    //check math bug
+
     return (
         <>
             <Pie
@@ -16,7 +18,7 @@ function myPie({ product, color }) {
                         data: [stockExposure, (totalAssets - stockExposure),],
                         backgroundColor: [
                            color[0],
-                           color[1]  
+                           color[1]
                         ],
                         borderWidth: 1
                     }]
@@ -25,6 +27,10 @@ function myPie({ product, color }) {
                 options={{
                     maintainAspectRatio: false,
                     responsive: false,
+                    title:{
+                        display:true,
+                        text:product[0].name + " - פיזור "
+                    }
                  }}
                 height={150}
                 width={280}

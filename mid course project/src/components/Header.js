@@ -14,6 +14,7 @@ function Header() {
                 <div className="fixer"></div>
                 <Link to="/"><img className="sailes-compare-logo" src={Img} alt="logo" /></Link>
                 <Link to="/favorite"><img className="cart" src={Cart} alt="logo" /></Link>
+                {/* <Link to="/favorite"><i class="fas fa-eye fa-x"></i></Link> */}
             </div>
         </>
     )

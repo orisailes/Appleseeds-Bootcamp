@@ -17,7 +17,9 @@ import מיטב from '../img/מיטב.png'
 
 function Table() {
 
-    //TODO: cancel duplicate selection, make sort functions, handle options clicks
+    // TODO: cancel duplicate selection, 
+    // TODO: handle animation bug, 
+    // TODO: check if local storage exist
     const [myData, setData] = useState({
         הראל: [],
         מגדל: [],
@@ -30,6 +32,8 @@ function Table() {
     const [isUserSelect, setisUserSelect] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
     const [productsToCompare, setProductsToCompare] = useState([])
+    const [wholeThisYearData, setWholeThisYearData] = useState([])
+
 
     let thisMonth = new Date();
     thisMonth = thisMonth.getMonth() - 1;
@@ -54,6 +58,10 @@ function Table() {
     }
 
     useEffect(() => {
+        // check if there is two products
+        if (localStorage.products) {
+            setProductsToCompare(JSON.parse(localStorage.getItem('products')))
+        }
         // make the fetch function not to run at first time
         if (chosenCompanies.length) {
             makeTableData(chosenCompanies);
@@ -90,15 +98,17 @@ function Table() {
                 }
                 page++;
             }
+            rawData = rawData.flat();
+            setWholeThisYearData([...wholeThisYearData, rawData].flat())
+            console.log(wholeThisYearData)
             const relevantData = [];
-            debugger;
             //* change the raw data and map it to only neww data
             rawData.forEach((item) => {
                 let itemReportMonth = item.REPORT_PERIOD.split('').slice(4);
                 if (itemReportMonth.join('') < 10) {
                     itemReportMonth = Number(itemReportMonth[1])
                 }
-                if (itemReportMonth === thisMonth && item.TOTAL_ASSETS>0) {
+                if (itemReportMonth === thisMonth && item.TOTAL_ASSETS > 0) {
                     relevantData.push(
                         {
                             name: item.FUND_NAME,
@@ -120,10 +130,10 @@ function Table() {
                             past5YearsYield: item.YIELD_TRAILING_5_YRS,
                             desposits: item.DEPOSITS,
                             withdrawls: item.WITHDRAWLS,
-                            thisMonthDesposits:item.NET_MONTHLY_DEPOSITS,
-                            standardDeviation:item.STANDARD_DEVIATION,
-                            alpha:item.ALPHA,
-                            sharpeRatio:item.SHARPE_RATIO,
+                            thisMonthDesposits: item.NET_MONTHLY_DEPOSITS,
+                            standardDeviation: item.STANDARD_DEVIATION,
+                            alpha: item.ALPHA,
+                            sharpeRatio: item.SHARPE_RATIO,
 
                         }
 
@@ -141,7 +151,11 @@ function Table() {
         setShowSpinner(false);
     }
 
-    const handleOptionClick = (id, company, action) => {
+    const handleOptionClick = (e, id, company, action, item) => {
+        const classes = e.currentTarget.className;
+        classes.split(' ').includes('green') ?
+            e.currentTarget.classList.remove('green') :
+            e.currentTarget.classList.add('green');
         const found = myData[company].filter(item => item.id === id);
         if (action === 'compare') {
             let temp;
@@ -179,14 +193,19 @@ function Table() {
                     break;
             }
         } else if (action === 'save') {
-            console.log(`handle save pleaseeeeeee (last day)`)
+            let helper = JSON.parse(localStorage.getItem('favorites')) || [];
+            helper.push(item)
+            localStorage.setItem('favorites',JSON.stringify(helper));
         }
     }
 
 
     const makeTable = () => {
         let tableBody = [];
-
+        let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (userFavoriteItems.length) {
+            userFavoriteItems = userFavoriteItems.map(item => item.id)
+        }
         for (let company in myData) {
             myData[company].forEach((item) => {
                 tableBody.push(
@@ -203,30 +222,15 @@ function Table() {
                             <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) && "red"}>{item.past3YearsYield || 'N/A'}</td>
                             <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
                             <td>
-                                <UseAnimations
-                                    animation={heart}
-                                    size={16}
-                                    onClick={() => {
-                                        // eslint-disable-next-line
-                                        handleOptionClick(item.id, company, 'save')
-                                    }}
-                                    render={(eventProps, animationProps) =>
-                                    (<button className="add-to-compare" {...eventProps}>
-                                        <div {...animationProps} /> <small>Save</small>
-                                    </button>)} />
-                            </td>                         
+                                <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) && "green"}`} onClick={(e) => {
+                                    handleOptionClick(e, item.id, company, 'save', item)
+                                }}><i className="fas fa-eye fa-2x"></i></button>
+
+                            </td>
                             <td>
-                                <UseAnimations
-                                    animation={searchToX}
-                                    size={16}
-                                    onClick={() => {
-                                        // eslint-disable-next-line
-                                        handleOptionClick(item.id, company, 'compare')
-                                    }}
-                                    render={(eventProps, animationProps) => (
-                                        <button className="add-to-favorite" {...eventProps}> 
-                                        <div {...animationProps} /><small>Compare</small>
-                                        </button>)}/>
+                                <button className="add-to-compare" onClick={(e) => {
+                                    handleOptionClick(e, item.id, company, 'compare', item)
+                                }}><i className="fas fa-chart-bar fa-2x"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -255,16 +259,34 @@ function Table() {
                                 מיטב: מיטב
                             }} products={productsToCompare} />
                             {productsToCompare.length === 2 &&
-                                <Link
-                                    to={{
-                                        pathname: '/compare',
-                                        products: productsToCompare
-                                    }}
-                                >
-                                    <button className="to-compare">
-                                        <i className="fas fa-chart-bar fa-4x"> </i>
-                                        <br></br> Compare!</button>
-                                </Link>}
+                                <>
+                                    <Link
+                                        to={{
+                                            pathname: '/compare',
+                                            products: productsToCompare,
+                                            wholeThisYearData: wholeThisYearData,
+                                        }}
+                                    >
+                                        <button className="to-compare">
+                                            <i className="fas fa-chart-bar fa-4x"> </i>
+                                            <br></br> Compare!</button>
+                                    </Link>
+                                    <Link
+                                        style={{ marginLeft: "2rem" }}
+                                        to="/table"
+                                        onClick={() => {
+                                            localStorage.clear()
+                                            setProductsToCompare([])
+                                        }}
+                                    >
+                                        <button
+                                            className="to-compare">
+                                            <i className="fas fa-trash fa-4x"> </i>
+                                            <br></br> Clear!</button>
+                                    </Link>
+
+                                </>
+                            }
                         </div>
                     }
                     {showSpinner && <UseAnimations size={64} speed={0.5} animation={loading} />}

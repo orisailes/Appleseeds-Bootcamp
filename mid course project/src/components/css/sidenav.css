@@ -25,21 +25,22 @@
     left: 16vw;
     top: 0.5vw;
     transform: translateX(-15vw);
-    outline: 1px solid rgba(92, 91, 91, 0.3);
-    z-index: 100;
+    z-index: 15;
+    outline: 2px solid rgba(92, 91, 91, 0.1);
 }
-
+.btn-wrapper > div{
+    color: var(--primary);
+}
 .btn-wrapper:hover{
-    outline: 1px solid rgba(92, 91, 91, 0.5);
+    outline: 2px solid rgba(92, 91, 91, 0.3);
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
 .nav-img {
     height: 30vh;
     width: 15vw;
     transform:scale(1) ;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.2s ease-in-out;
 }
 .nav-img:hover{
     transform: scale(1.05);
@@ -54,6 +55,7 @@
     font-size: 1.3rem;
     border-radius: 15px;
     opacity: 0.8;
+    transition: all 0.15s;
 }
 
 .side-nav .opt a{
@@ -71,16 +73,15 @@
     background-image: linear-gradient(to bottom right, rgba(255, 250, 240, 0.644), var(--secondary));
     opacity: 1;
     transform: scale(1.05);
-    transition: all 0.2s;
 }
 
 
 .show-nav {
-    animation: comeHere 0.5s forwards;
+    animation: comeHere 0.4s forwards;
 }
 
 .hide {
-    animation: goAway 0.5s;
+    animation: goAway 0.4s;
 }
 
 @keyframes goAway {
@@ -103,8 +104,19 @@ footer {
     width: 90%;
     opacity: 0.75;
     font-size: 0.7rem;
+    transition: opacity 0.1s;
 }
 
 footer:hover {
     opacity: 1;
+}
+
+.hide-all{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    background: black;
+    z-index: 9;
+    opacity: 0.75;
 }

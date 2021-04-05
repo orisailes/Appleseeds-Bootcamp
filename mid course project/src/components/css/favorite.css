@@ -1,4 +1,22 @@
-.favorite{
-    background:floralwhite ;
+.favorites {
+    background: url('../../img/bg.png')center center/cover;
     height: 90vh;
+    background-position: bottom;
+
+}
+
+.favorites-content {
+    margin-top:7vh ;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.favorite-card{
+    width: 80vw;
+    height: 15vh;
+    border: 1px solid black;
+    margin: 0.2rem;
 }

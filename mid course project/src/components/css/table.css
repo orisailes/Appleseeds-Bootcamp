@@ -15,6 +15,9 @@
     flex-direction: column;
     align-items: center;
     height: 80vh;
+    transform: translateY(-50px);
+    opacity: 0;
+    animation: Revel 0.5s forwards;
 }
 
 .chosen-companies {
@@ -86,6 +89,8 @@ tbody:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    outline: none;
+    border: none;
 }
 
 small {
