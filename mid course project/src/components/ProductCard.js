@@ -3,7 +3,6 @@ import React from 'react';
 
 function ProductCard({ products,images }) {
     let cards = [] ;
-    debugger;
     {products.forEach((item)=>{
                 cards.push(
                      <div key={item.id} className="products-card">

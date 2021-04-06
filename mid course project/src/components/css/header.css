@@ -33,3 +33,16 @@
     position: relative;
     top: -2vh;
 }
+
+.header-favorite-btn{
+    height: 83%;
+    width: 8vw;
+    outline: none;
+    border: none;
+    background: var(--primary-ligth);
+    border-radius: 15px;
+}
+.header-favorite-btn:hover{
+   background: var(--primary);
+   cursor: pointer;
+}

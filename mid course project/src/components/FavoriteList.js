@@ -33,8 +33,8 @@ function Favorite() {
 
     const handleDelete = (id) => {
         let helper = JSON.parse(localStorage.getItem('favorites'));
-        helper = helper.filter((item) =>{
-            if(item.id !== id){
+        helper = helper.filter((item) => {
+            if (item.id !== id) {
                 return item
             }
         })
@@ -54,19 +54,19 @@ function Favorite() {
                                     <button onClick={() => handleDelete(item.id)} className="delete-btn"><i className="fas fa-trash fa-2x"></i>Delete</button>
                                     <div className="flex columns">
                                         <h4>Fund inception: {item.inceptionAt.split(' ')[0]}</h4>
-                                        <a href={sites[company]}>More here</a>
+                                        <a href={sites[company]}>More About The Company</a>
                                     </div>
                                     <div className="favorite-card-content">
                                         <h3>{company}</h3>
                                         <h4>{item.name}</h4>
                                     </div>
-                                    <img src={images[company]} alt={company} />
+                                    <a href={sites[company]}><img src={images[company]} alt={company} /></a>
                                 </div>
                             </>
                         )
                     })
                     :
-                    <div>
+                    <div className="no-favorites-found">
                         <h1>no favorites found</h1>
                     </div>}
             </div>

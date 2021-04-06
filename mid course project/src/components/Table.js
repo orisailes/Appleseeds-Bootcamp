@@ -188,11 +188,19 @@ function Table() {
                     break;
             }
         } else if (action === 'save') {
+            debugger;
+            let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
+            if (userFavoriteItems.length) {
+                userFavoriteItems = userFavoriteItems.map(item => item.id)
+            }
             let helper = JSON.parse(localStorage.getItem('favorites')) || [];
-            helper.push(item)
+            if (!userFavoriteItems.includes(item.id)) helper.push(item)
+            else{
+                helper = helper.filter((item)=>item.id !==id)
+            }
+            console.log(helper)
             localStorage.setItem('favorites', JSON.stringify(helper));
         }
-
     }
 
     const makeTableHeading = () => {
