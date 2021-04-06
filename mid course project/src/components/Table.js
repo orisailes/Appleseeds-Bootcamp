@@ -30,8 +30,6 @@ function Table() {
     const [showSpinner, setShowSpinner] = useState(false);
     const [productsToCompare, setProductsToCompare] = useState([])
     const [wholeThisYearData, setWholeThisYearData] = useState([])
-    const [tableJSX, setTableJSX] = useState([])
-    console.log(productsToCompare)
 
     let thisMonth = new Date();
     thisMonth = thisMonth.getMonth() - 1;
@@ -54,7 +52,7 @@ function Table() {
             setCompanies(company);
         }
     }
-   
+
     useEffect(() => {
         // check if there is two products
         if (localStorage.products) {
@@ -98,7 +96,7 @@ function Table() {
             rawData = rawData.flat();
             setWholeThisYearData([...wholeThisYearData, rawData].flat())
             const relevantData = [];
-            //* change the raw data and map it to only neww data
+            //* change the raw data and map it to only new data
             rawData.forEach((item) => {
                 let itemReportMonth = item.REPORT_PERIOD.split('').slice(4);
                 if (itemReportMonth.join('') < 10) {
@@ -130,7 +128,7 @@ function Table() {
                             standardDeviation: item.STANDARD_DEVIATION,
                             alpha: item.ALPHA,
                             sharpeRatio: item.SHARPE_RATIO,
-
+                            company: company,
                         }
 
                     )
@@ -143,7 +141,7 @@ function Table() {
             temp[company] = relevantData;
             setData(temp);
         }
-        makeTable();
+        setisUserSelect(true)
         setShowSpinner(false);
     }
 
@@ -152,19 +150,17 @@ function Table() {
         classes.split(' ').includes('green') ?
             e.currentTarget.classList.remove('green') :
             e.currentTarget.classList.add('green');
-        const found = myData[company].filter(item => item.id === id);
+        const found = Object.values(myData).flat()
+            .filter(item => item.id === id);
         if (action === 'compare') {
-            
-            debugger;
             let temp;
             //* validation and delete if double click.
+            debugger
             switch (productsToCompare.length) {
                 case 0:
                     found.push(company)
                     temp = [...productsToCompare, found];
-                    setProductsToCompare(temp)
-
-                    // if(temp.length<3) setProductsToCompare(temp)
+                    if (temp.length < 3) setProductsToCompare(temp)
                     break;
                 case 1:
                     if (productsToCompare[0][0].id !== id) {
@@ -199,12 +195,152 @@ function Table() {
 
     }
 
+    const makeTableHeading = () => {
+        return (
+            <thead key={"table-header"} className="table-heading">
+                <tr>
+                    <th>ID</th>
+                    <th>
+                        <div className="flex">
+                            Fund Name
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('name', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('name', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Manged By
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('manageBy', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('manageBy', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Annual Fee
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('avgAnnnualManagmentFee', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('avgAnnnualManagmentFee', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Last Month Yield
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('thisMonthYield', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('thisMonthYield', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Current Year Yield
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('yearToDateYield', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('yearToDateYield', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Annual Yield (3 Years)
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('avgAnnualYield3Years', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('avgAnnualYield3Years', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Annual Yield (5 Years)
+                        <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('avgAnnualYield5Years', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('avgAnnualYield5Years', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
 
-    useEffect(() => {
-        setTableJSX(makeTable())
-        tableJSX.length && setisUserSelect(true);
-    }, [myData, wholeThisYearData])
-
+                    <th>
+                        <div className="flex">
+                            Total 3 Years Yield
+                               <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('past3YearsYield', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('past3YearsYield', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="flex">
+                            Total 5 Years Yield
+                               <div className="flex columns">
+                                <button onClick={() => {
+                                    handleSort('past5YearsYield', 'up')
+                                }}><i className="fas fa-sort-up"></i>
+                                </button>
+                                <button onClick={() => {
+                                    handleSort('past5YearsYield', 'down')
+                                }}><i className="fas fa-sort-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th colSpan="2">Options</th>
+                </tr>
+            </thead>
+        )
+    }
 
     const makeTable = () => {
         let tableBody = [];
@@ -214,6 +350,7 @@ function Table() {
         }
 
         for (let company in myData) {
+            // make JSX from each object
             myData[company].forEach((item) => {
                 tableBody.push(
                     <tbody key={item.id} >
@@ -230,13 +367,13 @@ function Table() {
                             <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
                             <td>
                                 <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) ? "green" : ""}`} onClick={(e) => {
-                                    handleOptionClick(e, item.id, company, 'save', item)
+                                    handleOptionClick(e, item.id, item.company, 'save', item)
                                 }}><i className="fas fa-heart fa-2x"></i></button>
 
                             </td>
                             <td>
                                 <button className="add-to-compare" onClick={(e) => {
-                                    handleOptionClick(e, item.id, company, 'compare', item)
+                                    handleOptionClick(e, item.id, item.company, 'compare', item)
                                 }}><i className="fas fa-chart-bar fa-2x"></i></button>
                             </td>
                         </tr>
@@ -245,254 +382,32 @@ function Table() {
             })
         }
         tableBody.unshift(
-            <thead key={"table-header"} className="table-heading">
-                <tr>
-                    <th>ID</th>
-                    <th>Fund Name
-                                    <button onClick={() => {
-                            handleSort('name', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('name', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Manged By
-                                    <button onClick={() => {
-                            handleSort('manageBy', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('manageBy', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Annual Fee
-                                    <button onClick={() => {
-                            handleSort('avgAnnnualManagmentFee', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('avgAnnnualManagmentFee', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Last Month Yield
-                                    <button onClick={() => {
-                            handleSort('thisMonthYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('thisMonthYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Current Year Yield
-                                    <button onClick={() => {
-                            handleSort('yearToDateYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('yearToDateYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Annual Yield (3 Years)
-                                    <button onClick={() => {
-                            handleSort('avgAnnualYield3Years', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('avgAnnualYield3Years', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Annual Yield (5 Years)
-                                    <button onClick={() => {
-                            handleSort('avgAnnualYield5Years', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('avgAnnualYield5Years', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-
-                    <th>Total 3 Years Yield
-                                    <button onClick={() => {
-                            handleSort('past3YearsYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('past3YearsYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Total 5 Years Yield
-                                    <button onClick={() => {
-                            handleSort('past5YearsYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('past5YearsYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th colSpan="2">Options</th>
-                </tr>
-            </thead>
+            makeTableHeading()
         )
         return tableBody
     }
 
-   
+
     const handleSort = (key, direction) => {
-        let sortedTable = Object.values(myData).flat()
-        let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
-        if (userFavoriteItems.length) {
-            userFavoriteItems = userFavoriteItems.map(item => item.id)
+        // favorites&compar handle!!@!@
+        let sortedTable =
+            Object.values(myData)
+                .flat()
+                .sort((a, b) => {
+                    return direction === 'up' ?
+                        a[key] - b[key] :
+                        b[key] - a[key]
+                });
+        let helper = {
+            הראל: sortedTable,
+            מגדל: [],
+            מיטב: [],
+            אנליסט: [],
+            אלטשולר: [],
         }
-        sortedTable.sort((a, b) => {
-            return direction === 'up' ?
-                a[key] - b[key] :
-                b[key] - a[key]
-        });
+        setData(helper)
 
-        let newSortedTable = [];
-        sortedTable.forEach((item) => {
-            let company = item.controlledBy.split(' ')[0]
-            if (company === "שלמה") company = "מגדל";
-            newSortedTable.push(
-                <tbody key={item.id} >
-                    <tr id={item.id}>
-                        <td>{item.id || 'N/A'}</td>
-                        <td>{item.name || 'N/A'}</td>
-                        <td>{item.manageBy || 'N/A'}</td>
-                        <td className={(item.avgAnnnualManagmentFee > 0.01 && item.avgAnnnualManagmentFee < 0.3) && "green"}>{item.avgAnnnualManagmentFee || 'N/A'}</td>
-                        <td className={(item.thisMonthYield > 2) ? "green" : item.thisMonthYield < -0.7 && "red"}>{item.thisMonthYield || 'N/A'}</td>
-                        <td>{item.yearToDateYield || 'N/A'}</td>
-                        <td className={(item.avgAnnualYield3Years > 7 && item.avgAnnualYield3Years > 0.01) ? "green" : (item.avgAnnualYield3Years < 1 && item.avgAnnualYield3Years > 0.01) && "red"}>{item.avgAnnualYield3Years || 'N/A'}</td>
-                        <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) && "red"}>{item.avgAnnualYield5Years || 'N/A'}</td>
-                        <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) && "red"}>{item.past3YearsYield || 'N/A'}</td>
-                        <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
-                        <td>
-                            <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) && "green"}`} onClick={(e) => {
-                                handleOptionClick(e, item.id, company, 'save', item)
-                            }}><i className="fas fa-heart fa-2x"></i></button>
-
-                        </td>
-                        <td>
-                            <button className="add-to-compare" onClick={(e) => {
-                                handleOptionClick(e, item.id, company, 'compare', item)
-                            }}><i className="fas fa-chart-bar fa-2x"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            )
-        })
-        newSortedTable.unshift(
-            <thead key={"table-header"} className="table-heading">
-                <tr >
-                    <th>ID</th>
-                    <th>Fund Name
-                                    <button onClick={() => {
-                            handleSort('name', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('name', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Manged By
-                                    <button onClick={() => {
-                            handleSort('manageBy', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('manageBy', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Annual Fee
-                                    <button onClick={() => {
-                            handleSort('avgAnnnualManagmentFee', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('avgAnnnualManagmentFee', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Last Month Yield
-                                    <button onClick={() => {
-                            handleSort('thisMonthYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('thisMonthYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Current Year Yield
-                                    <button onClick={() => {
-                            handleSort('yearToDateYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('yearToDateYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Annual Yield (3 Years)
-                                    <button onClick={() => {
-                            handleSort('avgAnnualYield3Years', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('avgAnnualYield3Years', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Annual Yield (5 Years)
-                                    <button onClick={() => {
-                            handleSort('avgAnnualYield5Years', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('avgAnnualYield5Years', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-
-                    <th>Total 3 Years Yield
-                                    <button onClick={() => {
-                            handleSort('past3YearsYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('past3YearsYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th>Total 5 Years Yield
-                                    <button onClick={() => {
-                            handleSort('past5YearsYield', 'up')
-                        }}><i className="fas fa-sort-up"></i>
-                        </button>
-                        <button onClick={() => {
-                            handleSort('past5YearsYield', 'down')
-                        }}><i className="fas fa-sort-down"></i>
-                        </button>
-                    </th>
-                    <th colSpan="2">Options</th>
-                </tr>
-            </thead>
-        )
-        setTableJSX(newSortedTable)
     }
-
 
     return (
         <div className="table-page">
@@ -546,7 +461,9 @@ function Table() {
                     {showSpinner && <UseAnimations size={64} speed={0.5} animation={loading} />}
                     {isUserSelect &&
                         <table className="table">
-                            {tableJSX}
+                            {
+                                makeTable()
+                            }
                         </table>
                     }
                 </div>
