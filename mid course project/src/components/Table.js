@@ -14,7 +14,6 @@ import מיטב from '../img/מיטב.png'
 
 
 function Table() {
-
     // TODO: cancel duplicate selection, 
     // TODO: handle animation bug, 
     // TODO: check if local storage exist
@@ -32,7 +31,7 @@ function Table() {
     const [productsToCompare, setProductsToCompare] = useState([])
     const [wholeThisYearData, setWholeThisYearData] = useState([])
     const [tableJSX, setTableJSX] = useState([])
-
+    console.log(productsToCompare)
 
     let thisMonth = new Date();
     thisMonth = thisMonth.getMonth() - 1;
@@ -55,7 +54,7 @@ function Table() {
             setCompanies(company);
         }
     }
-
+   
     useEffect(() => {
         // check if there is two products
         if (localStorage.products) {
@@ -155,6 +154,7 @@ function Table() {
             e.currentTarget.classList.add('green');
         const found = myData[company].filter(item => item.id === id);
         if (action === 'compare') {
+            
             debugger;
             let temp;
             //* validation and delete if double click.
@@ -162,7 +162,9 @@ function Table() {
                 case 0:
                     found.push(company)
                     temp = [...productsToCompare, found];
-                    temp.length < 3 && setProductsToCompare(temp);
+                    setProductsToCompare(temp)
+
+                    // if(temp.length<3) setProductsToCompare(temp)
                     break;
                 case 1:
                     if (productsToCompare[0][0].id !== id) {
@@ -182,7 +184,6 @@ function Table() {
                     }
                     if (temp[0][0].id === id) {
                         temp = [...temp[1]];
-
                         setProductsToCompare([temp]);
                         break;
                     }
@@ -195,7 +196,7 @@ function Table() {
             helper.push(item)
             localStorage.setItem('favorites', JSON.stringify(helper));
         }
-        console.log(productsToCompare)
+
     }
 
 
@@ -228,7 +229,7 @@ function Table() {
                             <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) && "red"}>{item.past3YearsYield || 'N/A'}</td>
                             <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
                             <td>
-                                <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) && "green"}`} onClick={(e) => {
+                                <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) ? "green" : ""}`} onClick={(e) => {
                                     handleOptionClick(e, item.id, company, 'save', item)
                                 }}><i className="fas fa-heart fa-2x"></i></button>
 
@@ -244,8 +245,8 @@ function Table() {
             })
         }
         tableBody.unshift(
-            <thead className="table-heading">
-                <tr key={"table-header"}>
+            <thead key={"table-header"} className="table-heading">
+                <tr>
                     <th>ID</th>
                     <th>Fund Name
                                     <button onClick={() => {
@@ -345,6 +346,7 @@ function Table() {
         return tableBody
     }
 
+   
     const handleSort = (key, direction) => {
         let sortedTable = Object.values(myData).flat()
         let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -389,10 +391,9 @@ function Table() {
                 </tbody>
             )
         })
-        debugger;
         newSortedTable.unshift(
-            <thead className="table-heading">
-                <tr key={"table-header"}>
+            <thead key={"table-header"} className="table-heading">
+                <tr >
                     <th>ID</th>
                     <th>Fund Name
                                     <button onClick={() => {
@@ -489,9 +490,10 @@ function Table() {
                 </tr>
             </thead>
         )
-        console.log(sortedTable)
         setTableJSX(newSortedTable)
     }
+
+
     return (
         <div className="table-page">
             <div className="table-content">
