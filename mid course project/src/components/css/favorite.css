@@ -53,6 +53,5 @@
     outline: none;
 }
 .delete-btn:hover{
-    /* background: red; */
     cursor: pointer;
 }

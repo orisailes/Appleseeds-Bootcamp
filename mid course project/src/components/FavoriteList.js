@@ -54,7 +54,7 @@ function Favorite() {
                                     <button onClick={() => handleDelete(item.id)} className="delete-btn"><i className="fas fa-trash fa-2x"></i>Delete</button>
                                     <div className="flex columns">
                                         <h4>Fund inception: {item.inceptionAt.split(' ')[0]}</h4>
-                                        <a target="_blank" href={sites[company]}>More here</a>
+                                        <a href={sites[company]}>More here</a>
                                     </div>
                                     <div className="favorite-card-content">
                                         <h3>{company}</h3>

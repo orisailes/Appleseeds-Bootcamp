@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Compare from './components/Compare'
 import Table from './components/Table'
