@@ -6,17 +6,53 @@
 }
 
 .favorites-content {
-    margin-top:7vh ;
+    margin-top: 7vh;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
+    height: 80vh;
+    overflow-y: scroll;
 }
 
-.favorite-card{
-    width: 80vw;
+.favorite-card {
+    width: 70vw;
     height: 15vh;
-    border: 1px solid black;
     margin: 0.2rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: var(--secondary-ligth);
+    opacity: 0.8;
+    border-radius: 15px;
+    transform: scale(1);
+    transition: all 0.2s;
+}
+
+.favorite-card:hover{
+    transform: scale(1.05);
+}
+
+.favorite-card img {
+    height: 10vh;
+
+}
+
+.favorite-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    line-height: 0.1rem;
+}
+
+.delete-btn{
+    background: none;
+    border: none;
+    outline: none;
+}
+.delete-btn:hover{
+    /* background: red; */
+    cursor: pointer;
 }

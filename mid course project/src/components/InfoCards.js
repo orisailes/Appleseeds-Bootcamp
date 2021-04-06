@@ -29,7 +29,7 @@ function Cards({ product, company }) {
             <div className="product-info-card-header-wrapper">
                 <h2 className="product-info-card-header">{product.name}</h2>
                 <img className="product-info-card-image" src={images[company]} alt={company} />
-                <button className="info-card-add-to-favorite" onClick={(e) => handleSave(e)}><i className="far fa-eye fa-2x"></i> <i className="fas fa-plus fa-lg"></i></button>
+                <button className="info-card-add-to-favorite" onClick={(e) => handleSave(e)}><i className="far fa-heart fa-2x"></i> <i className="fas fa-plus fa-lg"></i></button>
             </div>
             <div className="product-info-card-wrapper">
                 <div className="product-info-card">

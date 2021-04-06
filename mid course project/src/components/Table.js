@@ -224,7 +224,7 @@ function Table() {
                             <td>
                                 <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) && "green"}`} onClick={(e) => {
                                     handleOptionClick(e, item.id, company, 'save', item)
-                                }}><i className="fas fa-eye fa-2x"></i></button>
+                                }}><i className="fas fa-heart fa-2x"></i></button>
 
                             </td>
                             <td>

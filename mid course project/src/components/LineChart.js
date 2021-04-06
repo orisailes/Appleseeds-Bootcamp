@@ -285,6 +285,7 @@ function MyLine({ products }) {
                             display:true
                         }
                     }}
+                    
                     height={350}
                     width={window.innerWidth/2.5}
 

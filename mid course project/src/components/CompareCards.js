@@ -13,7 +13,7 @@ function CompareCard() {
     return (
         <div key={data} className="compare-cards">
             <div className="flex columns">
-                <InfoCards company={data[0][1]} product={data[1][0]} />
+                <InfoCards company={data[1][1]} product={data[1][0]} />
                 <div className="bars-graph">
                     <BarChart color={[`#1e212d7b`, `#1e212d`]} product={data[1]} />
                 </div>
@@ -28,7 +28,7 @@ function CompareCard() {
                 </div>
             </div>
             <div className="flex columns ">
-                <InfoCards company={data[1][1]} product={data[0][0]} />
+                <InfoCards company={data[0][1]} product={data[0][0]} />
                 <div className="bars-graph">
                     <BarChart color={[`#1687a77b`, `#1687a7`]} product={data[0]} />
                 </div>
