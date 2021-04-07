@@ -8,12 +8,9 @@ function Header() {
     return (
         <>
             <SideNav />
-            <div className="header-bg"></div>
             <div className="header">
-                <div className="fixer"></div>
                 <Link to="/"><img className="sailes-compare-logo" src={Img} alt="logo" /></Link>
-                {/* <Link to="/favorite"><img className="cart" src={Cart} alt="logo" /></Link> */}
-                <Link to="/favorite"><button className="header-favorite-btn"> <i className="fas fa-heart fa-lg"></i> Favorites</button></Link>
+                <Link to="/favorite"><button className="header-favorite-btn"> <i className="fas fa-heart fa-lg"></i><span>Favorites</span></button></Link>
             </div>
         </>
     )
