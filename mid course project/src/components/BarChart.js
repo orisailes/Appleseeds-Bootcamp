@@ -3,8 +3,6 @@ import { Bar } from 'react-chartjs-2'
 
 function myBar({ product, color }) {
 
-    console.log(window.clien)
-
     return (
         <>
             <Bar

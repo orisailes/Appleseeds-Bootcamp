@@ -155,7 +155,6 @@ function Table() {
         if (action === 'compare') {
             let temp;
             //* validation and delete if double click.
-            debugger
             switch (productsToCompare.length) {
                 case 0:
                     found.push(company)
@@ -188,7 +187,6 @@ function Table() {
                     break;
             }
         } else if (action === 'save') {
-            debugger;
             let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
             if (userFavoriteItems.length) {
                 userFavoriteItems = userFavoriteItems.map(item => item.id)
@@ -198,7 +196,6 @@ function Table() {
             else{
                 helper = helper.filter((item)=>item.id !==id)
             }
-            console.log(helper)
             localStorage.setItem('favorites', JSON.stringify(helper));
         }
     }
@@ -366,13 +363,13 @@ function Table() {
                             <td>{item.id || 'N/A'}</td>
                             <td>{item.name || 'N/A'}</td>
                             <td>{item.manageBy || 'N/A'}</td>
-                            <td className={(item.avgAnnnualManagmentFee > 0.01 && item.avgAnnnualManagmentFee < 0.3) && "green"}>{item.avgAnnnualManagmentFee || 'N/A'}</td>
-                            <td className={(item.thisMonthYield > 2) ? "green" : item.thisMonthYield < -0.7 && "red"}>{item.thisMonthYield || 'N/A'}</td>
+                            <td className={(item.avgAnnnualManagmentFee > 0.01 && item.avgAnnnualManagmentFee < 0.3) ? "green" : ""}>{item.avgAnnnualManagmentFee || 'N/A'}</td>
+                            <td className={(item.thisMonthYield > 2) ? "green" : item.thisMonthYield < -0.7 ? "red" : ""}>{item.thisMonthYield || 'N/A'}</td>
                             <td>{item.yearToDateYield || 'N/A'}</td>
-                            <td className={(item.avgAnnualYield3Years > 7 && item.avgAnnualYield3Years > 0.01) ? "green" : (item.avgAnnualYield3Years < 1 && item.avgAnnualYield3Years > 0.01) && "red"}>{item.avgAnnualYield3Years || 'N/A'}</td>
-                            <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) && "red"}>{item.avgAnnualYield5Years || 'N/A'}</td>
-                            <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) && "red"}>{item.past3YearsYield || 'N/A'}</td>
-                            <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) && "red"}>{item.past5YearsYield || 'N/A'}</td>
+                            <td className={(item.avgAnnualYield3Years > 7 && item.avgAnnualYield3Years > 0.01) ? "green" : (item.avgAnnualYield3Years < 1 && item.avgAnnualYield3Years > 0.01) ? "red": ""}>{item.avgAnnualYield3Years || 'N/A'}</td>
+                            <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) ? "red": ""}>{item.avgAnnualYield5Years || 'N/A'}</td>
+                            <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) ? "red": ""}>{item.past3YearsYield || 'N/A'}</td>
+                            <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) ? "red": ""}>{item.past5YearsYield || 'N/A'}</td>
                             <td>
                                 <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) ? "green" : ""}`} onClick={(e) => {
                                     handleOptionClick(e, item.id, item.company, 'save', item)

@@ -9,7 +9,6 @@ function CompareCard() {
 
     let data = localStorage.getItem('products')
     data = JSON.parse(data);
-    console.log(data)
     return (
         <div key={data} className="compare-cards">
             <div className="flex columns">

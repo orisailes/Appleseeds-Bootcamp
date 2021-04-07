@@ -14,14 +14,28 @@ function Cards({ product, company }) {
         אנליסט: אנליסט,
         הראל: הראל,
     }
-
+    debugger;
+    let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
+    userFavoriteItems = userFavoriteItems.map(item => item.id)
     const handleSave = (e) => {
         const classes = e.currentTarget.className;
         classes.split(' ').includes('green') ?
             e.currentTarget.classList.remove('green') :
             e.currentTarget.classList.add('green');
+        debugger;
+        // let helper = JSON.parse(localStorage.getItem('favorites')) || [];
+        // helper.push(product)
+        // localStorage.setItem('favorites', JSON.stringify(helper));
+        userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (userFavoriteItems.length) {
+            userFavoriteItems = userFavoriteItems.map(item => item.id)
+        }
+        console.log(product)
         let helper = JSON.parse(localStorage.getItem('favorites')) || [];
-        helper.push(product)
+        if (!userFavoriteItems.includes(product.id)) helper.push(product)
+        else {
+            helper = helper.filter((item) => item.id !== product.id)
+        }
         localStorage.setItem('favorites', JSON.stringify(helper));
     }
     return (
@@ -29,7 +43,7 @@ function Cards({ product, company }) {
             <div className="product-info-card-header-wrapper">
                 <h2 className="product-info-card-header">{product.name}</h2>
                 <img className="product-info-card-image" src={images[company]} alt={company} />
-                <button className="info-card-add-to-favorite" onClick={(e) => handleSave(e)}><i className="far fa-heart fa-2x"></i> <i className="fas fa-plus fa-lg"></i></button>
+                <button className={`info-card-add-to-favorite ${userFavoriteItems.includes(product.id) ? "green" : ""}`} onClick={(e) => handleSave(e)}><i className="far fa-heart fa-2x"></i> <i className="fas fa-plus fa-lg"></i></button>
             </div>
             <div className="product-info-card-wrapper">
                 <div className="product-info-card">

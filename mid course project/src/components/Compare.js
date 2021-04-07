@@ -1,19 +1,22 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import CompareCards from './CompareCards'
 import { Link } from 'react-router-dom'
 import './css/compare.css'
 import MainImg from '../img/navImg.png'
+import Adv from './Adv'
 
 
 // get the term and company name from table component!!
 
 function Compare(props) {
+
+    const [showAd, setShowAd] = useState(false)
     let products = null;
     const dataGet = props.location.products; // get from table
     const dataFromLocalStorage = localStorage.getItem('products')
     if (dataGet) {
         products = dataGet;
-        localStorage.clear();
+        localStorage.removeItem('products')
         localStorage.setItem('products', JSON.stringify(dataGet));
     }
     if (dataGet && !localStorage.products) {
@@ -23,7 +26,14 @@ function Compare(props) {
     if (!dataGet && localStorage.products) {
         products = JSON.parse(dataFromLocalStorage);
     }
- 
+
+    useEffect(() => {
+        setTimeout(() => {
+            setShowAd(true);
+            console.log(`adv poped`);
+        }, 3000);
+    }, [])
+
     return (
         <>
             <div className="compare-page">
@@ -40,9 +50,14 @@ function Compare(props) {
                     </div>
                     :
                     <div className="product-cards">
-                        <CompareCards />
+                        {/* <CompareCards /> */}
                         <Link to="/compare"><button className="compare-clear-btn" onClick={() => { localStorage.clear() }}>Clear products</button></Link>
                     </div>
+                }
+                {showAd &&
+                    <>
+                       <Adv/>
+                    </>
                 }
             </div>
         </>
