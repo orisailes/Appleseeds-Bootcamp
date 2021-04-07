@@ -31,7 +31,7 @@ function Compare(props) {
         setTimeout(() => {
             setShowAd(true);
             console.log(`adv poped`);
-        }, 3000);
+        }, 10000);
     }, [])
 
     return (
@@ -50,13 +50,13 @@ function Compare(props) {
                     </div>
                     :
                     <div className="product-cards">
-                        {/* <CompareCards /> */}
+                        <CompareCards />
                         <Link to="/compare"><button className="compare-clear-btn" onClick={() => { localStorage.clear() }}>Clear products</button></Link>
                     </div>
                 }
                 {showAd &&
                     <>
-                       <Adv/>
+                       <Adv setShowAd={setShowAd}/>
                     </>
                 }
             </div>

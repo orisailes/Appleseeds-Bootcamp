@@ -12,25 +12,52 @@
 }
 
 .adv-content {
-    height: 30vh;
+    height: 50vh;
     width: 30vw;
     border: 5px solid floralwhite;
     border-radius: 15px;
     position: relative;
-    background: black;
+    transition: all 1s;
 }
 
 .adv {
+    height: 100%;
+    width: 100%;
     position: relative;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
 }
 
 .adv button {
-    /* background: none; */
-    /* outline: none; */
-    /* border: none; */
-    /* position: absolute; */
-    /* top: 0; */
-    /* left: 0; */
-    /* z-index: 123132; */
+    background: none;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: -2vh;
+    left: -3vh;
+    z-index: 123132;
+    transition: transform 0.1s;
+    transform: scale(1);
+}
+
+.adv button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.adv a,
+.adv img {
+    height: 100%;
+    width: 100%;
+}
+
+.adv p {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 32%;
+    font-weight: bold;
 }

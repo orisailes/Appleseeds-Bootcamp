@@ -14,7 +14,7 @@ function Cards({ product, company }) {
         אנליסט: אנליסט,
         הראל: הראל,
     }
-    debugger;
+
     let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
     userFavoriteItems = userFavoriteItems.map(item => item.id)
     const handleSave = (e) => {
@@ -22,10 +22,6 @@ function Cards({ product, company }) {
         classes.split(' ').includes('green') ?
             e.currentTarget.classList.remove('green') :
             e.currentTarget.classList.add('green');
-        debugger;
-        // let helper = JSON.parse(localStorage.getItem('favorites')) || [];
-        // helper.push(product)
-        // localStorage.setItem('favorites', JSON.stringify(helper));
         userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
         if (userFavoriteItems.length) {
             userFavoriteItems = userFavoriteItems.map(item => item.id)
