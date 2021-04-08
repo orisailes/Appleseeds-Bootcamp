@@ -8,6 +8,7 @@ import FavoriteList from './components/FavoriteList'
 import NotFound from './components/NotFound'
 import './components/css/app.css'
 import './normalize.css'
+import './mobile.css'
 
 function App() {
 
