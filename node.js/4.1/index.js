@@ -1,74 +1,27 @@
-const { number } = require('yargs')
 const yargs = require('yargs')
 
-yargs.version('1.1.0')
-
 yargs.command({
-    command: 'add',
-    describe: 'add numbers',
-    builder:{
-        numberA:{
-            demandOption:true,
-            type:'number',
+    command: 'calc',
+    describe: 'calculat things',
+    builder: {
+        add: {
+            type: 'array',
         },
-        numberB:{
-            demandOption:true,
-            type:'number',
-        }
+        sub: {
+            type: 'array',
+        },
+        pow: {
+            type: 'array',
+        },
+        mult: {
+            type: 'array',
+        },
     },
     handler: function (argv) {
-        console.log(argv.numberA+argv.numberB)
-    }
-})
-yargs.command({
-    command: 'sub',
-    describe: 'sub numbers',
-    builder:{
-        numberA:{
-            demandOption:true,
-            type:'number',
-        },
-        numberB:{
-            demandOption:true,
-            type:'number',
-        }
-    },
-    handler: function (argv) {
-        console.log(argv.numberA-argv.numberB)
-    }
-})
-yargs.command({
-    command: 'mult',
-    describe: 'multiply numbers',
-    builder:{
-        numberA:{
-            demandOption:true,
-            type:'number',
-        },
-        numberB:{
-            demandOption:true,
-            type:'number',
-        }
-    },
-    handler: function (argv) {
-        console.log(argv.numberA*argv.numberB)
-    }
-})
-yargs.command({
-    command: 'pow',
-    describe: 'powring numbers',
-    builder:{
-        numberA:{
-            demandOption:true,
-            type:'number',
-        },
-        numberB:{
-            demandOption:true,
-            type:'number',
-        }
-    },
-    handler: function (argv) {
-        console.log(Math.pow(argv.numberA,argv.numberB))
+            argv.add ? console.log(argv.add[0] + argv.add[1]) :
+            argv.sub ? console.log(argv.sub[0] - argv.sub[1]) :
+            argv.mult ? console.log(argv.mult[0] * argv.mult[1]) :
+            argv.pow ? console.log(Math.pow(argv.pow[0], argv.pow[1])) : null
     }
 })
 
