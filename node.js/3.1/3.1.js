@@ -1,5 +1,11 @@
-const chalk = require('chalk');
 
-const greenMsg = chalk.green.bold('greenish color msg')
+// async function myFunc() {
+//     const funcs = await import('./utils.js')
+//     console.log(funcs.add(5,3))
+//     const fs = await import('fs')
+//     console.log(fs)
+// }
 
-console.log(greenMsg)
+const http = import('http')
+
+// myFunc();
