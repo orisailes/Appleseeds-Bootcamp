@@ -19,11 +19,7 @@ yargs.command({
             demandOption: true,
         },
     },
-    handler({
-        userName,
-        email,
-        password
-    }) {
+    handler({userName,email,password}) {
         const user = {
             userName,
             email,
