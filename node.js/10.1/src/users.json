@@ -1,0 +1,18 @@
+[
+    {
+        "user__name":"orix",
+        "email":"orix@gmail.com"
+    },
+    {
+        "user__name":"Yakov",
+        "email":"Yakov@gmail.com"
+    },
+    {
+        "user__name":"Yossi",
+        "email":"Yossi@gmail.com"
+    },
+    {
+        "user__name":"Amily",
+        "email":"Amily@gmail.com"
+    }
+]
