@@ -11,6 +11,20 @@ const moviesSort = (direction, movies) => {
     return movies
 }
 
+const getMoviesByGenre = (genre = [], movies = []) => {
+    genre = genre.split(',');
+    const result = [];
+    for (let i = 0; i < movies.length; i++) {
+        for (let x = 0; x < genre.length; x++) {
+            if (movies[i].genre.includes(genre[x])) {
+                result.push(movies[i]);
+                x = genre.length;
+            }
+        }
+    }
+    return result
+}
+
 app.get('/api/movies', (req, res) => {
     const {
         rating_sort_up,
@@ -21,8 +35,8 @@ app.get('/api/movies', (req, res) => {
     console.log(`get movies commited`);
     if (rating_sort_up) movies = moviesSort("up", movies);
     if (rating_sort_down) movies = moviesSort("down", movies);
-    // if(genre) movies = JSON.stringify(req.query)
-    res.status(200).send(req.query);
+    if (genre) movies = getMoviesByGenre(genre, movies)
+    res.status(200).send(movies);
 })
 
 app.get('/api/movies/:id', (req, res) => {
