@@ -18,7 +18,7 @@ const getMovieById = (id) => {
 }
 
 const createMovie = (movie) => {
-    const movies = getMovies();
+    const movies = getAllMovies();
     movies.push(movie);
     fs.writeFileSync('./movies.json', JSON.stringify(movies));
     return movies;
