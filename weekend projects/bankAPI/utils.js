@@ -75,22 +75,23 @@ const transferMoney = (fromID, toID, amount) => {
     let isValid = false;
     let clientHits = 0;
     let i = 0;
-    
+
     if (Number(fromClient.cash) - amount >= Number(fromClient.credit) * -1) isValid = true;
-    
-    
-    while (clientHits !== 2) {
-        if (clients[i].id === fromClient.id) {
-            fromClient.cash = Number(fromClient.cash) - amount;
-            clients[i]=fromClient
-            clientHits++;
+
+    if (isValid) {
+        while (clientHits !== 2) {
+            if (clients[i].id === fromClient.id) {
+                fromClient.cash = Number(fromClient.cash) - amount;
+                clients[i] = fromClient
+                clientHits++;
+            }
+            if (clients[i].id === toClient.id) {
+                toClient.cash = Number(toClient.cash) + amount;
+                clients[i] = toClient;
+                clientHits++;
+            }
+            i++;
         }
-        if (clients[i].id === toClient.id) {
-            toClient.cash = Number(toClient.cash) + amount;
-            clients[i]=toClient;
-            clientHits++;
-        }
-        i++;
     }
     fs.writeFileSync('./clients.json', JSON.stringify(clients));
     return isValid ? clients : 'cant transform the money';
