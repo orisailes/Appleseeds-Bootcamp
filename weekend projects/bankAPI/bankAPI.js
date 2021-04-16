@@ -10,6 +10,19 @@ app.get('/api/clients', (req, res) => {
     console.log(`get clients commited`);
     res.status(200).send(clients);
 })
+
+app.get('/api/clients/filter', (req, res) => {
+    let clients = utils.getAllClients();
+    console.log(`get clients with filter commited`);
+    const sortTerms = req.query; 
+    const sortKey = Object.keys(sortTerms)[0]
+    const order = sortTerms[sortKey]
+    clients = clients.sort((a,b)=>{
+        return order === "up" ? b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
+    })
+    res.status(200).send(clients);
+})
+
 app.get('/api/clients/:id', (req, res) => {
     const {
         id

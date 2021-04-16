@@ -14,7 +14,7 @@ const getAllClients = () => {
 const getClientById = (id) => {
     const clients = getAllClients();
     const found = clients.find(cli => cli.id === id);
-    return found
+    return found?found:"client not found";
 }
 
 const createClient = (client) => {
