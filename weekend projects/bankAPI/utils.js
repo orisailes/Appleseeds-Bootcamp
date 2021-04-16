@@ -104,5 +104,5 @@ module.exports = {
     updateCredit,
     getClientById,
     withdrawMoney,
-    transferMoney
+    transferMoney,
 }
