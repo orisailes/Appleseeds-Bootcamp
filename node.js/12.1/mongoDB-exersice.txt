@@ -31,3 +31,17 @@ db.restaurants.inserMany([...])
 1.14 db.restaurants.updateOne({_id:ObjectId("607d57b200b5604ba7b28ad0")},{$inc:{"reviews.1.score":2}})
 
 1.15 db.restaurants.updateOne({_id:ObjectId("607d57b200b5604ba7b28ad0")},{$inc:{"reviews.1.score":-1}})
+
+2.1 db.restaurants.find().forEach((res)=>{print("name: " + res.name)})
+
+2.2 db.restaurants.find().forEach((res)=>{print("city: " + res.address.city)})
+
+2.3 db.restaurants.find().forEach((res)=>{print("city: " + res.address.coordinates)})
+
+3.1 var myReg = new RegExp(/[a-f]/)
+      db.restaurants.find().forEach((res)=>{myReg.test(res.name[0])?print(res.name + " start with 'a-f'"):null})
+
+3.2 db.restaurants.count()
+
+3.3 db.restaurants.find().forEach((res)=>{res.reviews.forEach((rev)=>{rev.date.getFullYear()===2016?print(res.name + " got review from 2016"):null})})
+
