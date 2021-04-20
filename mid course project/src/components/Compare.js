@@ -51,7 +51,7 @@ function Compare(props) {
                     :
                     <div className="product-cards">
                         <CompareCards />
-                        <Link to="/compare"><button className="compare-clear-btn" onClick={() => { localStorage.clear() }}>Clear products</button></Link>
+                        <Link to="/compare"><button className="compare-clear-btn" onClick={() => { localStorage.removeItem("products") }}>Clear products</button></Link>
                     </div>
                 }
                 {showAd &&

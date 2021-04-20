@@ -282,21 +282,6 @@ function Table() {
                     </th>
                     <th>
                         <div className="flex">
-                            Annual Yield (3 Years)
-                        <div className="flex columns">
-                                <button onClick={() => {
-                                    handleSort('avgAnnualYield3Years', 'up')
-                                }}><i className="fas fa-sort-up"></i>
-                                </button>
-                                <button onClick={() => {
-                                    handleSort('avgAnnualYield3Years', 'down')
-                                }}><i className="fas fa-sort-down"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="flex">
                             Annual Yield (5 Years)
                         <div className="flex columns">
                                 <button onClick={() => {
@@ -358,7 +343,7 @@ function Table() {
             // make JSX from each object
             myData[company].forEach((item) => {
                 tableBody.push(
-                    <tbody key={item.id} >
+                    <tbody key={item.id}>
                         <tr id={item.id}>
                             <td>{item.id || 'N/A'}</td>
                             <td>{item.name || 'N/A'}</td>
@@ -366,7 +351,6 @@ function Table() {
                             <td className={(item.avgAnnnualManagmentFee > 0.01 && item.avgAnnnualManagmentFee < 0.3) ? "green" : ""}>{item.avgAnnnualManagmentFee || 'N/A'}</td>
                             <td className={(item.thisMonthYield > 2) ? "green" : item.thisMonthYield < -0.7 ? "red" : ""}>{item.thisMonthYield || 'N/A'}</td>
                             <td>{item.yearToDateYield || 'N/A'}</td>
-                            <td className={(item.avgAnnualYield3Years > 7 && item.avgAnnualYield3Years > 0.01) ? "green" : (item.avgAnnualYield3Years < 1 && item.avgAnnualYield3Years > 0.01) ? "red": ""}>{item.avgAnnualYield3Years || 'N/A'}</td>
                             <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) ? "red": ""}>{item.avgAnnualYield5Years || 'N/A'}</td>
                             <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) ? "red": ""}>{item.past3YearsYield || 'N/A'}</td>
                             <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) ? "red": ""}>{item.past5YearsYield || 'N/A'}</td>

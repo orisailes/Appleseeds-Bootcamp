@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './css/favorite.css'
+import MainImg from '../img/navImg.png'
 import הראל from '../img/הראל.png'
 import אנליסט from '../img/אנליסט.png'
 import מגדל from '../img/מגדל.png'
@@ -67,8 +69,12 @@ function Favorite() {
                     })
                     :
                     <div className="no-favorites-found">
-                        <h1>no favorites found</h1>
-                    </div>}
+                 <Link to="/"><img src={MainImg} alt="Sailes Compare" /></Link>
+                <div className="text">
+                    <h2 className="not-found-header">No favorites found.</h2>
+                    <Link to="/"><button className="btn">Home page</button></Link>
+                </div>
+        </div>}
             </div>
         </div>
     )

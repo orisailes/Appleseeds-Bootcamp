@@ -44,14 +44,14 @@ function Cards({ product, company }) {
             <div className="product-info-card-wrapper">
                 <div className="product-info-card">
                     <h4>Total Profits: </h4>
-                    <p>5 Years: {product.past5YearsYield}</p>
-                    <p>3 Years: {product.past3YearsYield}</p>
-                    <p>Year to date: {product.yearToDateYield}</p>
+                    <p>5 Years: {product.past5YearsYield ||"N/A"} </p>
+                    <p>3 Years: {product.past3YearsYield ||"N/A"}</p>
+                    <p>Year to date: {product.yearToDateYield ||"N/A"}</p>
                 </div>
                 <div className="product-info-card">
                     <h4>Withdraw & Desposits: </h4>
-                    <p>Desposits: {product.desposits}</p>
-                    <p>Withdraws: {product.withdrawls}</p>
+                    <p>Desposits: {product.desposits ||"N/A"}</p>
+                    <p>Withdraws: {product.withdrawls ||"N/A"}</p>
                 </div>
                 <div className="product-info-card percentage-box">
                     <h4>Stock Exposure: </h4>
