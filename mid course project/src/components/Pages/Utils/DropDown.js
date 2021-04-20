@@ -1,5 +1,5 @@
 import React, { useState,useRef, useEffect } from 'react';
-import './css/dropdown.css'
+import '../../css/dropdown.css'
 
 function DD({ title, keys , getCompanyByDropDown}) {
     const [isListOpen, setListOpen] = useState(false);
@@ -22,11 +22,13 @@ function DD({ title, keys , getCompanyByDropDown}) {
                 <button onClick={() => { setListOpen(prev => !prev) }} className="dd-btn">{isListOpen ? <i className="fas fa-angle-up"></i> : <i className="fas fa-angle-down fa-1x"></i>} {myTitle}  </button>
             </div>
             <button onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>הכל</button>
+
             {keys.map((company)=>{
                 return(
                     <button key={company} onClick={handleChoose} className={`dd-btn ${!isListOpen && "hide"}`}>{company}</button>
                 )
             })}
+            
         </div>
     )
 

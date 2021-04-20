@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import axios from 'axios'
-import UseAnimations from "react-useanimations";
-import loading from 'react-useanimations/lib/loading2'
 
-function MyLine({ products }) {
+function MyLine({ products,lineDidLoaded }) {
 
     let annualMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const [months, setMonths] = useState(annualMonths)
@@ -230,6 +228,8 @@ function MyLine({ products }) {
                 }
             }
             setIsDataLoaded(true);
+            debugger;
+            lineDidLoaded();
         }
 
 
@@ -249,7 +249,6 @@ function MyLine({ products }) {
 
     return (
         <>
-            {isDataLoaded ?
                 <Line
                     data={{
                         labels: months,
@@ -290,11 +289,6 @@ function MyLine({ products }) {
                     width={window.innerWidth/2.5}
 
                 />
-                :
-                <div className="flex columns">
-                    <UseAnimations size={150} speed={0.5} animation={loading} />
-                </div>
-            }
         </>
     )
 }

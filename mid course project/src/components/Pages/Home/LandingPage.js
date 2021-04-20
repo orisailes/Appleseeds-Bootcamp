@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './css/landing.css'
-import MainImg from '../img/navImg.png'
+import '../../css/landing.css'
+import MainImg from '../../../img/navImg.png'
 function LandingPage() {
     return (
         <div className="landing">

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import navImg from '../img/navImg.png'
-import './css/sidenav.css'
+import navImg from '../../../img/navImg.png'
+import '../../css/sidenav.css'
 import { Twirl as Hamburger } from 'hamburger-react'
 
 function SideNav() {

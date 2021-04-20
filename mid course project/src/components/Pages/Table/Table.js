@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import DropDown from './DropDown'
+import DropDown from '../Utils/DropDown'
 import ProductCard from './ProductCard'
 import axios from 'axios'
-import './css/table.css'
+import '../../css/table.css'
 import UseAnimations from "react-useanimations";
 import loading from 'react-useanimations/lib/loading'
-import הראל from '../img/הראל.png'
-import אנליסט from '../img/אנליסט.png'
-import מגדל from '../img/מגדל.png'
-import אלטשולר from '../img/אלטשולר.png'
-import מיטב from '../img/מיטב.png'
+import הראל from '../../../img/הראל.png'
+import אנליסט from '../../../img/אנליסט.png'
+import מגדל from '../../../img/מגדל.png'
+import אלטשולר from '../../../img/אלטשולר.png'
+import מיטב from '../../../img/מיטב.png'
 
 
 function Table() {
@@ -30,22 +30,24 @@ function Table() {
     const [showSpinner, setShowSpinner] = useState(false);
     const [productsToCompare, setProductsToCompare] = useState([])
     const [wholeThisYearData, setWholeThisYearData] = useState([])
+    const [searchByNameInput,setSearchByNameInput] = useState("")
 
     let thisMonth = new Date();
     thisMonth = thisMonth.getMonth() - 1;
 
     const getCompanyByDropDown = (company) => {
-
         if (isAll && company !== 'הכל') {
-            // if user dont want 'all'
+            // if user cchose 'all' and then dont want 'all'
             setIsAll(false)
             const helper = [...company]
             setCompanies(helper)
         }
-        if (!isAll) {
-            const userChose = [...chosenCompanies];
-            userChose.push(' ,' + company);
-            setCompanies(userChose);
+        if (!isAll && company !== 'הכל') {
+            if (!chosenCompanies.includes(' ,' + company)) {
+                const userChose = [...chosenCompanies];
+                userChose.push(' ,' + company);
+                setCompanies(userChose);
+            }
         }
         if (company === 'הכל') {
             setIsAll(true);
@@ -193,8 +195,8 @@ function Table() {
             }
             let helper = JSON.parse(localStorage.getItem('favorites')) || [];
             if (!userFavoriteItems.includes(item.id)) helper.push(item)
-            else{
-                helper = helper.filter((item)=>item.id !==id)
+            else {
+                helper = helper.filter((item) => item.id !== id)
             }
             localStorage.setItem('favorites', JSON.stringify(helper));
         }
@@ -335,10 +337,9 @@ function Table() {
     const makeTable = () => {
         let tableBody = [];
         let userFavoriteItems = JSON.parse(localStorage.getItem('favorites')) || [];
-        if (userFavoriteItems.length) {
-            userFavoriteItems = userFavoriteItems.map(item => item.id)
-        }
-
+        let userCompareItems = JSON.parse(localStorage.getItem('products')) || [];
+        if (userFavoriteItems.length) userFavoriteItems = userFavoriteItems.map(item => item.id)
+        if (userCompareItems.length) userCompareItems = userCompareItems.map(item => item[0].id)
         for (let company in myData) {
             // make JSX from each object
             myData[company].forEach((item) => {
@@ -347,13 +348,13 @@ function Table() {
                         <tr id={item.id}>
                             <td>{item.id || 'N/A'}</td>
                             <td>{item.name || 'N/A'}</td>
-                            <td>{item.manageBy || 'N/A'}</td>
+                            <td>{item.company || 'N/A'}</td>
                             <td className={(item.avgAnnnualManagmentFee > 0.01 && item.avgAnnnualManagmentFee < 0.3) ? "green" : ""}>{item.avgAnnnualManagmentFee || 'N/A'}</td>
                             <td className={(item.thisMonthYield > 2) ? "green" : item.thisMonthYield < -0.7 ? "red" : ""}>{item.thisMonthYield || 'N/A'}</td>
                             <td>{item.yearToDateYield || 'N/A'}</td>
-                            <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) ? "red": ""}>{item.avgAnnualYield5Years || 'N/A'}</td>
-                            <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) ? "red": ""}>{item.past3YearsYield || 'N/A'}</td>
-                            <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) ? "red": ""}>{item.past5YearsYield || 'N/A'}</td>
+                            <td className={(item.avgAnnualYield5Years > 9 && item.avgAnnualYield5Years > 0.01) ? "green" : (item.avgAnnualYield5Years < 1.5 && item.avgAnnualYield5Years > 0.01) ? "red" : ""}>{item.avgAnnualYield5Years || 'N/A'}</td>
+                            <td className={(item.past3YearsYield > 30 && item.past3YearsYield > 0.01) ? "green" : (item.past3YearsYield < 4.5 && item.past3YearsYield > 0.01) ? "red" : ""}>{item.past3YearsYield || 'N/A'}</td>
+                            <td className={(item.past5YearsYield > 50 && item.past5YearsYield > 0.01) ? "green" : (item.past5YearsYield < 10 && item.past5YearsYield > 0.01) ? "red" : ""}>{item.past5YearsYield || 'N/A'}</td>
                             <td>
                                 <button className={`add-to-favorite ${userFavoriteItems.includes(item.id) ? "green" : ""}`} onClick={(e) => {
                                     handleOptionClick(e, item.id, item.company, 'save', item)
@@ -361,7 +362,7 @@ function Table() {
 
                             </td>
                             <td>
-                                <button className="add-to-compare" onClick={(e) => {
+                                <button className={`add-to-favorite ${userCompareItems.includes(item.id) ? "green" : ""}`} onClick={(e) => {
                                     handleOptionClick(e, item.id, item.company, 'compare', item)
                                 }}><i className="fas fa-chart-bar fa-2x"></i></button>
                             </td>
@@ -376,6 +377,9 @@ function Table() {
         return tableBody
     }
 
+    const searchTermChange = (e) => {
+        setSearchByNameInput(e.target.value)
+    }
 
     const handleSort = (key, direction) => {
         // favorites&compar handle!!@!@
@@ -449,11 +453,16 @@ function Table() {
                     }
                     {showSpinner && <UseAnimations size={64} speed={0.5} animation={loading} />}
                     {isUserSelect &&
-                        <table className="table">
-                            {
-                                makeTable()
-                            }
-                        </table>
+                        <>
+                            <div>
+                                <input type="text" value={searchByNameInput} placeholder="searchByName" className="searchInput" onChange={searchTermChange}/>
+                            </div>
+                            <table className="table">
+                                {
+                                    makeTable()
+                                }
+                            </table>
+                        </>
                     }
                 </div>
             </div>

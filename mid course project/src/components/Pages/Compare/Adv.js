@@ -1,5 +1,5 @@
 import React from 'react'
-import './css/adv.css'
+import '../../css/adv.css'
 const Adv = ({ setShowAd }) => {
     return (
         <div className="adv-background">

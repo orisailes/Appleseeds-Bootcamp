@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import SideNav from './SideNav'
-import Img from '../img/logo4.png'
-import './css/header.css'
+import Img from '../../../img/logo4.png'
+import '../../css/header.css'
 
 function Header() {
     return (

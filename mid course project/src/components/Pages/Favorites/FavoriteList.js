@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import './css/favorite.css'
-import MainImg from '../img/navImg.png'
-import הראל from '../img/הראל.png'
-import אנליסט from '../img/אנליסט.png'
-import מגדל from '../img/מגדל.png'
-import אלטשולר from '../img/אלטשולר.png'
-import מיטב from '../img/מיטב.png'
+import '../../css/favorite.css'
+import MainImg from '../../../img/navImg.png'
+import הראל from '../../../img/הראל.png'
+import אנליסט from '../../../img/אנליסט.png'
+import מגדל from '../../../img/מגדל.png'
+import אלטשולר from '../../../img/אלטשולר.png'
+import מיטב from '../../../img/מיטב.png'
 
 function Favorite() {
 

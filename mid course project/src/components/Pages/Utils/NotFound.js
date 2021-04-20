@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './css/not-found.css'
-import MainImg from '../img/navImg.png'
+import '../../css/not-found.css'
+import MainImg from '../../../img/navImg.png'
 function LandingPage() {
 
 

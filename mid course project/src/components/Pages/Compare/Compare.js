@@ -1,12 +1,11 @@
 import React, { useEffect,useState } from 'react'
-import CompareCards from './CompareCards'
+import CompareCards from '../Compare/CompareCards'
 import { Link } from 'react-router-dom'
-import './css/compare.css'
-import MainImg from '../img/navImg.png'
+import '../../css/compare.css'
+import MainImg from '../../../img/navImg.png'
 import Adv from './Adv'
 
 
-// get the term and company name from table component!!
 
 function Compare(props) {
 
@@ -51,7 +50,6 @@ function Compare(props) {
                     :
                     <div className="product-cards">
                         <CompareCards />
-                        <Link to="/compare"><button className="compare-clear-btn" onClick={() => { localStorage.removeItem("products") }}>Clear products</button></Link>
                     </div>
                 }
                 {showAd &&
