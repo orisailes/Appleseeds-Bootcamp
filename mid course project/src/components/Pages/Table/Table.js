@@ -28,9 +28,10 @@ function Table() {
     const [isAll, setIsAll] = useState(false);
     const [isUserSelect, setisUserSelect] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
-    const [productsToCompare, setProductsToCompare] = useState([])
-    const [wholeThisYearData, setWholeThisYearData] = useState([])
-    const [searchByNameInput,setSearchByNameInput] = useState("")
+    const [productsToCompare, setProductsToCompare] = useState([]);
+    const [wholeThisYearData, setWholeThisYearData] = useState([]);
+    const [originalTable, setOriginalTable] = useState([]);
+    const [searchByNameInput, setSearchByNameInput] = useState("");
 
     let thisMonth = new Date();
     thisMonth = thisMonth.getMonth() - 1;
@@ -66,7 +67,9 @@ function Table() {
         } else {
             console.log(`first initialize`)
         }
+       
     }, [chosenCompanies])
+
 
 
     const makeTableData = async (companies) => {
@@ -142,6 +145,8 @@ function Table() {
             }
             temp[company] = relevantData;
             setData(temp);
+            console.log(Object.values(temp).flat());
+            setOriginalTable(Object.values(temp).flat())
         }
         setisUserSelect(true)
         setShowSpinner(false);
@@ -378,11 +383,32 @@ function Table() {
     }
 
     const searchTermChange = (e) => {
-        setSearchByNameInput(e.target.value)
+        setSearchByNameInput(e.target.value);
     }
 
+    useEffect(() => {
+        debugger;
+        if (searchByNameInput.length>0) {
+            let term = searchByNameInput;
+            let newData = [];
+            newData =
+                originalTable
+                    .filter(product => { return product.name.includes(term) && product })
+            let helper = {
+                הראל: newData,
+            }
+            setData(helper)
+        }else{
+            if(isUserSelect) {
+                let helper = {
+                    הראל: originalTable,
+                }
+                setData(helper)
+            }
+        }
+    }, [searchByNameInput])
+
     const handleSort = (key, direction) => {
-        // favorites&compar handle!!@!@
         let sortedTable =
             Object.values(myData)
                 .flat()
@@ -393,10 +419,6 @@ function Table() {
                 });
         let helper = {
             הראל: sortedTable,
-            מגדל: [],
-            מיטב: [],
-            אנליסט: [],
-            אלטשולר: [],
         }
         setData(helper)
 
@@ -455,7 +477,7 @@ function Table() {
                     {isUserSelect &&
                         <>
                             <div>
-                                <input type="text" value={searchByNameInput} placeholder="searchByName" className="searchInput" onChange={searchTermChange}/>
+                                <input type="text" value={searchByNameInput} placeholder="searchByName" className="searchInput" onChange={searchTermChange} />
                             </div>
                             <table className="table">
                                 {
