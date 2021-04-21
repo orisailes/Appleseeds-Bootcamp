@@ -38,7 +38,6 @@ const Product = mongoose.model("products", {
         },
         img: {
             type: [String],
-            minLength: 2,
             validate(value){
                 if(value.length<2) throw new Error('image must include at least 2 pictures')
             }
