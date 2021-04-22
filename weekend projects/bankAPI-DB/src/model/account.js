@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {ObjectId} = require('mongoose');
 
 const Account = mongoose.model("accounts", {
     isActive: {
@@ -14,10 +15,15 @@ const Account = mongoose.model("accounts", {
     credit: {
         type: Number,
         default: 0,
-        min:0,
+        min: 0,
 
+    },
+
+    _id: {
+        type: ObjectId,
     }
 
 })
+
 
 module.exports = Account;

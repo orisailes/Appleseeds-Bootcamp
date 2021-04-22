@@ -1,8 +1,10 @@
 const express = require('express');
-const utils = require('../utils')
+const utils = require('./utils')
 const path = require('path')
 const router = new express.Router()
-
+const Client = require('../model/client');
+const Account = require('../model/account');
+const {ObjectID} = require('mongodb');
 router.use(express.json());
 
 
@@ -12,6 +14,19 @@ router.use(express.json());
 //     app.use(express.static(path.join(__dirname, './client/public')))
 // }
 
+router.post('/api/clients', async (req, res) => {
+    const newClient = new Client(req.body);
+    try{
+        const clientResult = await newClient.save();
+        const newAccount = await new Account();
+        newAccount._id = new ObjectID(clientResult._id);
+        const newAccountResult = await newAccount.save();
+        console.log(clientResult);
+        console.log(newAccountResult);
+    }catch(err){
+        console.log(err.message);
+    }
+})
 
 // router.get('/api/clients', (req, res) => {
 //     const clients = utils.getAllClients();
@@ -90,3 +105,4 @@ router.use(express.json());
 //     res.status(200).send(utils.transferMoney(from, to, amount))
 // })
 
+module.exports = router

@@ -1,6 +1,6 @@
 const express = require('express')
 require('./db/mongoose')
-const bankRoute = require('./routers/product')
+const bankRoute = require('./router/my_bank')
 const cors = require('cors');
 const app = express();
 app.use(cors());

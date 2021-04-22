@@ -1,6 +1,6 @@
 const fs = require('fs')
-const Client = require('./model/client')
-const Account = require('./model/account')
+const Client = require('../model/client')
+const Account = require('../model/account')
 
 const getAllClients = () => {
     let clients = [];
