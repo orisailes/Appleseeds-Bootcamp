@@ -33,7 +33,7 @@ const Get = () => {
                 <div className="display-area">
                     {clients && clients.map((cli) => {
                         return (
-                            <div className="client-card">
+                            <div key={cli.email} className="client-card">
                                 <h4>Name: {cli.name}</h4>
                                 <p>Email: {cli.email}</p>
                                 <p>Passport: {cli.passport}</p>
