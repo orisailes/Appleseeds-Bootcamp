@@ -14,7 +14,7 @@ const Update = () => {
     const [currentPath, setCurrentPath] = useState('')
     const [userDidPress, setUserDidPress] = useState(false)
     const [isTransferMoney, setIsTransferMoney] = useState(false)
-    const [clientToDisplay, setClientToDisplay] = useState({})
+    const [clientToDisplay, setClientToDisplay] = useState([])
 
     const paths = {
         transfer: '/api/accounts/transfer',
@@ -56,39 +56,50 @@ const Update = () => {
     }
 
     const handleSubmit = async () => {
-        let url;
-        //! validation needed
-        switch (currentPath) {
-            case 'transfer':
-                url = `${paths[currentPath]}/?from=${idInput}&to=${idToDeliverMoneyInput}&amount=${amount}`
-                console.log(url);
-                break;
-            case 'withdraw':
-                url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                await axios.put(url)
-                fetchUser(idInput)
-                break;
-            case 'despositCash':
-                url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                await axios.put(url)
-                fetchUser(idInput)
-                break;
-            case 'changeCredit':
-                url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                await axios.put(url)
-                fetchUser(idInput)
-                break;
+        if (amount.length > 0 && idInput.length > 0) {
+            let url;
+            switch (currentPath) {
+                case 'transfer':
+                    if (idToDeliverMoneyInput.length > 0) {
+                        url = `${paths[currentPath]}?from=${idInput}&to=${idToDeliverMoneyInput}&amount=${amount}`
+                        await axios.put(url)
+                        fetchUser(idInput, idToDeliverMoneyInput)
+                    }
+                    break;
+                case 'withdraw':
+                    url = `${paths[currentPath]}/${idInput}?amount=${amount}`
+                    await axios.put(url)
+                    fetchUser(idInput)
+                    break;
+                case 'despositCash':
+                    url = `${paths[currentPath]}/${idInput}?amount=${amount}`
+                    await axios.put(url)
+                    fetchUser(idInput)
+                    break;
+                case 'changeCredit':
+                    url = `${paths[currentPath]}/${idInput}?amount=${amount}`
+                    await axios.put(url)
+                    fetchUser(idInput)
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
     }
 
-    const fetchUser = async (id) => {
-        const user = await axios.get(`api/clients/${id}`)
-        const account = await axios.get(`/api/accounts/${user.data._id}`)
-        console.log(account);
-        setClientToDisplay({ ...user.data, credit: account.data.credit, cash: account.data.cash })
+    const fetchUser = async (id1, id2) => {
+        if (id2) {
+            const user1 = await axios.get(`api/clients/${id1}`)
+            const account1 = await axios.get(`/api/accounts/${user1.data._id}`)
+            const user2 = await axios.get(`api/clients/${id2}`)
+            const account2 = await axios.get(`/api/accounts/${user2.data._id}`)
+            setClientToDisplay([{ ...user1.data, credit: account1.data.credit, cash: account1.data.cash }, { ...user2.data, credit: account2.data.credit, cash: account2.data.cash }])
+        } else {
+            const user = await axios.get(`api/clients/${id1}`)
+            const account = await axios.get(`/api/accounts/${user.data._id}`)
+            setClientToDisplay([{ ...user.data, credit: account.data.credit, cash: account.data.cash }])
+        }
     }
 
     return (
@@ -121,21 +132,26 @@ const Update = () => {
                         : null
                     }
                 </div>
-                {buildSubmit.length > 0 ? <Button onClick={handleSubmit} text={buildSubmit} /> : null}
-                <Link to="/"><Button text="Home" /></Link>
+                {buildSubmit.length > 0 ?
+                    <div className="buttons-container">
+                        <Button onClick={handleSubmit} text={buildSubmit} />
+                        <Link to="/"><Button text="Home" /></Link>
+                    </div>
+                    : null}
                 <div className="display-area">
-                    {Object.keys(clientToDisplay).length > 0 ?
-                        <>
-                            <div key={clientToDisplay.email} className="client-card">
-                                <h4>Name: {clientToDisplay.name}</h4>
-                                <p>Email: {clientToDisplay.email}</p>
-                                <p>Passport: {clientToDisplay.passport}</p>
-                                <p>ID: {clientToDisplay.passport}</p>
-                                <p>Cash: {clientToDisplay.cash}</p>
-                                <p>Credit: {clientToDisplay.credit}</p>
-                            </div>
-                        </>
-                        : null
+                    {Object.keys(clientToDisplay).length > 0 &&
+                        clientToDisplay.map((cli) => {
+                            return (
+                                <div key={cli.email} className="client-card">
+                                    <h4>Name: {cli.name}</h4>
+                                    <p>Email: {cli.email}</p>
+                                    <p>Passport: {cli.passport}</p>
+                                    <p>ID: {cli.passport}</p>
+                                    <p>Cash: {cli.cash}</p>
+                                    <p>Credit: {cli.credit}</p>
+                                </div>
+                            )
+                        })
                     }
                 </div>
                 <div className="bg">

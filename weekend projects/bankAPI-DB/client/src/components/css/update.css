@@ -11,7 +11,8 @@
 } 
 
 .update-wrapper .display-area{
-    height: 50vh;
+    height: 40vh;
+    width: 50vw;
 }
 
 .update-wrapper{
@@ -19,4 +20,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.update-wrapper .buttons-container{
+    height: 12vh;
 }

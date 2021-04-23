@@ -4,7 +4,7 @@ const Account = require('../model/account');
 const {
     ObjectID
 } = require('mongodb');
-
+const mongoose = require('mongoose')
 const getAllClients = async () => {
     let clients = [];
     try {
@@ -17,6 +17,7 @@ const getAllClients = async () => {
 
 const getClientById = async (id) => {
     const found = await Client.findById(id);
+    console.log(mongoose.Types.ObjectId.isValid(id));
     return found;
 }
 
@@ -87,7 +88,7 @@ const transferMoney = async (fromID, toID, amount) => {
         if (fromClient.cash - amount >= fromClient.credit * -1) isValid = true; // make transfer validation 
         if (isValid) {
             fromClient.cash = fromClient.cash - amount;
-            toClient.cash = toClient.cash + amount;
+            toClient.cash = Number(toClient.cash) + Number(amount);
             fromClientResult = await fromClient.save();
             toClientResult = await toClient.save();
         }
@@ -96,6 +97,28 @@ const transferMoney = async (fromID, toID, amount) => {
     }
 
     return [fromClientResult,toClientResult]
+}
+
+const deleteClientById = async (id) => {
+    let result=[]
+    id = new ObjectID(id.id)
+    try{
+        const clientRemove = await Client.findByIdAndRemove(id);
+        const accountRemove = await Account.findByIdAndRemove(id)
+        result.push(clientRemove,accountRemove)
+        return result
+    }catch(err){
+        return err.message
+    }
+}
+const deleteEverything = async () => {
+    try{
+        const deletedClient = await Client.deleteMany();
+        const deletedAccount = await Account.deleteMany();
+        return 'all clients and account deleted'
+    }catch(err){
+        return err.message
+    }
 }
 
 module.exports = {
@@ -107,4 +130,6 @@ module.exports = {
     getClientById,
     withdrawMoney,
     transferMoney,
+    deleteClientById,
+    deleteEverything
 }

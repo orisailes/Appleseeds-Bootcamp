@@ -29,7 +29,7 @@ router.get('/api/accounts/:id', async (req, res) => {
     } = req.params;
     console.log(`get account by id commited`);
     const result = await utils.getAccountById(id)
-   result?res.send(result):res.send('cannot get account')
+    result ? res.send(result) : res.send('cannot get account')
 })
 
 router.get('/api/clients/:id', async (req, res) => {
@@ -96,5 +96,25 @@ router.put('/api/accounts/transfer', async (req, res) => {
     const result = await utils.transferMoney(from, to, amount)
     result ? res.send(result) : res.status(400).send('invalid transfer request')
 })
+
+router.delete('/api/clients/:id', async (req, res) => {
+    const id = req.params;
+    let result;
+    if (id) {
+        console.log('delete by id request comitted');
+        result = await utils.deleteClientById(id);
+    }
+    result ? res.send(result) : res.send('delete doesnt comitted')
+})
+
+router.delete('/api/clients/', async (req, res) => {
+    const {
+        id
+    } = req.params;
+    console.log(`delete all records comitted`);
+    const result = await utils.deleteEverything()
+    result ? res.send(result) : res.send('cannot get account')
+})
+
 
 module.exports = router
