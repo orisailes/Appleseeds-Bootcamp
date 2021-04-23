@@ -1,0 +1,17 @@
+.bg {
+    background-color: #EFEFEF;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bg-img{
+    background: url('https://image.freepik.com/free-vector/flat-line-modern-concept-illustration_145666-730.jpg') no-repeat center center;
+    height: 60vh;
+    width: 100vw;
+}

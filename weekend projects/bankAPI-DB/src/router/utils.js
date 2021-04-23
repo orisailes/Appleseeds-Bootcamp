@@ -20,20 +20,23 @@ const getClientById = async (id) => {
     return found;
 }
 
+const getAccountById = async (id) => {
+    const found = await Account.findById(id);
+    return found;
+}
+
 const createClient = async (body) => {
-    const newClient = new Client(body);
-    let clientResult;
+    let newClient = new Client(body);
     let newAccount;
     try {
-        clientResult = await newClient.save();
+        newClient = await newClient.save();
         newAccount = await new Account();
-        newAccount._id = new ObjectID(clientResult._id);
-        await newAccount.save();
-
+        newAccount._id = new ObjectID(newClient._id);
+        newAccount = await newAccount.save();
     } catch (err) {
-        console.log(err.message);
+         return err.message;
     }
-    return clientResult;
+    return newClient;
 }
 
 const despositCash = async (id, amount) => {
@@ -85,8 +88,6 @@ const transferMoney = async (fromID, toID, amount) => {
         if (isValid) {
             fromClient.cash = fromClient.cash - amount;
             toClient.cash = toClient.cash + amount;
-            console.log(fromClient);
-            console.log(toClient);
             fromClientResult = await fromClient.save();
             toClientResult = await toClient.save();
         }
@@ -100,6 +101,7 @@ const transferMoney = async (fromID, toID, amount) => {
 module.exports = {
     getAllClients,
     createClient,
+    getAccountById,
     despositCash,
     updateCredit,
     getClientById,

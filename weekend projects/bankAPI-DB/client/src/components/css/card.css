@@ -1,0 +1,29 @@
+.card{
+    margin: 1rem;
+    height: 50vh;
+    width: 22vw;
+    border-radius: 5px;
+    clip-path: polygon(0% 0%, 100% 0, 100% 75%, 59% 75%, 33% 100%, 30% 75%, 0% 75%);
+    text-align: center;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.card:hover{
+    transform: scale(1.02);
+    outline: none;
+    border: none;
+}
+
+.create{
+    background:#ffc400ea ;
+}
+.read{
+    background:#5bc0de ;
+}
+.update{
+    background:#5cb85c ;
+}
+.delete{
+    background:#d9534f ;
+}

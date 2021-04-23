@@ -1,0 +1,11 @@
+.display-area{
+    height: 70vh;
+    width: 80vw;
+    border: 0.5px solid rgba(0, 0, 0, 0.3);
+    background: #fff;
+    overflow-y: auto;
+    overflow-x: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

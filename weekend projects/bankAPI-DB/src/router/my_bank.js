@@ -23,17 +23,14 @@ router.get('/api/clients', async (req, res) => {
     result ? res.send(result) : res.send('problem at getting all clients')
 })
 
-// router.get('/api/clients/filter', (req, res) => {
-//     console.log(`get clients with filter commited`);
-//     let clients = utils.getAllClients();
-//     const sortTerms = req.query;
-//     const sortKey = Object.keys(sortTerms)[0]
-//     const order = sortTerms[sortKey]
-//     clients = clients.sort((a, b) => {
-//         return order === "up" ? b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
-//     })
-//     res.status(200).send(clients);
-// })
+router.get('/api/accounts/:id', async (req, res) => {
+    const {
+        id
+    } = req.params;
+    console.log(`get account by id commited`);
+    const result = await utils.getAccountById(id)
+   result?res.send(result):res.send('cannot get account')
+})
 
 router.get('/api/clients/:id', async (req, res) => {
     const {
