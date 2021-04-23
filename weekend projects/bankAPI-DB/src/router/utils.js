@@ -1,102 +1,100 @@
-const fs = require('fs')
-const Client = require('../model/client')
-const Account = require('../model/account')
+const fs = require('fs');
+const Client = require('../model/client');
+const Account = require('../model/account');
+const {
+    ObjectID
+} = require('mongodb');
 
-const getAllClients = () => {
+const getAllClients = async () => {
     let clients = [];
     try {
-        clients = JSON.parse(fs.readFileSync('./clients.json'));
+        clients = await Client.find({});
         return clients;
     } catch (err) {
         return clients;
     }
-
 }
 
-const getClientById = (id) => {
-    const clients = getAllClients();
-    const found = clients.find(cli => cli.id === id);
-    return found?found:"client not found";
+const getClientById = async (id) => {
+    const found = await Client.findById(id);
+    return found;
 }
 
-const createClient = (client) => {
-    const clients = getAllClients();
-    clients.push(client);
-    fs.writeFileSync('./clients.json', JSON.stringify(clients));
-    return clients;
-}
+const createClient = async (body) => {
+    const newClient = new Client(body);
+    let clientResult;
+    let newAccount;
+    try {
+        clientResult = await newClient.save();
+        newAccount = await new Account();
+        newAccount._id = new ObjectID(clientResult._id);
+        await newAccount.save();
 
-const despositCash = (id, amount) => {
-    const clients = getAllClients();
-    clients.find((client, i) => {
-        if (client.id === id) {
-            let newCash = Number(clients[i].cash) + Number(amount);
-            clients[i].cash = `${newCash}`;
-        }
-    })
-    fs.writeFileSync('./clients.json', JSON.stringify(clients));
-    return clients;
-}
-
-const updateCredit = (id, amount) => {
-    const clients = getAllClients();
-    clients.find((client, i) => {
-        if (client.id === id) {
-            let newCredit = Number(clients[i].credit) + Number(amount);
-            clients[i].credit = `${newCredit}`;
-        }
-    })
-    fs.writeFileSync('./clients.json', JSON.stringify(clients));
-    return clients;
-}
-
-const withdrawMoney = (id, amount) => {
-    clients = getAllClients();
-    amount = Math.abs(Number(amount))
-    let isSucced = true;
-    clients.find((client, i) => {
-        if (client.id === id) {
-            cash = Number(client.cash);
-            credit = Number(client.credit);
-            if (cash - amount >= credit * -1) {
-                clients[i].cash = `${cash-amount}`
-            } else {
-                isSucced = false
-            }
-        }
-    })
-    fs.writeFileSync('./clients.json', JSON.stringify(clients));
-    return isSucced ? clients : 'not enough funds';
-}
-
-const transferMoney = (fromID, toID, amount) => {
-    const clients = getAllClients();
-    const fromClient = getClientById(fromID);
-    const toClient = getClientById(toID);
-    amount = Math.abs(Number(amount));
-    let isValid = false;
-    let clientHits = 0;
-    let i = 0;
-
-    if (Number(fromClient.cash) - amount >= Number(fromClient.credit) * -1) isValid = true;
-
-    if (isValid) {
-        while (clientHits !== 2) {
-            if (clients[i].id === fromClient.id) {
-                fromClient.cash = Number(fromClient.cash) - amount;
-                clients[i] = fromClient
-                clientHits++;
-            }
-            if (clients[i].id === toClient.id) {
-                toClient.cash = Number(toClient.cash) + amount;
-                clients[i] = toClient;
-                clientHits++;
-            }
-            i++;
-        }
+    } catch (err) {
+        console.log(err.message);
     }
-    fs.writeFileSync('./clients.json', JSON.stringify(clients));
-    return isValid ? clients : 'cant transform the money';
+    return clientResult;
+}
+
+const despositCash = async (id, amount) => {
+    const result = await Account.findByIdAndUpdate(id, {
+        $inc: {
+            cash: amount
+        }
+    }, {
+        new: true,
+        runValidators: true
+    });
+    return result;
+}
+
+const updateCredit = async (id, amount) => {
+    const result = await Account.findByIdAndUpdate(id, {
+        credit: amount
+    }, {
+        new: true,
+        runValidators: true
+    });
+    return result;
+}
+
+const withdrawMoney = async (id, amount) => {
+    let result;
+    try {
+        const accountFound = await Account.findById(id);
+        if (accountFound.cash - amount >= accountFound.credit * -1) {
+            accountFound.cash = accountFound.cash - amount
+        }
+        result = await accountFound.save();
+    } catch (err) {
+        return err.message
+    }
+    return result
+}
+
+const transferMoney = async (fromID, toID, amount) => {
+    let isValid = false;
+    let fromClient;
+    let toClient;
+    let fromClientResult;
+    let toClientResult;
+    try {
+        fromClient = await Account.findById(fromID);
+        toClient = await Account.findById(toID);
+        if (fromClient.cash - amount >= fromClient.credit * -1) isValid = true; // make transfer validation 
+        if (isValid) {
+            fromClient.cash = fromClient.cash - amount;
+            toClient.cash = toClient.cash + amount;
+            console.log(fromClient);
+            console.log(toClient);
+            fromClientResult = await fromClient.save();
+            toClientResult = await toClient.save();
+        }
+    } catch (err) {
+        return 'failed to tranfer money'
+    }
+
+    return [fromClientResult,toClientResult]
 }
 
 module.exports = {

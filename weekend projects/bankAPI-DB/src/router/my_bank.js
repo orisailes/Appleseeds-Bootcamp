@@ -1,10 +1,7 @@
 const express = require('express');
-const utils = require('./utils')
-const path = require('path')
-const router = new express.Router()
-const Client = require('../model/client');
-const Account = require('../model/account');
-const {ObjectID} = require('mongodb');
+const utils = require('./utils');
+const path = require('path');
+const router = new express.Router();
 router.use(express.json());
 
 
@@ -15,28 +12,20 @@ router.use(express.json());
 // }
 
 router.post('/api/clients', async (req, res) => {
-    const newClient = new Client(req.body);
-    try{
-        const clientResult = await newClient.save();
-        const newAccount = await new Account();
-        newAccount._id = new ObjectID(clientResult._id);
-        const newAccountResult = await newAccount.save();
-        console.log(clientResult);
-        console.log(newAccountResult);
-    }catch(err){
-        console.log(err.message);
-    }
+    console.log('new client request commited');
+    const result = await utils.createClient(req.body);
+    result ? res.send(result) : res.send('there is a problem. user not created')
 })
 
-// router.get('/api/clients', (req, res) => {
-//     const clients = utils.getAllClients();
-//     console.log(`get clients commited`);
-//     res.status(200).send(clients);
-// })
+router.get('/api/clients', async (req, res) => {
+    console.log(`get all clients commited`);
+    const result = await utils.getAllClients();
+    result ? res.send(result) : res.send('problem at getting all clients')
+})
 
 // router.get('/api/clients/filter', (req, res) => {
-//     let clients = utils.getAllClients();
 //     console.log(`get clients with filter commited`);
+//     let clients = utils.getAllClients();
 //     const sortTerms = req.query;
 //     const sortKey = Object.keys(sortTerms)[0]
 //     const order = sortTerms[sortKey]
@@ -46,63 +35,69 @@ router.post('/api/clients', async (req, res) => {
 //     res.status(200).send(clients);
 // })
 
-// router.get('/api/clients/:id', (req, res) => {
-//     const {
-//         id
-//     } = req.params
-//     const client = utils.getClientById(id);
-//     console.log(`get client commited`);
-//     res.status(200).send(client);
-// })
+router.get('/api/clients/:id', async (req, res) => {
+    const {
+        id
+    } = req.params
+    console.log(`get client commited`);
+    const result = await utils.getClientById(id);
+    result ? res.send(result) : res.send("client not found");
+})
 
-// router.post('/api/clients', (req, res) => {
-//     const clients = utils.createClient(req.body);
-//     console.log(`post client commited`);
-//     res.status(200).send(clients);
-// })
+router.put('/api/accounts/desposit/cash/:id', async (req, res) => {
+    const {
+        id
+    } = req.params;
+    let {
+        amount
+    } = req.query;
+    console.log(`put client commited - desposit cash`);
+    if (amount > 0) {
+        const result = await utils.despositCash(id, amount);
+        result ? res.send(result) : res.send('desposit doesnt commited, please try again later');
+    } else {
+        res.status(400).send('amount is invalid or not suplly as query')
+    }
+})
 
-// router.put('/api/clients/desposit/cash/:id', (req, res) => {
-//     const {
-//         id
-//     } = req.params;
-//     const {
-//         amount
-//     } = req.query;
-//     console.log(`put client commited`);
-//     res.status(200).send(utils.despositCash(id, amount));
-// })
+router.put('/api/accounts/desposit/credit/:id', async (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        amount
+    } = req.query;
+    console.log(`put client commited - change credit status`);
+    let result;
+    if (amount > 0) result = await utils.updateCredit(id, amount)
+    if (amount <= 0) res.status(400).send(`invalid request`)
+    res.status(200).send(result);
+})
 
-// router.put('/api/clients/desposit/credit/:id', (req, res) => {
-//     const {
-//         id
-//     } = req.params;
-//     const {
-//         amount
-//     } = req.query;
-//     console.log(`put client commited`);
-//     if (amount > 0) res.status(200).send(utils.updateCredit(id, amount));
-//     if (amount <= 0) res.status(400).send(`invalid request`)
-// })
+router.put('/api/accounts/withdraw/:id', async (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        amount
+    } = req.query;
+    console.log(`put request commited - withdraw cash`);
+    if (amount < 0) res.status(400).send('invalid withdraw request')
+    const result = await utils.withdrawMoney(id, amount);
+    res.status(200).send(result);
+})
 
-// router.put('/api/clients/withdraw/:id', (req, res) => {
-//     const {
-//         id
-//     } = req.params;
-//     const {
-//         amount
-//     } = req.query;
-//     console.log(`put client commited`);
-//     res.status(200).send(utils.withdrawMoney(id, amount));
-// })
-
-// router.put('/api/clients/transfer', (req, res) => {
-//     const {
-//         from,
-//         to,
-//         amount
-//     } = req.query;
-//     if (!from || !to || !amount) res.status(400).send('invalid queries. transfer hasnt been made')
-//     res.status(200).send(utils.transferMoney(from, to, amount))
-// })
+router.put('/api/accounts/transfer', async (req, res) => {
+    const {
+        from,
+        to,
+        amount
+    } = req.query;
+    if (!from || !to || !amount) res.status(400).send('invalid queries. transfer hasnt been made')
+    if (amount < 0) res.status(400).send('amount has tobe positive number')
+    console.log('put request commited - traansferm money');
+    const result = await utils.transferMoney(from, to, amount)
+    result ? res.send(result) : res.status(400).send('invalid transfer request')
+})
 
 module.exports = router
