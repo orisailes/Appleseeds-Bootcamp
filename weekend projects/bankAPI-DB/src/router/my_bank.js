@@ -5,11 +5,12 @@ const router = new express.Router();
 router.use(express.json());
 
 
-// if (process.env.NODE_ENV === "production") {
-//     app.use(express.static(path.join(__dirname, './client/build')))
-// } else {
-//     app.use(express.static(path.join(__dirname, './client/public')))
-// }
+if (process.env.NODE_ENV === "production") {
+    router.use(express.static(path.join(__dirname, '../../client/build')))
+} else {
+    router.use(express.static(path.join(__dirname, '../../client/public')))
+}
+
 
 router.post('/api/clients', async (req, res) => {
     console.log('new client request commited');
@@ -53,7 +54,7 @@ router.put('/api/accounts/desposit/cash/:id', async (req, res) => {
         const result = await utils.despositCash(id, amount);
         result ? res.send(result) : res.send('desposit doesnt commited, please try again later');
     } else {
-        res.status(400).send('amount is invalid or not suplly as query')
+        res.send('amount is invalid')
     }
 })
 
@@ -66,9 +67,11 @@ router.put('/api/accounts/desposit/credit/:id', async (req, res) => {
     } = req.query;
     console.log(`put client commited - change credit status`);
     let result;
-    if (amount > 0) result = await utils.updateCredit(id, amount)
-    if (amount <= 0) res.status(400).send(`invalid request`)
-    res.status(200).send(result);
+    if (amount > 0) {
+        result = await utils.updateCredit(id, amount)
+        res.status(200).send(result);
+    }
+    if (amount <= 0) res.send(`invalid credit change`)
 })
 
 router.put('/api/accounts/withdraw/:id', async (req, res) => {

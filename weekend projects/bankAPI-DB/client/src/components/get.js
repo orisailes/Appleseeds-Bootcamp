@@ -25,7 +25,6 @@ const Get = () => {
         }
         if (data.data.length === 0) setClients([])
         if (data.data.length > 0) setClients(data.data)
-        console.log(clients)
         setUserDidClick(true)
         setLoading(false)
     }

@@ -33,7 +33,12 @@ const createClient = async (body) => {
         newClient = await newClient.save();
         newAccount = await new Account();
         newAccount._id = new ObjectID(newClient._id);
-        newAccount = await newAccount.save();
+        try{
+            newAccount = await newAccount.save();
+        }catch(err){
+            await Client.findByIdAndDelete(newClient._id)
+           return 'fail to create account'
+        }
     } catch (err) {
          return err.message;
     }
@@ -53,6 +58,7 @@ const despositCash = async (id, amount) => {
 }
 
 const updateCredit = async (id, amount) => {
+    console.log('asdaasdasd');
     const result = await Account.findByIdAndUpdate(id, {
         credit: amount
     }, {
@@ -68,6 +74,8 @@ const withdrawMoney = async (id, amount) => {
         const accountFound = await Account.findById(id);
         if (accountFound.cash - amount >= accountFound.credit * -1) {
             accountFound.cash = accountFound.cash - amount
+        }else{
+            return 'not enough funds'
         }
         result = await accountFound.save();
     } catch (err) {
@@ -91,6 +99,8 @@ const transferMoney = async (fromID, toID, amount) => {
             toClient.cash = Number(toClient.cash) + Number(amount);
             fromClientResult = await fromClient.save();
             toClientResult = await toClient.save();
+        }else{
+            return 'failed to transfer money'
         }
     } catch (err) {
         return 'failed to tranfer money'

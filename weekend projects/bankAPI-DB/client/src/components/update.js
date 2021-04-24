@@ -59,27 +59,32 @@ const Update = () => {
         if (amount.length > 0 && idInput.length > 0) {
             setLoading(true)
             let url;
+            let result;
             switch (currentPath) {
                 case 'transfer':
                     if (idToDeliverMoneyInput.length > 0) {
                         url = `${paths[currentPath]}?from=${idInput}&to=${idToDeliverMoneyInput}&amount=${amount}`
-                        await axios.put(url)
+                        result = await axios.put(url)
+                        console.log(result);
                         fetchUser(idInput, idToDeliverMoneyInput)
                     }
                     break;
                 case 'withdraw':
                     url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                    await axios.put(url)
+                    result = await axios.put(url)
+                    console.log(result);
                     fetchUser(idInput)
                     break;
                 case 'despositCash':
                     url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                    await axios.put(url)
+                     result = await axios.put(url)
+                    console.log(result);
                     fetchUser(idInput)
                     break;
                 case 'changeCredit':
                     url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                    await axios.put(url)
+                     result = await axios.put(url)
+                    console.log(result);
                     fetchUser(idInput)
                     break;
 
