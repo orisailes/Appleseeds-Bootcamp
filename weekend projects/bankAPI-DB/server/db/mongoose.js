@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-let url;
+var url;
 
 if(process.env.NODE_ENV==='production'){
     url = process.end.urlKey
