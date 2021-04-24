@@ -1,10 +1,11 @@
-const fs = require('fs');
 const Client = require('../model/client');
 const Account = require('../model/account');
 const {
     ObjectID
 } = require('mongodb');
 const mongoose = require('mongoose')
+
+
 const getAllClients = async () => {
     let clients = [];
     try {
@@ -33,14 +34,14 @@ const createClient = async (body) => {
         newClient = await newClient.save();
         newAccount = await new Account();
         newAccount._id = new ObjectID(newClient._id);
-        try{
+        try {
             newAccount = await newAccount.save();
-        }catch(err){
+        } catch (err) {
             await Client.findByIdAndDelete(newClient._id)
-           return 'fail to create account'
+            return 'fail to create account'
         }
     } catch (err) {
-         return err.message;
+        return err.message;
     }
     return newClient;
 }
@@ -74,7 +75,7 @@ const withdrawMoney = async (id, amount) => {
         const accountFound = await Account.findById(id);
         if (accountFound.cash - amount >= accountFound.credit * -1) {
             accountFound.cash = accountFound.cash - amount
-        }else{
+        } else {
             return 'not enough funds'
         }
         result = await accountFound.save();
@@ -99,34 +100,34 @@ const transferMoney = async (fromID, toID, amount) => {
             toClient.cash = Number(toClient.cash) + Number(amount);
             fromClientResult = await fromClient.save();
             toClientResult = await toClient.save();
-        }else{
-            return 'failed to transfer money'
+        } else {
+            return false
         }
     } catch (err) {
-        return 'failed to tranfer money'
+        return false
     }
 
-    return [fromClientResult,toClientResult]
+    return [fromClientResult, toClientResult]
 }
 
 const deleteClientById = async (id) => {
-    let result=[]
+    let result = []
     id = new ObjectID(id.id)
-    try{
+    try {
         const clientRemove = await Client.findByIdAndRemove(id);
         const accountRemove = await Account.findByIdAndRemove(id)
-        result.push(clientRemove,accountRemove)
+        result.push(clientRemove, accountRemove)
         return result
-    }catch(err){
+    } catch (err) {
         return err.message
     }
 }
 const deleteEverything = async () => {
-    try{
+    try {
         const deletedClient = await Client.deleteMany();
         const deletedAccount = await Account.deleteMany();
         return 'all clients and account deleted'
-    }catch(err){
+    } catch (err) {
         return err.message
     }
 }

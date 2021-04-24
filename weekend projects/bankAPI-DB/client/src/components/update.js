@@ -13,10 +13,11 @@ const Update = () => {
     const [amount, setAmount] = useState('')
     const [buildSubmit, setBuildSubmit] = useState('')
     const [currentPath, setCurrentPath] = useState('')
+    const [errMessage, setErrMessage] = useState('')
     const [userDidPress, setUserDidPress] = useState(false)
     const [isTransferMoney, setIsTransferMoney] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [clientToDisplay, setClientToDisplay] = useState([])
-    const [loading,setLoading] = useState(false)
 
     const paths = {
         transfer: '/api/accounts/transfer',
@@ -65,27 +66,54 @@ const Update = () => {
                     if (idToDeliverMoneyInput.length > 0) {
                         url = `${paths[currentPath]}?from=${idInput}&to=${idToDeliverMoneyInput}&amount=${amount}`
                         result = await axios.put(url)
+                        if (result.status === 200) {
+                            fetchUser(idInput, idToDeliverMoneyInput)
+                        }
+                        if (result.status !== 200) {
+                            setErrMessage(result.data)
+                            setClientToDisplay([])
+                            setLoading(false)
+                        }
                         console.log(result);
-                        fetchUser(idInput, idToDeliverMoneyInput)
                     }
                     break;
                 case 'withdraw':
                     url = `${paths[currentPath]}/${idInput}?amount=${amount}`
                     result = await axios.put(url)
-                    console.log(result);
-                    fetchUser(idInput)
+                    if (result.status === 200) {
+                        fetchUser(idInput)
+                        setLoading(false)
+                    }
+                    if (result.status !== 200) {
+                        setErrMessage(result.data)
+                        setClientToDisplay([])
+                    }
                     break;
                 case 'despositCash':
                     url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                     result = await axios.put(url)
-                    console.log(result);
-                    fetchUser(idInput)
+                    result = await axios.put(url)
+                    debugger
+                    if (result.status === 200) {
+                        fetchUser(idInput)
+                        setLoading(false)
+                    }
+                    if (result.status !== 200) {
+                        console.log('in');
+                        setErrMessage(result.data)
+                        setClientToDisplay([])
+                    }
                     break;
                 case 'changeCredit':
                     url = `${paths[currentPath]}/${idInput}?amount=${amount}`
-                     result = await axios.put(url)
-                    console.log(result);
-                    fetchUser(idInput)
+                    result = await axios.put(url)
+                    if (result.status === 200) {
+                        fetchUser(idInput)
+                        setLoading(false)
+                    }
+                    if (result.status !== 200) {
+                        setErrMessage(result.data)
+                        setClientToDisplay([])
+                    }
                     break;
 
                 default:
@@ -106,6 +134,7 @@ const Update = () => {
             const account = await axios.get(`/api/accounts/${user.data._id}`)
             setClientToDisplay([{ ...user.data, credit: account.data.credit, cash: account.data.cash }])
         }
+        errMessage.length && setErrMessage('')
         setLoading(false)
     }
 
@@ -119,7 +148,7 @@ const Update = () => {
                     <Button id="changeCredit" onClick={(e) => handleChangeCredit(e)} text="Change Credit" />
                 </div>
                 <div className="inputs-container">
-                
+
                     {userDidPress ?
                         isTransferMoney ?
                             <>
@@ -146,9 +175,9 @@ const Update = () => {
                         <Link to="/"><Button text="Home" /></Link>
                     </div>
                     : null}
-                    <ClipLoader loading={loading} size={100} />
+                <ClipLoader loading={loading} size={100} />
                 <div className="display-area">
-                    {Object.keys(clientToDisplay).length > 0 &&
+                    {Object.keys(clientToDisplay).length > 0 ?
                         clientToDisplay.map((cli) => {
                             return (
                                 <div key={cli.email} className="client-card">
@@ -161,6 +190,8 @@ const Update = () => {
                                 </div>
                             )
                         })
+                        :
+                        <h2>{errMessage}</h2>
                     }
                 </div>
                 <div className="bg">

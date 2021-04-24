@@ -7,6 +7,7 @@ import Get from './components/get';
 import Landing from './components/landing';
 import './components/css/normalize.css'
 import './components/css/app.css'
+
 function App() {
 
   return (

@@ -11,11 +11,10 @@ if (process.env.NODE_ENV === "production") {
     router.use(express.static(path.join(__dirname, '../../client/public')))
 }
 
-
 router.post('/api/clients', async (req, res) => {
     console.log('new client request commited');
     const result = await utils.createClient(req.body);
-    typeof result === "string" ? res.status(206).send(result) : typeof result==="object" ? res.status(201).send(result) :null 
+    typeof result === "string" ? res.status(206).send(result) : typeof result === "object" ? res.status(201).send(result) : null
 })
 
 router.get('/api/clients', async (req, res) => {
@@ -54,7 +53,7 @@ router.put('/api/accounts/desposit/cash/:id', async (req, res) => {
         const result = await utils.despositCash(id, amount);
         result ? res.send(result) : res.send('desposit doesnt commited, please try again later');
     } else {
-        res.send('amount is invalid')
+        res.status(206).send('amount is invalid')
     }
 })
 
@@ -71,7 +70,7 @@ router.put('/api/accounts/desposit/credit/:id', async (req, res) => {
         result = await utils.updateCredit(id, amount)
         res.status(200).send(result);
     }
-    if (amount <= 0) res.send(`invalid credit change`)
+    if (amount <= 0) res.status(206).send(`invalid credit change`)
 })
 
 router.put('/api/accounts/withdraw/:id', async (req, res) => {
@@ -82,7 +81,7 @@ router.put('/api/accounts/withdraw/:id', async (req, res) => {
         amount
     } = req.query;
     console.log(`put request commited - withdraw cash`);
-    if (amount < 0) res.status(400).send('invalid withdraw request')
+    if (amount < 0) res.status(206).send('invalid withdraw request')
     const result = await utils.withdrawMoney(id, amount);
     res.status(200).send(result);
 })
@@ -94,10 +93,10 @@ router.put('/api/accounts/transfer', async (req, res) => {
         amount
     } = req.query;
     if (!from || !to || !amount) res.status(400).send('invalid queries. transfer hasnt been made')
-    if (amount < 0) res.status(400).send('amount has tobe positive number')
-    console.log('put request commited - traansferm money');
+    if (amount < 0) res.status(206).send('amount has to be positive number')
+    console.log('put request commited - transferm money');
     const result = await utils.transferMoney(from, to, amount)
-    result ? res.send(result) : res.status(400).send('invalid transfer request')
+    result ? res.send(result) : res.status(206).send('invalid transfer request')
 })
 
 router.delete('/api/clients/:id', async (req, res) => {
