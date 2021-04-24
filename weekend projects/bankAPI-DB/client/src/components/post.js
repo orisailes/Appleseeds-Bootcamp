@@ -1,28 +1,40 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Button from './utils/Button'
 import Input from './utils/Input'
 import { Link } from 'react-router-dom'
 import './css/bg.css'
 import './css/post.css'
 import axios from 'axios'
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Post = () => {
 
     const [nameInput, setNameInput] = useState('')
     const [emailInput, setEmailInput] = useState('')
     const [passportInput, setPassportInput] = useState('')
-    const [newClient, setNewClient] = useState([])
+    const [message, setMessage] = useState('')
+    const [client, setNewClient] = useState([])
+    const [loading,setLoading] = useState(false)
+
 
     const createUser = async () => {
-        let result;
         if (nameInput && emailInput && passportInput) {
+            setLoading(true)
             const newUser = {
                 "name": nameInput,
                 "email": emailInput,
                 "passport": passportInput
             }
             const newClient = await axios.post('/api/clients', newUser)
-            setNewClient(newClient.data)
+            console.log(newClient);
+            if(newClient.status===206) {
+                setMessage(`Fail to make new client... error message:\n${newClient.data}`.split('\n'))
+                Object.keys(client).length > 0 && setNewClient([])
+            }else{
+                setMessage('')
+                setNewClient(newClient.data)
+            }
+            setLoading(false)
         }
     }
     return (
@@ -42,13 +54,17 @@ const Post = () => {
                         <Input onChange={(e) => setPassportInput(e.target.value)} placeholder={"Insert Passport Here"} value={passportInput} />
                     </div>
                 </form>
-                <div className={Object.keys(newClient).length > 0 ? "new-client-card" : ""}>
-                    {Object.keys(newClient).length > 0 &&
+                {
+                    message.length>0 && message.map(str=><h3 key={str[0]}>{str}</h3>)
+                }
+                <ClipLoader loading={loading} size={50} />
+                <div className={Object.keys(client).length > 0 ? "new-client-card" : ""}>
+                    {Object.keys(client).length > 0 &&
                         <>
-                            <h4>Name: {newClient.name}</h4>
-                            <p>Email: {newClient.email}</p>
-                            <p>Passport: {newClient.passport}</p>
-                            <p>ID: {newClient.passport}</p>
+                            <h4>Name: {client.name}</h4>
+                            <p>Email: {client.email}</p>
+                            <p>Passport: {client.passport}</p>
+                            <p>ID: {client._id}</p>
                             <p>Cash: 0</p>
                             <p>Credit: 0</p>
                         </>

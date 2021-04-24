@@ -5,6 +5,7 @@ import Input from './utils/Input'
 import './css/update.css'
 import './css/display-area.css'
 import axios from 'axios'
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Update = () => {
     const [idInput, setIdInput] = useState('')
@@ -15,6 +16,7 @@ const Update = () => {
     const [userDidPress, setUserDidPress] = useState(false)
     const [isTransferMoney, setIsTransferMoney] = useState(false)
     const [clientToDisplay, setClientToDisplay] = useState([])
+    const [loading,setLoading] = useState(false)
 
     const paths = {
         transfer: '/api/accounts/transfer',
@@ -23,8 +25,6 @@ const Update = () => {
         changeCredit: '/api/accounts/desposit/credit'
     }
 
-    //6082c28756e6f93560ed1d1b
-    //6082ce03eddd0a2afc96f278
 
     const handleTransfer = async (e) => {
         (!userDidPress && setUserDidPress(true))
@@ -57,6 +57,7 @@ const Update = () => {
 
     const handleSubmit = async () => {
         if (amount.length > 0 && idInput.length > 0) {
+            setLoading(true)
             let url;
             switch (currentPath) {
                 case 'transfer':
@@ -100,6 +101,7 @@ const Update = () => {
             const account = await axios.get(`/api/accounts/${user.data._id}`)
             setClientToDisplay([{ ...user.data, credit: account.data.credit, cash: account.data.cash }])
         }
+        setLoading(false)
     }
 
     return (
@@ -112,6 +114,7 @@ const Update = () => {
                     <Button id="changeCredit" onClick={(e) => handleChangeCredit(e)} text="Change Credit" />
                 </div>
                 <div className="inputs-container">
+                
                     {userDidPress ?
                         isTransferMoney ?
                             <>
@@ -138,6 +141,7 @@ const Update = () => {
                         <Link to="/"><Button text="Home" /></Link>
                     </div>
                     : null}
+                    <ClipLoader loading={loading} size={100} />
                 <div className="display-area">
                     {Object.keys(clientToDisplay).length > 0 &&
                         clientToDisplay.map((cli) => {
