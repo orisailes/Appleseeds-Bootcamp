@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateAuthToken = async function(){
     const user = this
     const token = jwt.sign({ _id:user._id.toString() },'thisismyvalidation',{expiresIn:'7 days'})
-    user.tokens = user.tokens.concat({token})
+    !user.tokens.length && user.tokens.push({token})
     await user.save()
     return token
 }
@@ -36,6 +36,16 @@ userSchema.statics.loginByUserName = async (user_name, password) => {
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) return false
     return user
+}
+
+userSchema.methods.toJSON = function (){
+    const user = this
+    const userObject = user.toObject()
+    
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
 }
 
 userSchema.pre('save', async function (next) {
