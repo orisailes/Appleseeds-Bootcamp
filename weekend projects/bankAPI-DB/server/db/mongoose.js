@@ -6,7 +6,6 @@ if(process.env.NODE_ENV==='production'){
 }else{
     url = require('../keys/mongoUrl')
 }
-console.log(url);
 
 mongoose.connect(url, {
     useNewUrlParser: true,
