@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateAuthToken = async function(){
     const user = this
     const token = jwt.sign({ _id:user._id.toString() },'thisismyvalidation',{expiresIn:'7 days'})
-    !user.tokens.length && user.tokens.push({token})
+    user.tokens = [{token}]
     await user.save()
     return token
 }
@@ -43,7 +43,7 @@ userSchema.methods.toJSON = function (){
     const userObject = user.toObject()
     
     delete userObject.password
-    delete userObject.tokens
+    // delete userObject.tokens
 
     return userObject
 }

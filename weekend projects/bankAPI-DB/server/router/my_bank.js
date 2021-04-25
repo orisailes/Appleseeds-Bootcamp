@@ -12,8 +12,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 router.post('/api/clients', async (req, res) => {
-    console.log('new client request commited');
-    const result = await utils.createClient(req.body);
+   
+        console.log('new client request commited');
+        const result = await utils.createClient(req.body);
     typeof result === "string" ? res.status(206).send(result) : typeof result === "object" ? res.status(201).send(result) : null
 })
 
