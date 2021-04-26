@@ -1,6 +1,8 @@
 const User = require('../models/User')
 const sharp = require('sharp')
 const multer = require('multer')
+const { findById } = require('../models/User')
+
 
 const addUser = async (req, res) => {
     let result
@@ -56,8 +58,12 @@ const logout = async (req,res) => {
 const addAvatarPic = async (req,res) => {
     let result
     try{
-        req.user.avatar = req.file.buffer
-        result = await req.user.save()
+        if(!req.user.avatar){
+            req.user.avatar = req.file.buffer
+            result = await req.user.save()
+        }else{
+            result = 'user got avatar already'
+        }
     }catch(err){
         result = err.message
     }
@@ -69,11 +75,22 @@ const getUserAvatar = async (req,res) => {
     try{
         const user = await User.findById(req.params.id)
         if(!user || !user.avatar){
-            throw new Error('Avatar not found')
+            throw new Error('no user avatar')
         }
         result = user.avatar
     }catch(err){
         result = err.message
+    }
+    return result
+}
+
+const deleteUserAvatar = async (req,res) => {
+    let result
+    try{
+        req.user.avatar = undefined
+        result = await req.user.save()
+    }catch(err){
+        return err.message
     }
     return result
 }
@@ -84,5 +101,6 @@ module.exports = {
     login,
     logout,
     addAvatarPic,
-    getUserAvatar
+    getUserAvatar,
+    deleteUserAvatar
 }

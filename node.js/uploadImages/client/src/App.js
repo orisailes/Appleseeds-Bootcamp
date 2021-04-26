@@ -1,12 +1,14 @@
 import axios from 'axios'
 import './App.css';
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 function App() {
 
   const [userNameInput, setUserNameInput] = useState('')
   const [passInput, setPassInput] = useState('')
+  const [userId, setUserId] = useState('')
   const [dataFromServer, setDataFromServer] = useState([])
   const [isLogin, setIsLogin] = useState(false)
+  const [avatar, setAvatar] = useState(null)
 
   const login = async () => {
     let result
@@ -19,6 +21,7 @@ function App() {
         if (result.data.result) {
           setIsLogin(true)
           setDataFromServer(result.data.result.user_name + ' is logged in')
+          setUserId(result.data.result._id)
           localStorage.setItem('login_token', result.data.token)
         } else {
           setDataFromServer('unsuccesful login')
@@ -68,6 +71,14 @@ function App() {
     console.log(result);
   }
 
+  const fetchAvatar = async () => {
+    const userAvatar = await axios.get(`http://localhost:5000/api/users/${userId}/avatar`,{
+      responseType:'blob'
+    })
+    const pic = new File([userAvatar.data],'Avatar')
+    console.log(userAvatar);
+    setAvatar(pic)
+  }
 
 
   return (
@@ -81,11 +92,13 @@ function App() {
           <>
             <button style={{ padding: "15px" }} onClick={displayUserProfile}>show my profile</button>
             <button style={{ padding: "15px" }} onClick={logout}>logout</button>
+            <button style={{ padding: "15px" }} onClick={fetchAvatar}>show avatar</button>
           </>
         }
       </div>
       <div>
         {dataFromServer}
+        {avatar && <img style={{height:"20vh"}} src={URL.createObjectURL(avatar)}/>}
       </div>
     </>
   );
