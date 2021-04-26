@@ -459,7 +459,7 @@ function Table() {
                                         style={{ marginLeft: "2rem" }}
                                         to="/table"
                                         onClick={() => {
-                                            localStorage.clear()
+                                            localStorage.removeItem('products')
                                             setProductsToCompare([])
                                         }}
                                     >
