@@ -1,6 +1,6 @@
 import axios from 'axios'
 import './App.css';
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 function App() {
 
   const [userNameInput, setUserNameInput] = useState('')
@@ -39,14 +39,14 @@ function App() {
     const config = {
       headers: { Authorization: `Bearer ${localStorage.getItem('login_token')}` }
     };
-    try{
-    const result = await axios.put('http://localhost:5000/api/users/logout',{},config)
-    // remove token from local storage
-    console.log(result)
-    setIsLogin(false)
-    setDataFromServer(result.data.user_name + ' is logged out')
-    localStorage.removeItem('login_token')
-    }catch(err){
+    try {
+      const result = await axios.put('http://localhost:5000/api/users/logout', {}, config)
+      // remove token from local storage
+      console.log(result)
+      setIsLogin(false)
+      setDataFromServer(result.data.user_name + ' is logged out')
+      localStorage.removeItem('login_token')
+    } catch (err) {
       console.log(err)
     }
   }
@@ -66,20 +66,31 @@ function App() {
       headers: { Authorization: `Bearer ${localStorage.getItem('login_token')}` }
     };
     // send token as authorization
-    const result = await axios.get('http://localhost:5000/api/users/me',config)
+    const result = await axios.get('http://localhost:5000/api/users/me', config)
     setDataFromServer(JSON.stringify(result.data))
     console.log(result);
   }
 
   const fetchAvatar = async () => {
-    const userAvatar = await axios.get(`http://localhost:5000/api/users/${userId}/avatar`,{
-      responseType:'blob'
+    const userAvatar = await axios.get(`http://localhost:5000/api/users/${userId}/avatar`, {
+      responseType: 'blob'
     })
-    const pic = new File([userAvatar.data],'Avatar')
-    console.log(userAvatar);
-    setAvatar(pic)
+    setAvatar(userAvatar.data)
   }
 
+  const putNewAvatar = async (e) => {
+    e.preventDefault()
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('login_token')}`,
+        "Content-Type":"multipart/form-data"
+      }
+    }
+    const formData = new FormData()
+    formData.append('image', e.target.children[0].files[0])
+    const result = await axios.put(`http://localhost:5000/api/users/me/avatar`, formData, config)
+    console.log(result);
+  }
 
   return (
     <>
@@ -98,8 +109,21 @@ function App() {
       </div>
       <div>
         {dataFromServer}
-        {avatar && <img style={{height:"20vh"}} src={URL.createObjectURL(avatar)}/>}
+        {avatar &&
+          <img style={{ height: "20vh" }} src={URL.createObjectURL(avatar)} />
+        }
       </div>
+      <div>
+        {(isLogin && avatar) &&
+          <>
+            <form onSubmit={(e) => putNewAvatar(e)}>
+              <input type="file" name="avatar"></input>
+              <input type="submit"></input>
+            </form>
+          </>
+        }
+      </div>
+
     </>
   );
 }

@@ -8,7 +8,7 @@ const userController = require('../controller/user.controller')
 
 const upload = multer({
     limits: {
-        fileSize: 2000000
+        fileSize: 2000000 // limit file size in bytes
     },
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
