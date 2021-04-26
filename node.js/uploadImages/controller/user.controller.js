@@ -1,7 +1,9 @@
 const User = require('../models/User')
 const sharp = require('sharp')
 const multer = require('multer')
-const { findById } = require('../models/User')
+const {
+    findById
+} = require('../models/User')
 
 
 const addUser = async (req, res) => {
@@ -31,65 +33,65 @@ const login = async (req, res) => {
     try {
         const user = await User.loginByUserName(req.body.user_name, req.body.password)
         if (!user) result = false
-        if (user){ 
-           token = await user.generateAuthToken()
+        if (user) {
+            token = await user.generateAuthToken()
             result = user
         }
     } catch (err) {
         result = err.message
     }
-    return {result,token}
+    return {
+        result,
+        token
+    }
 }
 
-const logout = async (req,res) => {
+const logout = async (req, res) => {
     let result
-    try{
-        req.user.tokens = req.user.tokens.filter((token)=>{
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
-       result = await req.user.save()
-    }catch(err){
+        result = await req.user.save()
+    } catch (err) {
         result = err.message
     }
     return result
 }
 
 
-const addAvatarPic = async (req,res) => {
+const addAvatarPic = async (req, res) => {
     let result
-    try{
-        if(!req.user.avatar){
-            req.user.avatar = req.file.buffer
-            result = await req.user.save()
-        }else{
-            result = 'user got avatar already'
-        }
-    }catch(err){
+    try {
+        req.user.avatar = req.file.buffer
+        result = await req.user.save()
+
+    } catch (err) {
         result = err.message
     }
     return result
 }
 
-const getUserAvatar = async (req,res) => {
+const getUserAvatar = async (req, res) => {
     let result
-    try{
+    try {
         const user = await User.findById(req.params.id)
-        if(!user || !user.avatar){
+        if (!user || !user.avatar) {
             throw new Error('no user avatar')
         }
         result = user.avatar
-    }catch(err){
+    } catch (err) {
         result = err.message
     }
     return result
 }
 
-const deleteUserAvatar = async (req,res) => {
+const deleteUserAvatar = async (req, res) => {
     let result
-    try{
+    try {
         req.user.avatar = undefined
         result = await req.user.save()
-    }catch(err){
+    } catch (err) {
         return err.message
     }
     return result

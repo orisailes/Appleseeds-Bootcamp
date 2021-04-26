@@ -75,6 +75,7 @@ function App() {
     const userAvatar = await axios.get(`http://localhost:5000/api/users/${userId}/avatar`, {
       responseType: 'blob'
     })
+    console.log(userAvatar.data);
     setAvatar(userAvatar.data)
   }
 
@@ -83,13 +84,14 @@ function App() {
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('login_token')}`,
-        "Content-Type":"multipart/form-data"
+        responseType:'blob'
       }
     }
     const formData = new FormData()
-    formData.append('image', e.target.children[0].files[0])
+    formData.append('avatar', e.target.children[0].files[0])
     const result = await axios.put(`http://localhost:5000/api/users/me/avatar`, formData, config)
-    console.log(result);
+    const newAvatar =await new Blob([result.data.avatar],{type:'image/jpg'})
+    fetchAvatar()
   }
 
   return (
