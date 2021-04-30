@@ -1,0 +1,1 @@
+//! punch kick cut water_splash mega_kick heal tornado razor_leaf slash dragon_breath sand_attack tail_whip quick_attack shield lightning

@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { userContext } from '../../utils/context/userContext'
+import { motion } from 'framer-motion'
 import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
-import pokemonList from '../../utils/classes/pokemonsList'
+import pokemonList from '../../utils/classes/Pokemon/pokemonsList'
 
 const Battle = () => {
 
@@ -20,7 +21,15 @@ const Battle = () => {
         if (Object.keys(chosenPokemon).length > 0) {
             console.log(chosenPokemon);
         }
+        return (() => {
+            console.log('unmounted');
+            //TODO: save user new pokemon in atlas ad in context
+        })
     }, [chosenPokemon])
+
+    const wait = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     const handlePokemonChoose = (e) => {
         const pokemonName = e.target.innerText
@@ -28,16 +37,20 @@ const Battle = () => {
         setBattleStarted(true)
     }
 
-    const wait = (ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
+
     return (
-        <div className="battle-page">
+        <motion.div
+         exit={{opacity:0}}
+        animate={{opacity:1}}
+        initial={{opacity:0}}
+        transition={{duration:1}}
+          className="battle-page"
+         >
             <div className="pokemons-container">
+                <Pokemon isUserPokemon={false} pokemon={enemyPokemon} />
                 {
                     battleStarted &&
                     <>
-                        <Pokemon isUserPokemon={false} pokemon={enemyPokemon} />
                         <Pokemon isUserPokemon={true} pokemon={chosenPokemon} />
                     </>
                 }
@@ -63,7 +76,7 @@ const Battle = () => {
                             </div>
                 }
             </div>
-        </div>
+        </motion.div>
     )
 }
 

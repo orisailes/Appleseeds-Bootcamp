@@ -342,7 +342,7 @@ const weedle = (level) => {
         5 * level, // accurate
         3 * level, // power
         level, // level
-        "normal", // type
+        "grass", // type
         attacks // attacks(array)
     )
     return result

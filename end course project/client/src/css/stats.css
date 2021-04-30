@@ -7,7 +7,7 @@
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.179);
-    /* X    Y   SPREAD */
+    /*         X     Y   SPREAD */
     display: flex;
     flex-direction: column;
     align-self: center;
@@ -83,4 +83,8 @@
 
 .exp-container small{
     margin:auto 4px;
+}
+
+.stats-container{
+    animation:revelEnemyStats 1s forwards
 }

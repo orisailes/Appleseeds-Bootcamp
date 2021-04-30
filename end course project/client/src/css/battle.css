@@ -11,6 +11,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
 }
 
 .pokemons-container {
@@ -32,15 +33,17 @@
     height: 30vh;
 }
 
-.user-pokemon img{
+.user-pokemon img {
     align-self: flex-end;
 }
-.enemy-pokemon img{
+
+.enemy-pokemon img {
     align-self: flex-end;
     height: 40vh;
 }
-.enemy-pokemon{
-   flex-direction: row-reverse;
+
+.enemy-pokemon {
+    flex-direction: row-reverse;
 }
 
 .message-box-container {
@@ -55,4 +58,37 @@
     height: 20vh;
     width: 94vw;
     margin: auto;
+} 
+
+@keyframes revelEnemyStats {
+    from{
+        transform: translateX(-35vw);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@keyframes revelUserStats {
+    from{
+        transform: translateX(35vw);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@keyframes revelUserPokemon {
+    from{
+        transform: translateX(-35vw);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@keyframes revelEnemyPokemon {
+    from{
+        transform: translateX(35vw);
+    }
+    to{
+        transform: translateX(0);
+    }
 }
