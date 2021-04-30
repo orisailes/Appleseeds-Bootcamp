@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './css/normalize.css'
 import './css/app.css'
-import bk from './pokemons/img/pokemon-back/bulbasaur-back.png'
-import bf from './pokemons/img/pokemon-front/bulbasaur-front.png'
-import ck from './pokemons/img/pokemon-front/charmander-front.png'
-import cf from './pokemons/img/pokemon-back/charmander-back.png'
+import { userContext } from './utils/context/userContext'
+import Battle from './components/pages/battle'
+import Home from './components/pages/home'
+import pokemonList from './utils/classes/pokemonsList'
 
 function App() {
 
-  const wait = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 
-  const myFunc = async () => {
-    setTest('1')
-    await wait(1000)
-    setMessage('attack!')
-    await wait(1000)
-    setTest('2')
+  const scyther = pokemonList.scyther(5)
+  const hitmonlee = pokemonList.hitmonlee(6)
+  
+  const currentUser = {
+    name: "orisailes",
+    money: 0,
+    pokemons: [
+      hitmonlee,
+      scyther
+    ]
   }
-
-  const [message, setMessage] = useState('nothing happen')
-  const [test, setTest] = useState('0')
+  console.log(currentUser);
+  const [user, setUser] = useState(currentUser)
 
   return (
-    <div style={{ height: "100vh", background: "cornsilk" }} className="App">
-      {/* {<div>{test}</div>} */}
-      {/* {<p>{message}</p>} */}
-      {/* <button onClick={myFunc}>click</button> */}
-      <img src={bf}></img>
-      <img src={bk}></img>
-      <img src={cf}></img>
-      <img src={ck}></img>
-    </div>
-  );
+    <BrowserRouter>
+      <Switch>
+        <userContext.Provider value={{ user, setUser }}>
+          <Route exact path="/battle" component={Battle} />
+          <Route exact path="/" component={Home} />
+        </userContext.Provider>
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
 export default App;

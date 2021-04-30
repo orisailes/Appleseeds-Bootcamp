@@ -1,0 +1,86 @@
+.stats-container {
+    height: 60%;
+    width: 30%;
+    background-color: #f6f5e1;
+    margin: 1rem;
+    border-radius: 5px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.179);
+    /* X    Y   SPREAD */
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+.stats-heading {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.stats-heading .type-img{
+    height: 7vh;
+    margin: auto 0;
+}
+
+.hp-container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+}
+
+.hp-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80%;
+    height: 3vh;
+
+}
+
+.hp-bar::-webkit-progress-bar {
+    border-radius: 5px;
+}
+
+.hp-bar::-webkit-progress-value {
+    background-color: #55D589;
+    border-radius: 5px;
+    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.35);
+}
+
+.enemy-pokemon .hp-bar {
+    float: right;
+}
+
+.exp-container {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 80%;
+}
+
+.exp-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1.5vh;
+}
+
+
+.exp-bar::-webkit-progress-bar {
+    border-radius: 3px;
+}
+
+.exp-bar::-webkit-progress-value {
+    border-radius: 3px;
+    background-color: #45CDF6;
+}
+
+
+.hp-container p{
+    margin:auto 10px;
+}
+
+.exp-container small{
+    margin:auto 4px;
+}
