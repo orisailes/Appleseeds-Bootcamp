@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonList.hitmonlee(16)
+    const fakeEnemyPokemon = pokemonList.hitmonlee(26)
 
 
     const { user, setUser } = useContext(userContext)
@@ -21,73 +21,71 @@ function Battle() {
     const [isPokemonChangeWanted, setIsPokemonChangeWanted] = useState(false)
     const [turnIsActive, setTurnIsActive] = useState(false)
     const [gameOver, setGameOver] = useState(false)
+    const [whoCauseDamage, setWhoCauseDamage] = useState({})
     const [message, setMessage] = useState('Battle Start!')
+
+    const wait = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    useEffect(() => {
+        user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
+    }, [])
+
+    useEffect(() => {
+        const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 150)
+        console.log(isPokemonLeft);
+        if(gameOver && isPokemonLeft){
+            //handle exp increse
+            console.log(whoCauseDamage);    
+            console.log('user won');
+        }else{
+            console.log('user die');
+        }
+    }, [gameOver])
 
     useEffect(() => {
         if (Object.keys(chosenPokemon).length > 0) {
+            console.log(whoCauseDamage);
             let newUser = _.cloneDeep(user)
             newUser.pokemons.find((poke, i) => {
                 if (poke.name === chosenPokemon.name) newUser.pokemons[i] = chosenPokemon
             })
             setUser(newUser)
             if (chosenPokemon.hp === 0) { // if user pokemon die
-                debugger
-                const isPokemonLeft = user.pokemons.every((pokemon) => pokemon.hp > 0)
-                if (isPokemonLeft) {
-                    const newPokemon = user.pokemons[Math.floor(Math.random() * user.pokemons.length)]
-                    while (newPokemon.hp === 0) {
-                        newPokemon = user.pokemons[Math.floor(Math.random() * user.pokemons.length)]
-                    }
-                    setChosenPokemon(newPokemon)
-                    console.log(newPokemon);
+                const nextPokemon = newUser.pokemons.find((pokemon) => pokemon.hp > 0) // check if some pokemon got hp left and take him
+                if (nextPokemon) {
+                    setChosenPokemon(nextPokemon)
                     setTurnIsActive(false)
                 }
-                if (!isPokemonLeft) {
+                if (!nextPokemon) {
                     setGameOver(true)
                 }
             }
         }
-        return (() => {
-            console.log('unmounted');
-            //TODO: save user new pokemon in atlas ad in context
-        })
     }, [chosenPokemon])
 
-    const wait = (ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
 
-    const handlePokemonChoose = (e) => {
-        const pokemonName = e.target.id
-        const pokemon = user.pokemons.find(poke => poke.name === pokemonName)
-        console.log(pokemon);
-        setChosenPokemon(pokemon)
-        setBattleStarted(true)
-    }
 
-    const handleChangePokemon = () => {
-        setIsPokemonChangeWanted(true)
-        console.log(user);
-        console.log(chosenPokemon);
-    }
-
-    const handleUserAttack = async (attack) => {
+    const handleUserAttack = async (attack) => {    //! battle manage
         setTurnIsActive(true)
         // await wait(250)
         setMessage(`${chosenPokemon.name.toUpperCase()} Use ${attack.toUpperCase()}!`)
         // await wait(1500)
         let enemyHelper = _.cloneDeep(enemyPokemon)
-        enemyHelper.hp -= 10
-        if (enemyHelper.hp < 0) enemyHelper.hp = 0
+        let userDamage = 10 //! calculate needed
+        if (enemyHelper.hp < userDamage) userDamage = enemyHelper.hp
+        enemyHelper.hp -= userDamage
+        const manageCausingDamageHelper = { ...whoCauseDamage }
+        manageCausingDamageHelper[chosenPokemon.name] += userDamage
+        setWhoCauseDamage(manageCausingDamageHelper)
         setEnemyPokemon(enemyHelper)
-        if (enemyHelper.hp !== 0) {
-            enemyTurn()
-        }
+        if (enemyHelper.hp !== 0) enemyTurn()
         if (enemyHelper.hp === 0) {
-            handlePokemonDead(enemyPokemon, 'enemy')
+            console.log(whoCauseDamage);
+            setGameOver(true)
             setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
         }
-
         // setMessage(`${}`)
         // await wait(500)
     }
@@ -109,18 +107,18 @@ function Battle() {
         }
     }
 
-    const handlePokemonDead = (belonging) => {
-        // console.log(belonging);
-        // if (belonging === 'user') {
-        //     debugger
+    const handlePokemonChoose = (e) => {
+        const pokemonName = e.target.id
+        const pokemon = user.pokemons.find(poke => poke.name === pokemonName)
+        console.log(pokemon);
+        setChosenPokemon(pokemon)
+        setBattleStarted(true)
+    }
 
-        // } else {
-        //     console.log('cp dead');
-        // }
-        // //TODO: change pokemon if userPokemonHp is > 0
-        // //TODO: else, user is lose
-        // //TODO: handle enemy dead
-        // setTurnIsActive(false)
+    const handleChangePokemon = () => {
+        setIsPokemonChangeWanted(true)
+        console.log(user);
+        console.log(chosenPokemon);
     }
 
     const handleRun = () => {
@@ -131,7 +129,7 @@ function Battle() {
         <div
             className="battle-page"
         >
-            {gameOver && <div className="hider"></div>}
+            {gameOver && <div className="hider">{JSON.stringify(whoCauseDamage)}</div>}
             {
                 isPokemonChangeWanted &&
                 <div className="hider">
@@ -148,7 +146,7 @@ function Battle() {
                                         className="user-individual-pokemon">
                                         <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
                                         <h3>Lv: {poke.level}</h3>
-                                        <h3>HP: {poke.maxHp / poke.hp * 100}%</h3>
+                                        <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
                                     </div>
                                 )
                             })}
@@ -167,7 +165,7 @@ function Battle() {
             </div>
             <div className="message-box-container">
                 {
-                    isBattleWanted ?
+                    isBattleWanted ? //* first user "chatting" -> choose between run and battle
                         battleStarted === false &&
                         <div className="message-box">{user.pokemons.map((poke) => {
                             return (
@@ -203,7 +201,7 @@ function Battle() {
                             </div>
                 }
                 {
-                    (battleStarted && isBattleWanted) &&
+                    (battleStarted && isBattleWanted) && //* if user want to fight
                     <>
                         <div className="message-box">
                             <div className="message">

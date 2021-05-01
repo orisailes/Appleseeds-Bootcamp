@@ -3,11 +3,13 @@ import StatsContainer from './StatsContainer'
 import '../../css/pokemon.css';
 
 function Pokemon({ isUserPokemon, pokemon }) {
-    
+
     return (
         <div className={`pokemon  ${isUserPokemon ? "user-pokemon" : "enemy-pokemon"}`}>
             <img
-                className={`${isUserPokemon ? "user-pokemon-img" : "enemy-pokemon-img"}`} src={require(`../../pokemons/img/pokemon-${isUserPokemon ? "back" : "front"}/${pokemon.name}.png`).default}
+                className={`${isUserPokemon ? "user-pokemon-img" : "enemy-pokemon-img"}`}
+                src={require(`../../pokemons/img/pokemon-${isUserPokemon ? "back" : "front"}/${pokemon.name}.png`).default}
+                alt={pokemon.name}
             >
             </img>
             <StatsContainer pokemon={pokemon} isUserPokemon={isUserPokemon} />
