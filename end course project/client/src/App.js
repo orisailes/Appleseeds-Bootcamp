@@ -12,7 +12,7 @@ function App() {
 
 
   const scyther = pokemonList.scyther(1)
-  const hitmonlee = pokemonList.hitmonlee(6)
+  const hitmonlee = pokemonList.hitmonlee(1)
 
   const currentUser = {
     name: "orisailes",

@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonList.hitmonlee(21)
+    const fakeEnemyPokemon = pokemonList.hitmonlee(1)
 
 
     const { user, setUser } = useContext(userContext)
@@ -63,11 +63,13 @@ function Battle() {
                     userPokemonRef.current.classList.remove("user-pokemon-die")
                     if (nextPokemon) {
                         setChosenPokemon(nextPokemon)
-                        setTurnIsActive(false)
                     }
                     if (!nextPokemon) {
                         setGameOver(true)
                     }
+                }
+                if(chosenPokemon.hp !== 0){
+                    setTurnIsActive(false)
                 }
             }
         }
@@ -124,6 +126,7 @@ function Battle() {
             setMessage(`It wasn't very effective...`)
             await wait(1000)
             enemyTurn()
+            setTurnIsActive(false)
         }
     }
 
@@ -151,11 +154,11 @@ function Battle() {
             }
             setChosenPokemon(userHelper)
             await wait(500)
-            setTurnIsActive(false)
         }
         if (isMiss) {
             setMessage(`It wasn't very effective...`)
             await wait(1500)
+            setTurnIsActive(false)
         }
     }
 
