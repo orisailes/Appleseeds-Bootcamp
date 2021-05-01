@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
 import '../../css/battle.css'
 import Button from '../utils/Button'
@@ -7,7 +7,7 @@ import Pokemon from '../utils/Pokemon'
 import pokemonList from '../../utils/classes/Pokemon/pokemonsList'
 import _ from 'lodash';
 
-function Battle () {
+function Battle() {
 
     const fakeEnemyPokemon = pokemonList.hitmonlee(16)
 
@@ -20,19 +20,32 @@ function Battle () {
     const [displayOptions, setDisplayOptions] = useState(true)
     const [isPokemonChangeWanted, setIsPokemonChangeWanted] = useState(false)
     const [turnIsActive, setTurnIsActive] = useState(false)
+    const [gameOver, setGameOver] = useState(false)
     const [message, setMessage] = useState('Battle Start!')
 
     useEffect(() => {
-        console.log(user);
-        console.log(chosenPokemon)
         if (Object.keys(chosenPokemon).length > 0) {
             let newUser = _.cloneDeep(user)
             newUser.pokemons.find((poke, i) => {
                 if (poke.name === chosenPokemon.name) newUser.pokemons[i] = chosenPokemon
             })
-            debugger
-            console.log(newUser);
             setUser(newUser)
+            if (chosenPokemon.hp === 0) { // if user pokemon die
+                debugger
+                const isPokemonLeft = user.pokemons.every((pokemon) => pokemon.hp > 0)
+                if (isPokemonLeft) {
+                    const newPokemon = user.pokemons[Math.floor(Math.random() * user.pokemons.length)]
+                    while (newPokemon.hp === 0) {
+                        newPokemon = user.pokemons[Math.floor(Math.random() * user.pokemons.length)]
+                    }
+                    setChosenPokemon(newPokemon)
+                    console.log(newPokemon);
+                    setTurnIsActive(false)
+                }
+                if (!isPokemonLeft) {
+                    setGameOver(true)
+                }
+            }
         }
         return (() => {
             console.log('unmounted');
@@ -67,13 +80,16 @@ function Battle () {
         enemyHelper.hp -= 10
         if (enemyHelper.hp < 0) enemyHelper.hp = 0
         setEnemyPokemon(enemyHelper)
-        if (enemyHelper.hp === 0) {
-            setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
-            handlePokemonDead(enemyPokemon, 'enemy')
+        if (enemyHelper.hp !== 0) {
+            enemyTurn()
         }
+        if (enemyHelper.hp === 0) {
+            handlePokemonDead(enemyPokemon, 'enemy')
+            setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
+        }
+
         // setMessage(`${}`)
         // await wait(500)
-        enemyTurn()
     }
 
     const enemyTurn = async () => {
@@ -87,24 +103,23 @@ function Battle () {
         if (userHelper.hp < 0) userHelper.hp = 0
         setChosenPokemon(userHelper)
         // await wait(500)
-        if (userHelper.hp === 0) {
-            setMessage(`${chosenPokemon.name.toUpperCase()} Is DEAD!`)
-            handlePokemonDead(chosenPokemon, 'user')
-        } else {
+        if (userHelper.hp !== 0) {
             setMessage(`${chosenPokemon.name.toUpperCase()} Turn...`)
             setTurnIsActive(false)
         }
     }
 
-    const handlePokemonDead = (pokemon, belonging) => {
-        console.log(pokemon, belonging);
-        const userPokemonsHP = user.pokemons.reduce((acc, poke) => {
-            return acc + poke.hp
-        }, 0)
-        console.log(userPokemonsHP);
-        //TODO: change pokemon if userPokemonHp is > 0
-        //TODO: else, user is lose
-        //TODO: handle enemy dead
+    const handlePokemonDead = (belonging) => {
+        // console.log(belonging);
+        // if (belonging === 'user') {
+        //     debugger
+
+        // } else {
+        //     console.log('cp dead');
+        // }
+        // //TODO: change pokemon if userPokemonHp is > 0
+        // //TODO: else, user is lose
+        // //TODO: handle enemy dead
         // setTurnIsActive(false)
     }
 
@@ -116,6 +131,7 @@ function Battle () {
         <div
             className="battle-page"
         >
+            {gameOver && <div className="hider"></div>}
             {
                 isPokemonChangeWanted &&
                 <div className="hider">
@@ -134,7 +150,6 @@ function Battle () {
                                         <h3>Lv: {poke.level}</h3>
                                         <h3>HP: {poke.maxHp / poke.hp * 100}%</h3>
                                     </div>
-
                                 )
                             })}
                         </div>
