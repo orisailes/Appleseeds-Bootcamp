@@ -1,8 +1,8 @@
-import React from 'react';
+import React,{useRef} from 'react';
 import StatsContainer from './StatsContainer'
 import '../../css/pokemon.css';
 
-function Pokemon({ isUserPokemon, pokemon }) {
+function Pokemon({ isUserPokemon, pokemon,forwardedRef }) {
 
     return (
         <div className={`pokemon  ${isUserPokemon ? "user-pokemon" : "enemy-pokemon"}`}>
@@ -10,6 +10,7 @@ function Pokemon({ isUserPokemon, pokemon }) {
                 className={`${isUserPokemon ? "user-pokemon-img" : "enemy-pokemon-img"}`}
                 src={require(`../../pokemons/img/pokemon-${isUserPokemon ? "back" : "front"}/${pokemon.name}.png`).default}
                 alt={pokemon.name}
+                ref={forwardedRef}
             >
             </img>
             <StatsContainer pokemon={pokemon} isUserPokemon={isUserPokemon} />

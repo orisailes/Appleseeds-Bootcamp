@@ -131,6 +131,82 @@
     height: 25vh;
 }
 
+.user-attacks{
+    animation: userAttack 0.25s backwards ease-in-out;
+}
+
+.enemy-attacks{
+    animation: enemyAttack 0.25s backwards ease-in-out;
+}
+
+.get-hurt{
+    animation: getHurt 0.5s backwards ease-in-out;
+}
+
+.user-pokemon-die{
+    animation: userPokemonDie 0.3s forwards linear;
+}
+.enemy-pokemon-die{
+    animation: enemyPokemonDie 0.35s forwards linear;
+}
+
+@keyframes userPokemonDie{
+    to{
+        transform: translateY(30vh);
+    }
+}
+@keyframes enemyPokemonDie{
+    to{
+        transform: translateX(20vw);
+    }
+}
+
+@keyframes getHurt{
+    10%{
+        opacity: 0.2;
+    }
+    20%{
+        opacity: 1;
+    }
+    30%{
+        opacity: 0.2;
+    }
+    40%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0.2;
+    }
+    60%{
+        opacity: 1;
+    }
+    70%{
+        opacity: 0.2;
+    }
+    80%{
+        opacity: 1;
+    }
+    90%{
+        opacity: 0.2;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes userAttack {
+    50%{
+        transform: translate(10rem,-2.5rem) ;
+    }
+  
+}
+
+@keyframes enemyAttack {
+    50%{
+        transform: translate(-10rem,2.5rem) ;
+    }
+}
+
 @keyframes revelEnemyStats {
     from {
         transform: translateX(-35vw);

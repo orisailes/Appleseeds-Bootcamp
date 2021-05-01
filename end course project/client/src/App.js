@@ -11,7 +11,7 @@ import pokemonList from './utils/classes/Pokemon/pokemonsList'
 function App() {
 
 
-  const scyther = pokemonList.scyther(5)
+  const scyther = pokemonList.scyther(1)
   const hitmonlee = pokemonList.hitmonlee(6)
 
   const currentUser = {

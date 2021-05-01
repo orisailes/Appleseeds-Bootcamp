@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
 import '../../css/battle.css'
@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonList.hitmonlee(26)
+    const fakeEnemyPokemon = pokemonList.hitmonlee(21)
 
 
     const { user, setUser } = useContext(userContext)
@@ -23,6 +23,8 @@ function Battle() {
     const [gameOver, setGameOver] = useState(false)
     const [whoCauseDamage, setWhoCauseDamage] = useState({})
     const [message, setMessage] = useState('Battle Start!')
+    const userPokemonRef = useRef(null)
+    const enemyPokemonRef = useRef(null)
 
     const wait = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -34,92 +36,141 @@ function Battle() {
 
     useEffect(() => {
         const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 150)
-        console.log(isPokemonLeft);
-        if(gameOver && isPokemonLeft){
-            //handle exp increse
-            console.log(whoCauseDamage);    
+        if (gameOver && isPokemonLeft) {
+            //! handle exp increse
+            console.log(whoCauseDamage);
             console.log('user won');
-        }else{
+        }
+        if (gameOver) {
             console.log('user die');
         }
     }, [gameOver])
 
     useEffect(() => {
-        if (Object.keys(chosenPokemon).length > 0) {
-            console.log(whoCauseDamage);
-            let newUser = _.cloneDeep(user)
-            newUser.pokemons.find((poke, i) => {
-                if (poke.name === chosenPokemon.name) newUser.pokemons[i] = chosenPokemon
-            })
-            setUser(newUser)
-            if (chosenPokemon.hp === 0) { // if user pokemon die
-                const nextPokemon = newUser.pokemons.find((pokemon) => pokemon.hp > 0) // check if some pokemon got hp left and take him
-                if (nextPokemon) {
-                    setChosenPokemon(nextPokemon)
-                    setTurnIsActive(false)
-                }
-                if (!nextPokemon) {
-                    setGameOver(true)
+
+        const chosenPokemonChanged = async () => {
+            if (Object.keys(chosenPokemon).length > 0) {
+                debugger
+                let newUser = _.cloneDeep(user)
+                newUser.pokemons.find((poke, i) => {
+                    if (poke.name === chosenPokemon.name) newUser.pokemons[i] = chosenPokemon
+                })
+                setUser(newUser)
+                if (chosenPokemon.hp === 0) { // if user pokemon die
+                    const nextPokemon = newUser.pokemons.find((pokemon) => pokemon.hp > 0) // check if some pokemon got hp left and take him
+                    userPokemonRef.current.classList.add("user-pokemon-die")
+                    await wait(1500)
+                    userPokemonRef.current.classList.remove("user-pokemon-die")
+                    if (nextPokemon) {
+                        setChosenPokemon(nextPokemon)
+                        setTurnIsActive(false)
+                    }
+                    if (!nextPokemon) {
+                        setGameOver(true)
+                    }
                 }
             }
         }
+        chosenPokemonChanged()
     }, [chosenPokemon])
 
-
-
-    const handleUserAttack = async (attack) => {    //! battle manage
-        setTurnIsActive(true)
-        // await wait(250)
-        setMessage(`${chosenPokemon.name.toUpperCase()} Use ${attack.toUpperCase()}!`)
-        // await wait(1500)
-        let enemyHelper = _.cloneDeep(enemyPokemon)
-        let userDamage = 10 //! calculate needed
-        if (enemyHelper.hp < userDamage) userDamage = enemyHelper.hp
-        enemyHelper.hp -= userDamage
-        const manageCausingDamageHelper = { ...whoCauseDamage }
-        manageCausingDamageHelper[chosenPokemon.name] += userDamage
-        setWhoCauseDamage(manageCausingDamageHelper)
-        setEnemyPokemon(enemyHelper)
-        if (enemyHelper.hp !== 0) enemyTurn()
-        if (enemyHelper.hp === 0) {
-            console.log(whoCauseDamage);
-            setGameOver(true)
-            setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
+    useEffect(() => {
+        const enemyPokemonChanged = async () => {
+            if (enemyPokemon.hp <= 0) {
+                setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
+                await wait(1000)
+                enemyPokemonRef.current.classList.add("enemy-pokemon-die")
+                await wait(1500)
+                setGameOver(true)
+            }
         }
-        // setMessage(`${}`)
-        // await wait(500)
+        enemyPokemonChanged()
+    }, [enemyPokemon])
+
+    const handleUserAttack = async (attack) => {
+
+        //!better solution needed! not working!
+        userPokemonRef.current && userPokemonRef.current.classList.remove("user-pokemon-img")
+        enemyPokemonRef.current && enemyPokemonRef.current.classList.remove("enemy-pokemon-img")
+
+
+        //! battle manage
+        setTurnIsActive(true)
+        setMessage(`${chosenPokemon.name.toUpperCase()} Use ${attack.toUpperCase()}!`)
+        userPokemonRef.current.classList.add("user-attacks")
+        await wait(750)
+        userPokemonRef.current.classList.remove("user-attacks")
+        let enemyHelper = _.cloneDeep(enemyPokemon)
+        let isMiss = false
+        if (!isMiss) {
+            enemyPokemonRef.current.classList.add("get-hurt")
+            await wait(500)
+            enemyPokemonRef.current.classList.remove("get-hurt")
+            let userDamage = 10 //TODO: calculate needed
+            if (enemyHelper.hp < userDamage) userDamage = enemyHelper.hp
+            enemyHelper.hp -= userDamage
+            const manageCausingDamageHelper = { ...whoCauseDamage }
+            manageCausingDamageHelper[chosenPokemon.name] += userDamage
+            setWhoCauseDamage(manageCausingDamageHelper)
+            setEnemyPokemon(enemyHelper)
+            if (enemyHelper.hp !== 0) enemyTurn()
+            if (enemyHelper.hp === 0) {
+                setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
+                await wait(1500)
+                // using use effect above, to do better animation job
+            }
+        }
+        if (isMiss) {
+            setMessage(`It wasn't very effective...`)
+            await wait(1000)
+            enemyTurn()
+        }
     }
 
     const enemyTurn = async () => {
         setMessage(`Its ${enemyPokemon.name.toUpperCase()} Turn...`)
-        // await wait(1500)
         let randomEnemyAttack = enemyPokemon.attacks[Math.floor(Math.random() * enemyPokemon.attacks.length)]
         setMessage(`${enemyPokemon.name.toUpperCase()} Choose ${randomEnemyAttack.replace("_", " ").toUpperCase()}!`)
-        // await wait(1500)
+        await wait(750)
+        enemyPokemonRef.current.classList.add("enemy-attacks")
+        await wait(500)
+        enemyPokemonRef.current.classList.remove("enemy-attacks")
         let userHelper = _.cloneDeep(chosenPokemon)
-        userHelper.hp -= 10
-        if (userHelper.hp < 0) userHelper.hp = 0
-        setChosenPokemon(userHelper)
-        // await wait(500)
-        if (userHelper.hp !== 0) {
-            setMessage(`${chosenPokemon.name.toUpperCase()} Turn...`)
+        let isMiss = false
+        if (!isMiss) {
+            userPokemonRef.current.classList.add("get-hurt")
+            await wait(500)
+            userPokemonRef.current.classList.remove("get-hurt")
+            let enemyDamage = 10 //TODO: calculate needed!
+            userHelper.hp -= enemyDamage
+            if (userHelper.hp < 0) {
+                userHelper.hp = 0
+                setMessage(`${userHelper.name.toUpperCase()} DEAD!`)
+                await wait(1500)
+
+            }
+            setChosenPokemon(userHelper)
+            await wait(500)
             setTurnIsActive(false)
+        }
+        if (isMiss) {
+            setMessage(`It wasn't very effective...`)
+            await wait(1500)
         }
     }
 
     const handlePokemonChoose = (e) => {
         const pokemonName = e.target.id
         const pokemon = user.pokemons.find(poke => poke.name === pokemonName)
-        console.log(pokemon);
-        setChosenPokemon(pokemon)
+        pokemon.hp > 0 && setChosenPokemon(pokemon)
         setBattleStarted(true)
     }
 
     const handleChangePokemon = () => {
         setIsPokemonChangeWanted(true)
-        console.log(user);
-        console.log(chosenPokemon);
     }
+
+
 
     const handleRun = () => {
         console.log('run!!');
@@ -155,11 +206,11 @@ function Battle() {
                 </div>
             }
             <div className="pokemons-container">
-                <Pokemon isUserPokemon={false} pokemon={enemyPokemon} />
+                <Pokemon forwardedRef={enemyPokemonRef} isUserPokemon={false} pokemon={enemyPokemon} />
                 {
                     battleStarted &&
                     <>
-                        <Pokemon isUserPokemon={true} pokemon={chosenPokemon} />
+                        <Pokemon forwardedRef={userPokemonRef} isUserPokemon={true} pokemon={chosenPokemon} />
                     </>
                 }
             </div>
