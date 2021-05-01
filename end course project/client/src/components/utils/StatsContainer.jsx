@@ -7,8 +7,7 @@ import '../../css/stats.css';
 function Stats({ pokemon, isUserPokemon }) {
     return (
 
-        <div
-            className="stats-container">
+        <div className={`stats-container ${isUserPokemon?"user-stats-container":"enemy-stats-container"}`}>
 
             <div className="stats-heading">
                 <h3>{pokemon.name.toUpperCase()}</h3>

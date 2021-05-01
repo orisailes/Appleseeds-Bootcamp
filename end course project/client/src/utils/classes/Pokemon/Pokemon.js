@@ -10,6 +10,7 @@ class Pokemon {
         this.level = level
         this.type = type
         this.attacks = attacks
+        this.exp = 0
     }
 }
 module.exports = Pokemon

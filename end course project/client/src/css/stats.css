@@ -18,7 +18,7 @@
     justify-content: space-evenly;
 }
 
-.stats-heading .type-img{
+.stats-heading .type-img {
     height: 7vh;
     margin: auto 0;
 }
@@ -32,21 +32,17 @@
 }
 
 .hp-bar {
-    -webkit-appearance: none;
-    appearance: none;
     width: 80%;
     height: 3vh;
-
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
 }
 
-.hp-bar::-webkit-progress-bar {
+.hp-bar .progress {
     border-radius: 5px;
-}
-
-.hp-bar::-webkit-progress-value {
-    background-color: #55D589;
-    border-radius: 5px;
-    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.35);
+    height: 100%;
+    background-color: rgb(62, 122, 235);
+    transition: all 0.5s linear;
 }
 
 .enemy-pokemon .hp-bar {
@@ -61,30 +57,32 @@
 }
 
 .exp-bar {
-    -webkit-appearance: none;
-    appearance: none;
+    width: 40%;
     height: 1.5vh;
-}
-
-
-.exp-bar::-webkit-progress-bar {
     border-radius: 3px;
+    background-color: rgb(111, 111, 111);
 }
 
-.exp-bar::-webkit-progress-value {
+.exp-progress {
     border-radius: 3px;
-    background-color: #45CDF6;
+    height: 100%;
+    background-color: rgb(62, 122, 235);
+    transition: all 0.5s linear;
+}
+
+.hp-container p {
+    margin: auto 10px;
+}
+
+.exp-container small {
+    margin: auto 4px;
 }
 
 
-.hp-container p{
-    margin:auto 10px;
+.user-stats-container {
+    animation: revelUserStats 1s forwards;
 }
 
-.exp-container small{
-    margin:auto 4px;
-}
-
-.stats-container{
-    animation:revelEnemyStats 1s forwards
+.enemy-stats-container {
+    animation: revelEnemyStats 1s forwards;
 }

@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
-import { motion } from 'framer-motion'
 import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
 import pokemonList from '../../utils/classes/Pokemon/pokemonsList'
+import _ from 'lodash';
 
-const Battle = () => {
+function Battle () {
 
     const fakeEnemyPokemon = pokemonList.hitmonlee(16)
 
@@ -16,10 +17,22 @@ const Battle = () => {
     const [chosenPokemon, setChosenPokemon] = useState({})
     const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
     const [battleStarted, setBattleStarted] = useState(false)
+    const [displayOptions, setDisplayOptions] = useState(true)
+    const [isPokemonChangeWanted, setIsPokemonChangeWanted] = useState(false)
+    const [turnIsActive, setTurnIsActive] = useState(false)
+    const [message, setMessage] = useState('Battle Start!')
 
     useEffect(() => {
+        console.log(user);
+        console.log(chosenPokemon)
         if (Object.keys(chosenPokemon).length > 0) {
-            console.log(chosenPokemon);
+            let newUser = _.cloneDeep(user)
+            newUser.pokemons.find((poke, i) => {
+                if (poke.name === chosenPokemon.name) newUser.pokemons[i] = chosenPokemon
+            })
+            debugger
+            console.log(newUser);
+            setUser(newUser)
         }
         return (() => {
             console.log('unmounted');
@@ -32,20 +45,102 @@ const Battle = () => {
     }
 
     const handlePokemonChoose = (e) => {
-        const pokemonName = e.target.innerText
-        setChosenPokemon(user.pokemons.find(poke => poke.name === pokemonName))
+        const pokemonName = e.target.id
+        const pokemon = user.pokemons.find(poke => poke.name === pokemonName)
+        console.log(pokemon);
+        setChosenPokemon(pokemon)
         setBattleStarted(true)
     }
 
+    const handleChangePokemon = () => {
+        setIsPokemonChangeWanted(true)
+        console.log(user);
+        console.log(chosenPokemon);
+    }
+
+    const handleUserAttack = async (attack) => {
+        setTurnIsActive(true)
+        // await wait(250)
+        setMessage(`${chosenPokemon.name.toUpperCase()} Use ${attack.toUpperCase()}!`)
+        // await wait(1500)
+        let enemyHelper = _.cloneDeep(enemyPokemon)
+        enemyHelper.hp -= 10
+        if (enemyHelper.hp < 0) enemyHelper.hp = 0
+        setEnemyPokemon(enemyHelper)
+        if (enemyHelper.hp === 0) {
+            setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
+            handlePokemonDead(enemyPokemon, 'enemy')
+        }
+        // setMessage(`${}`)
+        // await wait(500)
+        enemyTurn()
+    }
+
+    const enemyTurn = async () => {
+        setMessage(`Its ${enemyPokemon.name.toUpperCase()} Turn...`)
+        // await wait(1500)
+        let randomEnemyAttack = enemyPokemon.attacks[Math.floor(Math.random() * enemyPokemon.attacks.length)]
+        setMessage(`${enemyPokemon.name.toUpperCase()} Choose ${randomEnemyAttack.replace("_", " ").toUpperCase()}!`)
+        // await wait(1500)
+        let userHelper = _.cloneDeep(chosenPokemon)
+        userHelper.hp -= 10
+        if (userHelper.hp < 0) userHelper.hp = 0
+        setChosenPokemon(userHelper)
+        // await wait(500)
+        if (userHelper.hp === 0) {
+            setMessage(`${chosenPokemon.name.toUpperCase()} Is DEAD!`)
+            handlePokemonDead(chosenPokemon, 'user')
+        } else {
+            setMessage(`${chosenPokemon.name.toUpperCase()} Turn...`)
+            setTurnIsActive(false)
+        }
+    }
+
+    const handlePokemonDead = (pokemon, belonging) => {
+        console.log(pokemon, belonging);
+        const userPokemonsHP = user.pokemons.reduce((acc, poke) => {
+            return acc + poke.hp
+        }, 0)
+        console.log(userPokemonsHP);
+        //TODO: change pokemon if userPokemonHp is > 0
+        //TODO: else, user is lose
+        //TODO: handle enemy dead
+        // setTurnIsActive(false)
+    }
+
+    const handleRun = () => {
+        console.log('run!!');
+    }
 
     return (
-        <motion.div
-         exit={{opacity:0}}
-        animate={{opacity:1}}
-        initial={{opacity:0}}
-        transition={{duration:1}}
-          className="battle-page"
-         >
+        <div
+            className="battle-page"
+        >
+            {
+                isPokemonChangeWanted &&
+                <div className="hider">
+                    <>
+                        <div className="user-pokemons-container">
+                            {user.pokemons.map((poke) => {
+                                return (
+                                    <div
+                                        key={poke.name}
+                                        onClick={() => {
+                                            setChosenPokemon(poke)
+                                            setIsPokemonChangeWanted(false)
+                                        }}
+                                        className="user-individual-pokemon">
+                                        <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
+                                        <h3>Lv: {poke.level}</h3>
+                                        <h3>HP: {poke.maxHp / poke.hp * 100}%</h3>
+                                    </div>
+
+                                )
+                            })}
+                        </div>
+                    </>
+                </div>
+            }
             <div className="pokemons-container">
                 <Pokemon isUserPokemon={false} pokemon={enemyPokemon} />
                 {
@@ -62,21 +157,96 @@ const Battle = () => {
                         <div className="message-box">{user.pokemons.map((poke) => {
                             return (
                                 <React.Fragment key={poke.name}>
-                                    <Button onClick={(e) => handlePokemonChoose(e)} text={poke.name} />
+
+                                    <Button
+                                        turnIsActive={turnIsActive}
+                                        id={poke.name}
+                                        onClick={(e) => handlePokemonChoose(e)}
+                                        text={poke.name} />
+
                                 </React.Fragment>
                             )
                         })}</div>
                         :
                         isBattleWanted === false ?
-                            <div>Run</div>
+                            handleRun()
                             :
                             <div className="message-box">
-                                <Button onClick={() => setIsBattleWanted(false)} text="RUN" />
-                                <Button onClick={() => setIsBattleWanted(true)} text="BATTLE" />
+                                <div className="first-btn">
+
+                                    <Button
+                                        turnIsActive={turnIsActive}
+                                        onClick={() => setIsBattleWanted(false)}
+                                        text="run" />
+
+                                    <Button
+                                        turnIsActive={turnIsActive}
+                                        onClick={() => setIsBattleWanted(true)}
+                                        text="battle" />
+
+                                </div>
                             </div>
                 }
+                {
+                    (battleStarted && isBattleWanted) &&
+                    <>
+                        <div className="message-box">
+                            <div className="message">
+                                <h2>{message}</h2>
+                            </div>
+                            <div className="battle-btn-container">
+                                {
+                                    displayOptions ?
+                                        <>
+                                            <Button
+                                                turnIsActive={turnIsActive} onClick={() => {
+                                                    {
+                                                        setDisplayOptions(false)
+                                                    }
+                                                }}
+                                                text="fight" />
+
+                                            <Button
+                                                turnIsActive={turnIsActive}
+                                                onClick={handleRun}
+                                                text="run" />
+
+                                            <Button
+                                                turnIsActive={turnIsActive}
+                                                className="pokemon-switch-btn"
+                                                onClick={() => handleChangePokemon()} text="pokemons" />
+                                        </>
+                                        :
+                                        <>
+
+                                            {chosenPokemon.attacks.map((attack) => {
+
+                                                return (
+                                                    <React.Fragment key={attack}>
+
+                                                        <Button
+                                                            turnIsActive={turnIsActive}
+                                                            className="attack-btn"
+                                                            text={attack}
+                                                            onClick={() => handleUserAttack(attack)} />
+
+                                                    </React.Fragment>
+                                                )
+                                            })}
+
+                                            <Button
+                                                turnIsActive={turnIsActive}
+                                                className="pokemon-switch-btn"
+                                                onClick={() => handleChangePokemon()} text="pokemons" />
+
+                                        </>
+                                }
+                            </div>
+                        </div>
+                    </>
+                }
             </div>
-        </motion.div>
+        </div>
     )
 }
 
