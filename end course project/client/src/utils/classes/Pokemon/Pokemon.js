@@ -42,7 +42,8 @@ class Pokemon {
     }
 
     calculateDamage() {
-
+        //! damage = POW * SKILL(attack name) * (OPPONENT.DEF/100)
+        // to recive??
     }
 
 }

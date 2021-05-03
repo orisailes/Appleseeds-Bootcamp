@@ -7,7 +7,7 @@ const Pokemon = require('./Pokemon')
 // stats are powered by 0.65 to make exponential series
 
 const scyther = (level) => {
-    const promoter = 0.4
+    const promoter = 0.5
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10 && level <= 15) attacks = ["cut", "punch", "heal"]
