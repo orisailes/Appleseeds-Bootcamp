@@ -1,3 +1,5 @@
+const attacks = require('./attacks')
+
 class Pokemon {
     constructor(name, maxHp, defense, accurate, power, level, type, attacks, dodge) {
         this.name = name
@@ -15,10 +17,10 @@ class Pokemon {
     }
 
     isHitTarget(opponent) {
-        //! test needed
+
         let result = this.accurate - opponent.dodge
         let isMiss = Boolean
-        debugger
+
         switch (true) {
             case (result === 0):
                 result = 0.05
@@ -35,16 +37,40 @@ class Pokemon {
         const tester = Math.random() * 1
         if (tester > result) isMiss = false
         if (tester <= result) isMiss = true
-        // console.log(tester)
-        // console.log(result)
-        // console.log(isMiss)
         return isMiss
     }
 
-    calculateDamage() {
-        //! damage = POW * SKILL(attack name) * (OPPONENT.DEF/100)
-        // to recive??
+    calculateDamage(opponent = "", attack) {
+        if (attack !== "heal" && attack !== "shield") {
+            return (
+                Math.floor(
+                    attacks(attack) + 1 + this.power *
+                    Math.abs(opponent.defense / 100 - 1) *
+                    (Math.random() * (1.25 - 0.75) + 0.75)
+                )
+            )
+        }
+        if (attack === "shield" || attack === "heal") return "invalid attack"
     }
 
+    increseHp(attack) {
+
+        if (attack === "heal") {
+            const newHp = Math.floor(this.hp += this.maxHp * (Math.random() * (0.15 - 0.08) + 0.08))
+            return newHp >= this.maxHp ? this.maxHp : newHp
+        }
+        if (attack !== "heal") return "invalid hp increase"
+    }
+
+    increseDefense(attack) {
+        if (attack === "shield") {
+            const newDef = Math.round(this.defense += this.defense * (Math.random() * (0.15 - 0.08) + 0.08))
+            return newDef
+        }
+        if (attack !== "shield") return "invalid defense increase"
+    }
 }
+
+
+
 module.exports = Pokemon

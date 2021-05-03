@@ -9,9 +9,9 @@ import _ from 'lodash';
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonsGenerator.hitmonlee(1)
+    const fakeEnemyPokemon = pokemonsGenerator.scyther(1)
 
-
+  //TODO:merge user and enemy battle functions. make exp util
     const { user, setUser } = useContext(userContext)
     const [isBattleWanted, setIsBattleWanted] = useState(null)
     const [chosenPokemon, setChosenPokemon] = useState({})
@@ -67,7 +67,7 @@ function Battle() {
                         setGameOver(true)
                     }
                 }
-                if(chosenPokemon.hp !== 0){
+                if (chosenPokemon.hp !== 0) {
                     setTurnIsActive(false)
                 }
             }
@@ -76,6 +76,7 @@ function Battle() {
     }, [chosenPokemon])
 
     useEffect(() => {
+      debugger
         const enemyPokemonChanged = async () => {
             if (enemyPokemon.hp <= 0) {
                 setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
@@ -94,57 +95,84 @@ function Battle() {
         userPokemonRef.current && userPokemonRef.current.classList.remove("user-pokemon-img")
         enemyPokemonRef.current && enemyPokemonRef.current.classList.remove("enemy-pokemon-img")
 
-       console.log(chosenPokemon);
         //! battle manage
+
         setTurnIsActive(true)
         setMessage(`${chosenPokemon.name.toUpperCase()} Use ${attack.toUpperCase()}!`)
-        userPokemonRef.current.classList.add("user-attacks")
-        await wait(750)
-        userPokemonRef.current.classList.remove("user-attacks")
         let enemyHelper = _.cloneDeep(enemyPokemon)
         let isMiss = chosenPokemon.isHitTarget(enemyPokemon)
-        if (!isMiss) {
+        let statsCharged = false
+        if (attack === "heal" || attack === "shield") {
+            await handleStatsCharged(chosenPokemon, attack)
+            statsCharged = true
+            enemyTurn()
+        }
+        else {
+            userPokemonRef.current.classList.add("user-attacks")
+            await wait(750)
+            userPokemonRef.current.classList.remove("user-attacks")
+        }
+        if (!isMiss && !statsCharged) {
             enemyPokemonRef.current.classList.add("get-hurt")
             await wait(500)
             enemyPokemonRef.current.classList.remove("get-hurt")
-            let userDamage = 10 //TODO: calculate needed
+            let userDamage = chosenPokemon.calculateDamage(enemyPokemon, attack)
             if (enemyHelper.hp < userDamage) userDamage = enemyHelper.hp
             enemyHelper.hp -= userDamage
+            
             const manageCausingDamageHelper = { ...whoCauseDamage }
             manageCausingDamageHelper[chosenPokemon.name] += userDamage
+            
             setWhoCauseDamage(manageCausingDamageHelper)
             setEnemyPokemon(enemyHelper)
+            debugger
             if (enemyHelper.hp !== 0) enemyTurn()
             if (enemyHelper.hp === 0) {
                 setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
                 await wait(1500)
-                // using use effect above, to do better animation job
+                // using use effect above, to do better rendering job
             }
         }
-        if (isMiss) {
+        if (isMiss && !statsCharged) {
             await wait(500)
             setMessage(`It wasn't very effective...`)
             await wait(1500)
             enemyTurn()
         }
+
     }
 
     const enemyTurn = async () => {
         setMessage(`Its ${enemyPokemon.name.toUpperCase()} Turn...`)
         let randomEnemyAttack = enemyPokemon.attacks[Math.floor(Math.random() * enemyPokemon.attacks.length)]
         setMessage(`${enemyPokemon.name.toUpperCase()} Choose ${randomEnemyAttack.replace("_", " ").toUpperCase()}!`)
-        await wait(750)
-        enemyPokemonRef.current.classList.add("enemy-attacks")
-        await wait(500)
-        enemyPokemonRef.current.classList.remove("enemy-attacks")
+        let statsCharged = false
         let userHelper = _.cloneDeep(chosenPokemon)
         let isMiss = enemyPokemon.isHitTarget(chosenPokemon)
-        if (!isMiss) {
+        debugger
+        await wait(750)
+
+        if (randomEnemyAttack === "heal" || randomEnemyAttack === "shield") {
+            debugger
+            await handleStatsCharged(enemyPokemon, randomEnemyAttack)
+            statsCharged = true
+            let enemyHelper = _.cloneDeep(enemyPokemon)
+            setEnemyPokemon(enemyHelper)
+            setTurnIsActive(false)
+        } else {
+            enemyPokemonRef.current.classList.add("enemy-attacks")
+            await wait(500)
+            enemyPokemonRef.current.classList.remove("enemy-attacks")
+        }
+
+        if (!isMiss && !statsCharged) {
             userPokemonRef.current.classList.add("get-hurt")
             await wait(500)
             userPokemonRef.current.classList.remove("get-hurt")
-            let enemyDamage = 10 //TODO: calculate needed!
+
+            let enemyDamage = enemyPokemon.calculateDamage(chosenPokemon, randomEnemyAttack)
             userHelper.hp -= enemyDamage
+
             if (userHelper.hp < 0) {
                 userHelper.hp = 0
                 setMessage(`${userHelper.name.toUpperCase()} DEAD!`)
@@ -154,13 +182,15 @@ function Battle() {
             setChosenPokemon(userHelper)
             await wait(500)
         }
-        if (isMiss) {
+
+        if (isMiss && !statsCharged) {
             await wait(500)
             setMessage(`It wasn't very effective...`)
             await wait(1500)
             setMessage(`Its ${chosenPokemon.name.toUpperCase()} Turn...`)
             setTurnIsActive(false)
         }
+
     }
 
     const handlePokemonChoose = (e) => {
@@ -174,6 +204,19 @@ function Battle() {
         setIsPokemonChangeWanted(true)
     }
 
+    const handleStatsCharged = async (pokemon, attack) => {
+        switch (true) {
+            case (attack === "heal"): // can add in future more
+
+                pokemon.hp = pokemon.increseHp(attack)
+                break;
+            case (attack === "shield"): // can add in future more
+                pokemon.defense = pokemon.increseDefense(attack)
+                break;
+            default:
+                break;
+        }
+    }
 
 
     const handleRun = () => {
