@@ -42,15 +42,14 @@ function Battle() {
             console.log('user won');
         }
         if (gameOver) {
-            console.log('user die');
+            console.log('user die'); // not true
         }
     }, [gameOver])
 
     useEffect(() => {
-
         const chosenPokemonChanged = async () => {
             if (Object.keys(chosenPokemon).length > 0) {
-                debugger
+
                 let newUser = _.cloneDeep(user)
                 newUser.pokemons.find((poke, i) => {
                     if (poke.name === chosenPokemon.name) newUser.pokemons[i] = chosenPokemon
@@ -95,7 +94,7 @@ function Battle() {
         userPokemonRef.current && userPokemonRef.current.classList.remove("user-pokemon-img")
         enemyPokemonRef.current && enemyPokemonRef.current.classList.remove("enemy-pokemon-img")
 
-
+       console.log(chosenPokemon);
         //! battle manage
         setTurnIsActive(true)
         setMessage(`${chosenPokemon.name.toUpperCase()} Use ${attack.toUpperCase()}!`)
@@ -103,7 +102,7 @@ function Battle() {
         await wait(750)
         userPokemonRef.current.classList.remove("user-attacks")
         let enemyHelper = _.cloneDeep(enemyPokemon)
-        let isMiss = false
+        let isMiss = chosenPokemon.isHitTarget(enemyPokemon)
         if (!isMiss) {
             enemyPokemonRef.current.classList.add("get-hurt")
             await wait(500)
@@ -123,10 +122,10 @@ function Battle() {
             }
         }
         if (isMiss) {
+            await wait(500)
             setMessage(`It wasn't very effective...`)
-            await wait(1000)
+            await wait(1500)
             enemyTurn()
-            setTurnIsActive(false)
         }
     }
 
@@ -139,7 +138,7 @@ function Battle() {
         await wait(500)
         enemyPokemonRef.current.classList.remove("enemy-attacks")
         let userHelper = _.cloneDeep(chosenPokemon)
-        let isMiss = false
+        let isMiss = enemyPokemon.isHitTarget(chosenPokemon)
         if (!isMiss) {
             userPokemonRef.current.classList.add("get-hurt")
             await wait(500)
@@ -156,8 +155,10 @@ function Battle() {
             await wait(500)
         }
         if (isMiss) {
+            await wait(500)
             setMessage(`It wasn't very effective...`)
             await wait(1500)
+            setMessage(`Its ${chosenPokemon.name.toUpperCase()} Turn...`)
             setTurnIsActive(false)
         }
     }

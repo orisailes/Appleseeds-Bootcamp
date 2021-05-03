@@ -14,7 +14,8 @@ const scyther = (level) => {
         3 * level, // power
         level, // level
         "grass", // type
-        attacks // attacks(array)
+        attacks, // attacks(array)
+        5 * level // dodge
     )
     return result
 }
@@ -31,7 +32,8 @@ const hitmonlee = (level) => {
         3 * level, // power
         level, // level
         "fighting", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -48,7 +50,8 @@ const bulbasaur = (level) => {
         3 * level, // power
         level, // level
         "grass", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -65,7 +68,8 @@ const caterpie = (level) => {
         3 * level, // power
         level, // level
         "normal", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -82,7 +86,8 @@ const charmander = (level) => {
         3 * level, // power
         level, // level
         "fire", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -99,7 +104,8 @@ const eevee = (level) => {
         3 * level, // power
         level, // level
         "rock", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -110,13 +116,14 @@ const eknas = (level) => {
     if (level > 10) attacks = ["sand_attack", "punch"]
     const result = new Pokemon(
         "eknas", // name
-        17 * level, // maxHp
+        11 * level, // maxHp
         4 * level, // defense
         5 * level, // accurate
         3 * level, // power
         level, // level
         "normal", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -133,7 +140,8 @@ const geodude = (level) => {
         3 * level, // power
         level, // level
         "rock", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -150,7 +158,8 @@ const metapod = (level) => {
         3 * level, // power
         level, // level
         "normal", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -167,7 +176,8 @@ const pidgey = (level) => {
         3 * level, // power
         level, // level
         "normal", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -184,7 +194,8 @@ const pikachu = (level) => {
         3 * level, // power
         level, // level
         "electric", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -201,7 +212,8 @@ const ponyta = (level) => {
         3 * level, // power
         level, // level
         "fire", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -218,7 +230,8 @@ const psyduck = (level) => {
         3 * level, // power
         level, // level
         "water", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -235,7 +248,8 @@ const raticate = (level) => {
         3 * level, // power
         level, // level
         "normal", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -252,7 +266,8 @@ const rattata = (level) => {
         3 * level, // power
         level, // level
         "normal", // type
-        attacks // attacks(array)
+        attacks, // attacks,(array)
+        5 * level // dodge
     )
     return result
 }
@@ -269,8 +284,9 @@ const spearow = (level) => {
         5 * level, // accurate
         3 * level, // power
         level, // level
-        "normal", // type
-        attacks // attacks(array)
+        "normal,", // type
+        attacks, // attacks(array)
+        5 * level // dodge
     )
     return result
 }
@@ -289,7 +305,8 @@ const squirtle = (level) => {
         3 * level, // power
         level, // level
         "water", // type
-        attacks // attacks(array)
+        attacks, // attacks(array)
+        5 * level // dodge
     )
     return result
 }
@@ -307,7 +324,8 @@ const voltorb = (level) => {
         3 * level, // power
         level, // level
         "electric", // type
-        attacks // attacks(array)
+        attacks, // attacks(array)
+        5 * level // dodge
     )
     return result
 }
@@ -325,7 +343,8 @@ const vulpix = (level) => {
         3 * level, // power
         level, // level
         "fire", // type
-        attacks // attacks(array)
+        attacks, // attacks(array)
+        5 * level // dodge
     )
     return result
 }
@@ -343,7 +362,8 @@ const weedle = (level) => {
         3 * level, // power
         level, // level
         "grass", // type
-        attacks // attacks(array)
+        attacks, // attacks(array)
+        5 * level // dodge
     )
     return result
 }
