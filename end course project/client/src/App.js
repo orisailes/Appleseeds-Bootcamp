@@ -6,13 +6,13 @@ import './css/normalize.css'
 import Battle from './components/pages/battle'
 import Map from './components/pages/map'
 import Home from './components/pages/home'
-import pokemonList from './utils/classes/Pokemon/pokemonsList'
+import pokemonsGenerator from './utils/classes/Pokemon/pokemonsGenerator'
 
 function App() {
 
 
-  const scyther = pokemonList.scyther(1)
-  const hitmonlee = pokemonList.hitmonlee(1)
+  const scyther = pokemonsGenerator.scyther(2)
+  const hitmonlee = pokemonsGenerator.hitmonlee(3)
 
   const currentUser = {
     name: "orisailes",

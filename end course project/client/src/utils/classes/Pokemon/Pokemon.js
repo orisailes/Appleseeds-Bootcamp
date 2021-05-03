@@ -1,7 +1,5 @@
-const pokemonList = require('./pokemonsList')
-
 class Pokemon {
-    constructor(name, maxHp, defense, accurate, power, level, type, attacks,dodge) {
+    constructor(name, maxHp, defense, accurate, power, level, type, attacks, dodge) {
         this.name = name
         this.hp = maxHp
         this.maxHp = maxHp
@@ -18,9 +16,9 @@ class Pokemon {
 
     isHitTarget(opponent) {
         //! test needed
-
         let result = this.accurate - opponent.dodge
         let isMiss = Boolean
+        debugger
         switch (true) {
             case (result === 0):
                 result = 0.05
@@ -36,11 +34,15 @@ class Pokemon {
         }
         const tester = Math.random() * 1
         if (tester > result) isMiss = false
-        if (tester < result) isMiss = true
-        console.log(tester);
-        console.log(result);
-        console.log(isMiss)
+        if (tester <= result) isMiss = true
+        // console.log(tester)
+        // console.log(result)
+        // console.log(isMiss)
         return isMiss
+    }
+
+    calculateDamage() {
+
     }
 
 }

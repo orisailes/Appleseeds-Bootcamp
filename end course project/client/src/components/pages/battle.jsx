@@ -4,12 +4,12 @@ import { userContext } from '../../utils/context/userContext'
 import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
-import pokemonList from '../../utils/classes/Pokemon/pokemonsList'
+import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
 import _ from 'lodash';
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonList.hitmonlee(1)
+    const fakeEnemyPokemon = pokemonsGenerator.hitmonlee(1)
 
 
     const { user, setUser } = useContext(userContext)
