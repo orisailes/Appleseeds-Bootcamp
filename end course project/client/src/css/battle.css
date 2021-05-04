@@ -103,7 +103,7 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    background: rgba(0, 0, 0, 0.603);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 123;
     display: flex;
     justify-content: center;
@@ -149,6 +149,21 @@
 .enemy-pokemon-die{
     animation: enemyPokemonDie 0.35s forwards linear;
 }
+
+.hider .end-game-individual-pokemon{
+
+width: 45%;
+color: whitesmoke;
+font-weight: bolder;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+.hider .end-game-individual-pokemon img{
+    height: 35vh;
+}
+
 
 @keyframes userPokemonDie{
     to{

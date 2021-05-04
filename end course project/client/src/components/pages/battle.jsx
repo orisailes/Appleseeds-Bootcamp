@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { userContext } from '../../utils/context/userContext'
 import { Link } from 'react-router-dom'
 import '../../css/battle.css'
@@ -6,21 +6,24 @@ import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
 import _ from 'lodash';
+import ExpBar from '../utils/ExpBar'
+
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonsGenerator.rattata(5)
+    const fakeEnemyPokemon = pokemonsGenerator.rattata(4)
 
     const { user, setUser } = useContext(userContext)
-    const [isBattleWanted, setIsBattleWanted] = useState(null)
-    const [chosenPokemon, setChosenPokemon] = useState({})
     const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
+    const [whoCauseDamage, setWhoCauseDamage] = useState([])
+    const [chosenPokemon, setChosenPokemon] = useState({})
+    const [isBattleWanted, setIsBattleWanted] = useState(null)
     const [battleStarted, setBattleStarted] = useState(false)
-    const [displayOptions, setDisplayOptions] = useState(true)
     const [isPokemonChangeWanted, setIsPokemonChangeWanted] = useState(false)
     const [turnIsActive, setTurnIsActive] = useState(false)
     const [gameOver, setGameOver] = useState(false)
-    const [whoCauseDamage, setWhoCauseDamage] = useState({})
+    const [gameEndHider, setGameEndHider] = useState(false)
+    const [displayOptions, setDisplayOptions] = useState(true)
     const [message, setMessage] = useState('Battle Start!')
     const userPokemonRef = useRef(null)
     const enemyPokemonRef = useRef(null)
@@ -35,33 +38,75 @@ function Battle() {
 
     useEffect(() => {
 
+        const endGameSession = async () => {
+            if (gameOver) {
+                await wait(750)
+                let newUser = _.cloneDeep(user)
+                for (let pokemon in whoCauseDamage) {
+                    const damagePercentCause = whoCauseDamage[pokemon] / enemyPokemon.maxHp
+                    if (damagePercentCause) {
+                        newUser.pokemons.find((poke, i) => {
+                            if (poke.name === pokemon) {
+                                let result = poke.calculateExp(enemyPokemon, damagePercentCause)
+                                let levelUpCounter = poke.level
+                                while (result >= poke.maxExp) { //  pokemon level up
+                                    result = result - poke.maxExp
+                                    levelUpCounter++
+                                    poke = pokemonsGenerator[poke.name](levelUpCounter)
+                                    const renderingControl = async () => {
+                                        newUser.pokemons[i].exp = newUser.pokemons[i].maxExp
+                                        debugger
+                                        setUser(newUser)
+                                        // await wait(1000)
+                                    }
+                                    renderingControl()
+                                    newUser.pokemons[i] = poke
+                                    setUser(newUser)
+                                }
+                                newUser.pokemons[i].exp = result
+                            }
+                        })
+                    }
+                }
+                setUser(newUser)
+            }
+        }
+        endGameSession()
+
+    }, [gameEndHider])
+
+    useEffect(() => {
+
         const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
         if (gameOver && isPokemonLeft) {
-            let newUser = _.cloneDeep(user)
-            for (let pokemon in whoCauseDamage) {
-                const damagePercentCause = whoCauseDamage[pokemon] / enemyPokemon.maxHp
-                if(damagePercentCause){
-                newUser.pokemons.find((poke,i)=>{
-                    if(poke.name===pokemon){
-                        let result = poke.calculateExp(enemyPokemon,damagePercentCause)
-                        let levelUpCounter = poke.level
-                        while(result>=poke.maxExp){
-                            result = result - poke.maxExp
-                            levelUpCounter++
-                            poke = pokemonsGenerator[poke.name](levelUpCounter)
-                            newUser.pokemons[i] = poke
-                        }
-                        newUser.pokemons[i].exp = result
-                    }
-                })
-            }
-            }
-            setUser(newUser)
+            setGameEndHider(true)
+            // let newUser = _.cloneDeep(user)
+            // for (let pokemon in whoCauseDamage) {
+            //     const damagePercentCause = whoCauseDamage[pokemon] / enemyPokemon.maxHp
+            //     if (damagePercentCause) {
+            //         newUser.pokemons.find((poke, i) => {
+            //             if (poke.name === pokemon) {
+            //                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
+            //                 let levelUpCounter = poke.level
+            //                 while (result >= poke.maxExp) { //  pokemon level up
+            //                     result = result - poke.maxExp
+            //                     levelUpCounter++
+            //                     poke = pokemonsGenerator[poke.name](levelUpCounter)
+            //                     newUser.pokemons[i] = poke
+            //                 }
+            //                 newUser.pokemons[i].exp = result
+            //             }
+            //         })
+            //     }
+            // }
+            // setUser(newUser)
         }
         if (gameOver && !isPokemonLeft) {
+            setGameEndHider(true)
             console.log('user die'); // double check
         }
     }, [gameOver])
+
 
     useEffect(() => {
 
@@ -92,7 +137,6 @@ function Battle() {
     }, [chosenPokemon])
 
     useEffect(() => {
-
         const enemyPokemonChanged = async () => {
             if (enemyPokemon.hp <= 0) {
                 setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
@@ -244,9 +288,25 @@ function Battle() {
             <div
                 className="battle-page"
             >
-                {gameOver && <div className="hider">
-                <Link to="/">HOME</Link>
-                    {JSON.stringify(whoCauseDamage)}
+                {gameEndHider &&
+                    <div className="hider">
+                        <Link to="/">HOME</Link>
+                        {user.pokemons.map((poke) => {
+                            return (
+                                <div
+                                    key={poke.name}
+                                    onClick={() => {
+                                        setChosenPokemon(poke)
+                                        setIsPokemonChangeWanted(false)
+                                    }}
+                                    className="end-game-individual-pokemon">
+                                    <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
+                                    <h3>Lv: {poke.level}</h3>
+                                    <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
+                                    <ExpBar pokemon={poke} />
+                                </div>
+                            )
+                        })}
                     </div>}
                 {
                     isPokemonChangeWanted &&

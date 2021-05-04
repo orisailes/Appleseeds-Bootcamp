@@ -80,7 +80,7 @@ class Pokemon {
             promoter *
             this.maxExp *
             percentCause
-        return reward * percentCause
+        return reward * percentCause *10
     }
 }
 
