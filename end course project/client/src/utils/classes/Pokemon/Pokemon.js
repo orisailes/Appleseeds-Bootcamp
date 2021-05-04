@@ -71,7 +71,7 @@ class Pokemon {
         if (attack !== "shield") return "invalid defense increase"
     }
 
-    increseExp(enemy, percentCause) {
+    calculateExp(enemy, percentCause) {
         console.log('this.maxExp:', this.maxExp)
         console.log('enemy.maxExp:', enemy.maxExp)
         const promoter = promotersList[enemy.name]

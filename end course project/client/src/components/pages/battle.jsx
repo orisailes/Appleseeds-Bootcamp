@@ -39,10 +39,22 @@ function Battle() {
         if (gameOver && isPokemonLeft) {
             let newUser = _.cloneDeep(user)
             for (let pokemon in whoCauseDamage) {
-                debugger
                 const damagePercentCause = whoCauseDamage[pokemon] / enemyPokemon.maxHp
-                newUser.pokemons.find((poke, i) => (poke.name === pokemon) ? newUser.pokemons[i].exp = poke.increseExp(enemyPokemon, damagePercentCause):null)
-                console.log(newUser.pokemons);
+                if(damagePercentCause){
+                newUser.pokemons.find((poke,i)=>{
+                    if(poke.name===pokemon){
+                        let result = poke.calculateExp(enemyPokemon,damagePercentCause)
+                        let levelUpCounter = poke.level
+                        while(result>=poke.maxExp){
+                            result = result - poke.maxExp
+                            levelUpCounter++
+                            poke = pokemonsGenerator[poke.name](levelUpCounter)
+                            newUser.pokemons[i] = poke
+                        }
+                        newUser.pokemons[i].exp = result
+                    }
+                })
+            }
             }
             setUser(newUser)
         }
@@ -156,7 +168,7 @@ function Battle() {
             setMessage(`${enemyPokemon.name.toUpperCase()} Choose ${randomEnemyAttack.replace("_", " ").toUpperCase()}!`)
 
             if (randomEnemyAttack === "heal" || randomEnemyAttack === "shield") {
-                debugger
+
                 await handleStatsCharged(enemyHelper, randomEnemyAttack)
                 enemyStatsCharged = true
                 // await wait(1500)
