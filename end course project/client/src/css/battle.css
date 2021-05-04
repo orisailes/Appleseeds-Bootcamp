@@ -131,94 +131,116 @@
     height: 25vh;
 }
 
-.user-attacks{
+.user-attacks {
     animation: userAttack 0.25s backwards ease-in-out;
 }
 
-.enemy-attacks{
+.enemy-attacks {
     animation: enemyAttack 0.25s backwards ease-in-out;
 }
 
-.get-hurt{
+.get-hurt {
     animation: getHurt 0.5s backwards ease-in-out;
 }
 
-.user-pokemon-die{
+.user-pokemon-die {
     animation: userPokemonDie 0.3s forwards linear;
 }
-.enemy-pokemon-die{
+
+.enemy-pokemon-die {
     animation: enemyPokemonDie 0.35s forwards linear;
 }
 
-.hider .end-game-individual-pokemon{
-
-width: 45%;
-color: whitesmoke;
-font-weight: bolder;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+.hider .end-game-individual-pokemon {
+    width: 45%;
+    color: whitesmoke;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
-.hider .end-game-individual-pokemon img{
+
+.hider .end-game-individual-pokemon img {
     height: 35vh;
 }
 
+.new-level-recived-span{
+    font-size: small;
+}
 
-@keyframes userPokemonDie{
-    to{
+.new-level-recived {
+    transition: all 0.6s;
+    transform: scale(1.2);
+    color: #3E7AEB;
+
+}
+
+
+@keyframes userPokemonDie {
+    to {
         transform: translateY(30vh);
     }
 }
-@keyframes enemyPokemonDie{
-    to{
+
+@keyframes enemyPokemonDie {
+    to {
         transform: translateX(20vw);
     }
 }
 
-@keyframes getHurt{
-    10%{
+@keyframes getHurt {
+    10% {
         opacity: 0.2;
     }
-    20%{
+
+    20% {
         opacity: 1;
     }
-    30%{
+
+    30% {
         opacity: 0.2;
     }
-    40%{
+
+    40% {
         opacity: 1;
     }
-    50%{
+
+    50% {
         opacity: 0.2;
     }
-    60%{
+
+    60% {
         opacity: 1;
     }
-    70%{
+
+    70% {
         opacity: 0.2;
     }
-    80%{
+
+    80% {
         opacity: 1;
     }
-    90%{
+
+    90% {
         opacity: 0.2;
     }
-    100%{
+
+    100% {
         opacity: 1;
     }
 }
 
 @keyframes userAttack {
-    50%{
-        transform: translate(10rem,-2.5rem) ;
+    50% {
+        transform: translate(10rem, -2.5rem);
     }
-  
+
 }
 
 @keyframes enemyAttack {
-    50%{
-        transform: translate(-10rem,2.5rem) ;
+    50% {
+        transform: translate(-10rem, 2.5rem);
     }
 }
 

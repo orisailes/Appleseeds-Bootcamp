@@ -12,7 +12,7 @@ function App() {
 
 
   const scyther = pokemonsGenerator.scyther(2)
-  const hitmonlee = pokemonsGenerator.vulpix(5)
+  const hitmonlee = pokemonsGenerator.vulpix(1)
 
   const currentUser = {
     name: "orisailes",

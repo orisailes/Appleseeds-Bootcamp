@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef, useLayoutEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { userContext } from '../../utils/context/userContext'
 import { Link } from 'react-router-dom'
 import '../../css/battle.css'
@@ -12,18 +12,19 @@ import ExpBar from '../utils/ExpBar'
 function Battle() {
 
     const fakeEnemyPokemon = pokemonsGenerator.rattata(4)
-
+    //TODO: handle type vs type extra dmg , delete extra xp boost
     const { user, setUser } = useContext(userContext)
     const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
     const [whoCauseDamage, setWhoCauseDamage] = useState([])
     const [chosenPokemon, setChosenPokemon] = useState({})
-    const [isBattleWanted, setIsBattleWanted] = useState(null)
+    const [endGameNewLevels, setEndGameNewLevels] = useState({})
     const [battleStarted, setBattleStarted] = useState(false)
     const [isPokemonChangeWanted, setIsPokemonChangeWanted] = useState(false)
     const [turnIsActive, setTurnIsActive] = useState(false)
     const [gameOver, setGameOver] = useState(false)
     const [gameEndHider, setGameEndHider] = useState(false)
     const [displayOptions, setDisplayOptions] = useState(true)
+    const [isBattleWanted, setIsBattleWanted] = useState(null)
     const [message, setMessage] = useState('Battle Start!')
     const userPokemonRef = useRef(null)
     const enemyPokemonRef = useRef(null)
@@ -36,38 +37,36 @@ function Battle() {
         user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
     }, [])
 
+
     useEffect(() => {
 
         const endGameSession = async () => {
             if (gameOver) {
-                await wait(750)
+                await wait(1000)
                 let newUser = _.cloneDeep(user)
+                let newLevels = {}
+                let levelUpCounters = {}
                 for (let pokemon in whoCauseDamage) {
                     const damagePercentCause = whoCauseDamage[pokemon] / enemyPokemon.maxHp
                     if (damagePercentCause) {
                         newUser.pokemons.find((poke, i) => {
                             if (poke.name === pokemon) {
                                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
-                                let levelUpCounter = poke.level
                                 while (result >= poke.maxExp) { //  pokemon level up
+                                    levelUpCounters[poke.name] ? levelUpCounters[poke.name]++ : levelUpCounters[poke.name] = 1
+                                    newLevels[poke.name] = poke.level
                                     result = result - poke.maxExp
-                                    levelUpCounter++
-                                    poke = pokemonsGenerator[poke.name](levelUpCounter)
-                                    const renderingControl = async () => {
-                                        newUser.pokemons[i].exp = newUser.pokemons[i].maxExp
-                                        debugger
-                                        setUser(newUser)
-                                        // await wait(1000)
-                                    }
-                                    renderingControl()
+                                    newLevels[poke.name]++
+                                    poke = pokemonsGenerator[poke.name](newLevels[poke.name])
                                     newUser.pokemons[i] = poke
-                                    setUser(newUser)
                                 }
                                 newUser.pokemons[i].exp = result
                             }
                         })
                     }
                 }
+                setEndGameNewLevels(levelUpCounters)
+               console.log('newUser:', newUser)
                 setUser(newUser)
             }
         }
@@ -80,29 +79,10 @@ function Battle() {
         const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
         if (gameOver && isPokemonLeft) {
             setGameEndHider(true)
-            // let newUser = _.cloneDeep(user)
-            // for (let pokemon in whoCauseDamage) {
-            //     const damagePercentCause = whoCauseDamage[pokemon] / enemyPokemon.maxHp
-            //     if (damagePercentCause) {
-            //         newUser.pokemons.find((poke, i) => {
-            //             if (poke.name === pokemon) {
-            //                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
-            //                 let levelUpCounter = poke.level
-            //                 while (result >= poke.maxExp) { //  pokemon level up
-            //                     result = result - poke.maxExp
-            //                     levelUpCounter++
-            //                     poke = pokemonsGenerator[poke.name](levelUpCounter)
-            //                     newUser.pokemons[i] = poke
-            //                 }
-            //                 newUser.pokemons[i].exp = result
-            //             }
-            //         })
-            //     }
-            // }
-            // setUser(newUser)
         }
         if (gameOver && !isPokemonLeft) {
             setGameEndHider(true)
+            setWhoCauseDamage([])
             console.log('user die'); // double check
         }
     }, [gameOver])
@@ -189,6 +169,7 @@ function Battle() {
             manageCausingDamageHelper[chosenPokemon.name] += userDamage
 
             setWhoCauseDamage(manageCausingDamageHelper)
+
             setEnemyPokemon(enemyHelper)
 
             if (enemyHelper.hp === 0) {
@@ -292,16 +273,19 @@ function Battle() {
                     <div className="hider">
                         <Link to="/">HOME</Link>
                         {user.pokemons.map((poke) => {
+                            let isLeveledUp = Boolean
+                            {Object.keys(endGameNewLevels).includes(poke.name) ? isLeveledUp=true : isLeveledUp=false}
+                            console.log();
                             return (
                                 <div
                                     key={poke.name}
-                                    onClick={() => {
-                                        setChosenPokemon(poke)
-                                        setIsPokemonChangeWanted(false)
-                                    }}
                                     className="end-game-individual-pokemon">
                                     <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
-                                    <h3>Lv: {poke.level}</h3>
+                                    <h3
+                                        className={isLeveledUp?"new-level-recived":""}>
+                                        Lv: {poke.level}
+                                        {isLeveledUp && <span className="new-level-recived-span"> (+ {endGameNewLevels[poke.name]})</span>}
+                                    </h3>
                                     <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
                                     <ExpBar pokemon={poke} />
                                 </div>

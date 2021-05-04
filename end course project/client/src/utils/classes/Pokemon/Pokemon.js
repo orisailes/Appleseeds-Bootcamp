@@ -72,15 +72,13 @@ class Pokemon {
     }
 
     calculateExp(enemy, percentCause) {
-        console.log('this.maxExp:', this.maxExp)
-        console.log('enemy.maxExp:', enemy.maxExp)
         const promoter = promotersList[enemy.name]
         let reward =
             (enemy.maxExp / this.maxExp) *
             promoter *
             this.maxExp *
             percentCause
-        return reward * percentCause *10
+        return Number((reward * percentCause *10).toFixed(2))
     }
 }
 
