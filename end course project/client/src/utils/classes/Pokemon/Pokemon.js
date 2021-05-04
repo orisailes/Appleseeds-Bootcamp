@@ -71,12 +71,17 @@ class Pokemon {
     }
 
     increseExp(enemy, percentCause) {
-        
-        const promoter = promotersList[enemy.name] + 1
-        const enemyLevel = enemy.level
-        const reward = Math.pow(enemyLevel, promoter) * percentCause
-        return Number(reward.toFixed(2))
 
+        let reward
+        const promoter = promotersList[enemy.name] + 1
+        const differece = this.level - enemy.level
+        let enemyWeaker = Boolean
+        differece < 0 ? enemyWeaker = true : enemyWeaker = false
+        const providerRate = 20 * promoter
+        if (enemyWeaker) reward = providerRate - (providerRate * differece / 100)
+        if (!enemyWeaker) reward = providerRate + (providerRate * differece / 100)
+
+        return reward * percentCause
     }
 }
 
