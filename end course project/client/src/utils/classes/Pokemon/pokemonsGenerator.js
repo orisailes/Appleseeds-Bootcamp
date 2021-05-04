@@ -1,15 +1,15 @@
 const Pokemon = require('./Pokemon')
-
+const promotersList = require('./promotersList')
+const hpPromoter = 0.5
 //* instroctions:
 // initial stats will be between 10~15 dependes on the pokemon tendency
 // initial maxHp will be always 75
 // promoter will be between 0.1~0.5 depends on pokemons quality (above 0.6 its only super rare pokemons)
 // stats are powered by hpPromoter to make exponential series
-const hpPromoter = 0.5
 
 const scyther = (level) => {
-    const promoter = 0.45
-    let attacks = ["heal"]
+    const promoter =promotersList.scyther
+    let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10 && level <= 15) attacks = ["cut", "punch", "heal"]
     if (level > 15) attacks = ["cut", "punch", "heal", "razor_leaf"]
@@ -29,7 +29,7 @@ const scyther = (level) => {
 
 
 const hitmonlee = (level) => {
-    const promoter = 0.35
+    const promoter =promotersList.hitmonlee
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["kick", "punch"]
     if (level > 10) attacks = ["kick", "punch", "mega_kick"]
@@ -48,7 +48,7 @@ const hitmonlee = (level) => {
 }
 
 const bulbasaur = (level) => {
-    const promoter = 0.45
+    const promoter =promotersList.bulbasaur
     let attacks = ["cut"]
     if (level >= 5 && level <= 10) attacks = ["heal", "cut"]
     if (level > 10) attacks = ["heal", "cut", "razor_leaf"]
@@ -67,7 +67,7 @@ const bulbasaur = (level) => {
 }
 
 const caterpie = (level) => {
-    const promoter = 0.25
+    const promoter =promotersList.caterpie
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["cut", "punch", "shield"]
@@ -86,7 +86,7 @@ const caterpie = (level) => {
 }
 
 const charmander = (level) => {
-    const promoter = 0.45
+    const promoter =promotersList.charmander
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["slash", "punch"]
     if (level > 10) attacks = ["slash", "punch", "dragon_breath"]
@@ -105,7 +105,7 @@ const charmander = (level) => {
 }
 
 const eevee = (level) => {
-    const promoter = 0.45
+    const promoter =promotersList.eevee
     let attacks = ["tailWhip"]
     if (level >= 5 && level <= 10) attacks = ["sand_attack", "tail_whip"]
     if (level > 10) attacks = ["sand_attack", "tail_whip", "quick_attack"]
@@ -124,7 +124,7 @@ const eevee = (level) => {
 }
 
 const eknas = (level) => {
-    const promoter = 0.25
+    const promoter =promotersList.eknas
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["sand_attack", "punch"]
     if (level > 10) attacks = ["sand_attack", "punch"]
@@ -143,7 +143,7 @@ const eknas = (level) => {
 }
 
 const geodude = (level) => {
-    const promoter = 0.3
+    const promoter =promotersList.geodude
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["rock_attack", "punch"]
     if (level > 10) attacks = ["shield", "punch", "rock_attack"]
@@ -162,7 +162,7 @@ const geodude = (level) => {
 }
 
 const metapod = (level) => {
-    const promoter = 0.2
+    const promoter =promotersList.metapod
     let attacks = ["punch"]
     if (level >= 5) attacks = ["shield", "punch"]
 
@@ -181,7 +181,7 @@ const metapod = (level) => {
 }
 
 const pidgey = (level) => {
-    const promoter = 0.25
+    const promoter =promotersList.pidgey
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["cut", "punch", "tornado"]
@@ -200,7 +200,7 @@ const pidgey = (level) => {
 }
 
 const pikachu = (level) => {
-    const promoter = 0.45
+    const promoter =promotersList.pikachu
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["kick", "punch"]
     if (level > 10) attacks = ["kick", "punch", "lightning"]
@@ -219,7 +219,7 @@ const pikachu = (level) => {
 }
 
 const ponyta = (level) => {
-    const promoter = 0.4
+    const promoter =promotersList.ponyta
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["dragon_breath", "punch"]
     if (level > 10) attacks = ["dragon_breath", "punch", "mega_kick"]
@@ -238,7 +238,7 @@ const ponyta = (level) => {
 }
 
 const psyduck = (level) => {
-    const promoter = 0.35
+    const promoter =promotersList.psyduck
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["water_splash", "punch"]
     if (level > 10) attacks = ["water_splash", "punch", "mega_kick"]
@@ -257,7 +257,7 @@ const psyduck = (level) => {
 }
 
 const raticate = (level) => {
-    const promoter = 0.35
+    const promoter =promotersList.raticate
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["cut", "punch", "heal", "tail_whip"]
@@ -276,16 +276,16 @@ const raticate = (level) => {
 }
 
 const rattata = (level) => {
-    const promoter = 0.25
+    const promoter =promotersList.rattata
     let attacks = ["punch"]
     if (level >= 5) attacks = ["cut", "punch"]
 
     const result = new Pokemon(
         "rattata", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
+        Number((12 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
+        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
@@ -295,7 +295,7 @@ const rattata = (level) => {
 }
 
 const spearow = (level) => {
-    const promoter = 0.35
+    const promoter =promotersList.spearow
     let attacks = ["kick"]
     if (level >= 5 && level <= 10) attacks = ["tornado", "kick"]
     if (level > 10) attacks = ["tornado", "kick", "quick_attack"]
@@ -315,7 +315,7 @@ const spearow = (level) => {
 }
 
 const squirtle = (level) => {
-    const promoter = 0.4
+    const promoter =promotersList.squirtle
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["water_splash", "punch"]
     if (level > 10 && level <= 15) attacks = ["water_splash", "punch", "quick_attack"]
@@ -336,7 +336,7 @@ const squirtle = (level) => {
 }
 
 const voltorb = (level) => {
-    const promoter = 0.35
+    const promoter =promotersList.voltorb
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["quick_attack", "punch"]
     if (level > 10) attacks = ["punch", "quick_attack", "lightning"]
@@ -356,7 +356,7 @@ const voltorb = (level) => {
 }
 
 const vulpix = (level) => {
-    const promoter = 0.4
+    const promoter =promotersList.vulpix
     let attacks = ["cut"]
     if (level >= 5 && level <= 10) attacks = ["quick_attack", "cut"]
     if (level > 10) attacks = ["cut", "quick_attack", "dragon_breath"]
@@ -376,7 +376,7 @@ const vulpix = (level) => {
 }
 
 const weedle = (level) => {
-    const promoter = 0.25
+    const promoter =promotersList.weedle
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["punch", "cut", "heal"]

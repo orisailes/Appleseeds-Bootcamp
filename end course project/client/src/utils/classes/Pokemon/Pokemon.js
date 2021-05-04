@@ -1,5 +1,5 @@
 const attacks = require('./attacks')
-
+const promotersList = require('./promotersList')
 class Pokemon {
     constructor(name, maxHp, defense, accurate, power, level, type, attacks, dodge) {
         this.name = name
@@ -68,6 +68,15 @@ class Pokemon {
             return newDef
         }
         if (attack !== "shield") return "invalid defense increase"
+    }
+
+    increseExp(enemy, percentCause) {
+        
+        const promoter = promotersList[enemy.name] + 1
+        const enemyLevel = enemy.level
+        const reward = Math.pow(enemyLevel, promoter) * percentCause
+        return Number(reward.toFixed(2))
+
     }
 }
 
