@@ -14,6 +14,7 @@ class Pokemon {
         this.attacks = attacks
         this.exp = 0
         this.dodge = dodge
+        this.maxExp = Math.pow(level, 3) - Math.pow(level - 1, 3)
     }
 
     isHitTarget(opponent) {
@@ -71,16 +72,14 @@ class Pokemon {
     }
 
     increseExp(enemy, percentCause) {
-
-        let reward
-        const promoter = promotersList[enemy.name] + 1
-        const differece = this.level - enemy.level
-        let enemyWeaker = Boolean
-        differece < 0 ? enemyWeaker = true : enemyWeaker = false
-        const providerRate = 20 * promoter
-        if (enemyWeaker) reward = providerRate - (providerRate * differece / 100)
-        if (!enemyWeaker) reward = providerRate + (providerRate * differece / 100)
-
+        console.log('this.maxExp:', this.maxExp)
+        console.log('enemy.maxExp:', enemy.maxExp)
+        const promoter = promotersList[enemy.name]
+        let reward =
+            (enemy.maxExp / this.maxExp) *
+            promoter *
+            this.maxExp *
+            percentCause
         return reward * percentCause
     }
 }
