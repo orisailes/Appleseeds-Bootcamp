@@ -12,13 +12,25 @@ function App() {
 
 
   const scyther = pokemonsGenerator.scyther(2)
-  const hitmonlee = pokemonsGenerator.vulpix(1)
-
+  const vulpix = pokemonsGenerator.vulpix(1)
+  const vulpix2 = pokemonsGenerator.vulpix(1)
+  const vulpix3 = pokemonsGenerator.vulpix(1)
+  const vulpix4 = pokemonsGenerator.vulpix(1)
+  const vulpix5 = pokemonsGenerator.vulpix(1)
+  const vulpix6 = pokemonsGenerator.vulpix(1)
+  const vulpix7 = pokemonsGenerator.vulpix(1)
+  
   const currentUser = {
     name: "orisailes",
     money: 0,
     pokemons: [
-      hitmonlee,
+      vulpix,
+      vulpix2,
+      vulpix3,
+      vulpix4,
+      vulpix5,
+      vulpix6,
+      vulpix7,
       scyther
     ]
   }

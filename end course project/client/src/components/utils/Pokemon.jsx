@@ -8,7 +8,7 @@ function Pokemon({ isUserPokemon, pokemon,forwardedRef }) {
         <div className={`pokemon  ${isUserPokemon ? "user-pokemon" : "enemy-pokemon"}`}>
             <img
                 className={`${isUserPokemon ? "user-pokemon-img" : "enemy-pokemon-img"}`}
-                src={require(`../../pokemons/img/pokemon-${isUserPokemon ? "back" : "front"}/${pokemon.name}.png`).default}
+                src={require(`../../img/pokemon-${isUserPokemon ? "back" : "front"}/${pokemon.name}.png`).default}
                 alt={pokemon.name}
                 ref={forwardedRef}
             >

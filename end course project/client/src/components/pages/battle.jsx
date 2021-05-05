@@ -44,7 +44,7 @@ function Battle() {
 
             const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
             if (gameOver && isPokemonLeft) {
-                // await wait(1000)
+                await wait(1000)
                 let newUser = _.cloneDeep(user)
                 let newLevels = {}
                 let levelUpCounters = {}
@@ -54,10 +54,11 @@ function Battle() {
                         newUser.pokemons.find((poke, i) => {
                             if (poke.name === pokemon) {
                                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
-                                while (result >= poke.maxExp) { //  pokemon level up
+                                debugger
+                                while (result >= poke.maxExp-poke.exp) { //  pokemon level up
                                     levelUpCounters[poke.name] ? levelUpCounters[poke.name]++ : levelUpCounters[poke.name] = 1
                                     newLevels[poke.name] = poke.level
-                                    result = result - poke.maxExp
+                                    result -=  (poke.maxExp-poke.exp)
                                     newLevels[poke.name]++
                                     poke = pokemonsGenerator[poke.name](newLevels[poke.name])
                                     newUser.pokemons[i] = poke
@@ -273,11 +274,10 @@ function Battle() {
     return (
         <>
             <div
-                className="battle-page"
+                className="battle-page" // 70% of the upper side screen
             >
                 {gameEndHider &&
                     <div className="hider">
-                        <Link to="/">HOME</Link>
                         <div className="end-game-pokemons-container">
                             {user.pokemons.map((poke) => {
                                 let isLeveledUp = Boolean
@@ -287,7 +287,7 @@ function Battle() {
                                         <div
                                             key={poke.name}
                                             className="end-game-individual-pokemon">
-                                            <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
+                                            <img src={require(`../../img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
                                             <h3
                                                 className={isLeveledUp ? "new-level-recived" : ""}>
                                                 Lv: {poke.level}
@@ -300,10 +300,12 @@ function Battle() {
                                 )
                             })}
                         </div>
-                        <div
-                            className="user-money">
-                            <h3>New Money: {user.money} $</h3>
+                        <div>
+                            <h3 className="user-money">
+                                New Money: <span className="user-money-span">{user.money}$</span>
+                            </h3>
                         </div>
+                        <Link to="/">HOME</Link>
                     </div>}
                 {
                     isPokemonChangeWanted &&
@@ -319,7 +321,7 @@ function Battle() {
                                                 setIsPokemonChangeWanted(false)
                                             }}
                                             className="user-individual-pokemon">
-                                            <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
+                                            <img src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default} alt={poke.name} />
                                             <h3>Lv: {poke.level}</h3>
                                             <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
                                         </div>
@@ -338,20 +340,27 @@ function Battle() {
                         </>
                     }
                 </div>
-                <div className="message-box-container">
+                <div 
+                className="message-box-container" // 30% of the lower side screen
+                >
                     {
                         isBattleWanted ? //* first user "chatting" -> choose between run and battle
                             battleStarted === false &&
                             <div className="message-box">{user.pokemons.map((poke) => {
                                 return (
                                     <React.Fragment key={poke.name}>
-
-                                        <Button
-                                            turnIsActive={turnIsActive}
-                                            id={poke.name}
-                                            onClick={(e) => handlePokemonChoose(e)}
-                                            text={poke.name} />
-
+                                        <div 
+                                        onClick={(e) => handlePokemonChoose(e)}
+                                        className="pokemon-choose-div"
+                                        >
+                                            <img src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default}></img>
+                                            <Button
+                                                turnIsActive={turnIsActive}
+                                                id={poke.name}
+                                                text={poke.name} />
+                                            <small>Lv: {poke.level}</small>
+                                            <small>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</small>
+                                        </div>
                                     </React.Fragment>
                                 )
                             })}</div>

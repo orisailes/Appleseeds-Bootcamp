@@ -5,13 +5,43 @@
     z-index: -100;
     top: 0;
     left: 0;
-    background: url('../pokemons/img/utils/battleZone.png') no-repeat center center/cover;
+    background: url('../img/utils/battleZone.png') no-repeat center center/cover;
     background-size: 100vw 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
+}
+
+.pokemon-choose-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80%;
+    cursor: pointer;
+    width: 12%;
+    line-height: 1rem;
+}
+
+.pokemon-choose-div > button > i {
+    transition: transform 0.3s;
+}
+
+
+.pokemon-choose-div:hover>button>i {
+
+    transform: rotate(1turn) scale(1.4);
+}
+
+.pokemon-choose-div>button:hover {
+    font-weight: normal !important;
+}
+
+
+.pokemon-choose-div button {
+    margin: 0 !important;
 }
 
 .pokemons-container {
@@ -108,13 +138,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction:column ;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .user-pokemons-container {
     position: absolute;
     height: 60vh;
-    width: 50vw;
+    width: 70vw;
     border: 4px solid white;
     color: white;
     background: rgba(0, 0, 0, 0.753);
@@ -126,10 +157,11 @@
 .user-pokemons-container .user-individual-pokemon {
     text-align: center;
     cursor: pointer;
+    width: 12%;
 }
 
 .user-pokemons-container .user-individual-pokemon img {
-    height: 25vh;
+    height: 12vh;
 }
 
 .user-attacks {
@@ -153,7 +185,8 @@
 }
 
 .hider .end-game-individual-pokemon {
-    width: 45%;
+    width: 8%;
+    height: 90%;
     color: whitesmoke;
     font-weight: normal;
     display: flex;
@@ -178,16 +211,23 @@
 }
 
 .user-money {
-    transition: all 0.6s;
-    transform: scale(1.2);
+    transform: scale(1.25);
     color: #57cd4c;
     margin-top: 3rem;
 }
 
-.end-game-pokemons-container{
+.user-money-span {
+    transition: all 0.6s;
+    font-size: larger;
+    color: #71d068;
+    margin-top: 3rem;
+}
+
+.end-game-pokemons-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 

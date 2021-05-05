@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
 
 const Home = () => {
+    //TODO: cant get two pokemons the same
     const {user,setUser} = useContext(userContext)
 
     return (
