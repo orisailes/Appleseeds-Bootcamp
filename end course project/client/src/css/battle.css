@@ -24,6 +24,9 @@
     width: 12%;
     line-height: 1rem;
 }
+.pokemon-choose-div button {
+ font-size: smaller;
+}
 
 .pokemon-choose-div > button > i {
     transition: transform 0.3s;

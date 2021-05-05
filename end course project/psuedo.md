@@ -46,8 +46,8 @@ Day7-8 :
 * there is user can walk only on grass, trail, or tall grass and cant walk on something else 
 * the main map will contains pokeheal that will restore the user pokemon hp(it will be a button for this moment)
 * each map will contain different enemies types and levels.
-* before goin to map that is not the main, check if the user got a pokemon
-
+* before goin to map that is not the main, check if the user got a pokemon(validation - not hacking the url)
+* add sounds to maps and battle
 
 Day 9:
 * add money and pokestore feature. the main map will contain store that the user can buy and choose him as main pokemon. the main pokemon is the only pokemon that can be in battle

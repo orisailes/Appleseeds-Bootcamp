@@ -5,31 +5,31 @@ const attacks = (attack) => {
     if (attack === "heal") return "heal"
     if (attack !== "heal" && attack !== "shield") {
         switch (true) {
-            case "punch":
+            case (attack === "punch"):
                 return 1.2
-            case "kick":
+            case (attack === "kick"):
                 return 1.3
-            case "cut":
+            case (attack === "cut"):
                 return 1.25
-            case "water_splash":
+            case (attack === "water_splash"):
                 return 1.3
-            case "mega_kick":
+            case (attack === "mega_kick"):
                 return 1.35
-            case "tornado":
+            case (attack === "tornado"):
                 return 1.3
-            case "razor_leaf":
+            case (attack === "razor_leaf"):
                 return 1.45
-            case "slash":
+            case (attack === "slash"):
                 return 1.4
-            case "dragon_breath":
+            case (attack === "dragon_breath"):
                 return 1.45
-            case "sand_attack":
+            case (attack === "sand_attack"):
                 return 1.35
-            case "tail_whip":
+            case (attack === "tail_whip"):
                 return 1.35
-            case "quick_attack":
+            case (attack === "quick_attack"):
                 return 1.4
-            case "lightning":
+            case (attack === "lightning"):
                 return 1.45
             default:
                 return 1.25

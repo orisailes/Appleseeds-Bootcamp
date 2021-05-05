@@ -42,6 +42,7 @@ class Pokemon {
     }
 
     calculateDamage(opponent = "", attack) {
+
         const attackerType = this.type
         const opponentType = opponent.type
         let addOrDecreaseByType = 1
@@ -84,9 +85,18 @@ class Pokemon {
 
         }
         if (attack !== "heal" && attack !== "shield") {
+            
+            const test =
+                Math.floor(
+                    (attacks(attack) * this.power) * // power multip by attack 'quality'
+                    Math.abs(opponent.defense / 100 - 1) * // the more defense->the less dmg left (defense glich!)
+                    addOrDecreaseByType * // bonus if type fits
+                    (Math.random() * (1.25 - 0.75) + 0.75) // randomize 75%~125% dmg
+                )
+            console.log(test);
             return (
                 Math.floor(
-                    attacks(attack) + this.power *
+                    (attacks(attack) * this.power) *
                     Math.abs(opponent.defense / 100 - 1) *
                     addOrDecreaseByType *
                     (Math.random() * (1.25 - 0.75) + 0.75)
@@ -114,7 +124,7 @@ class Pokemon {
     }
 
     calculateExp(enemy, percentCause) {
-        debugger
+        
         const promoter = attributesList[enemy.name].quality
         let reward =
             Number(
