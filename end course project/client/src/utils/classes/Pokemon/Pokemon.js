@@ -1,5 +1,6 @@
 const attacks = require('./attacks')
-const promotersList = require('./promotersList')
+const attributesList = require('./attributesList')
+
 class Pokemon {
     constructor(name, maxHp, defense, accurate, power, level, type, attacks, dodge) {
         this.name = name
@@ -113,13 +114,19 @@ class Pokemon {
     }
 
     calculateExp(enemy, percentCause) {
-        const promoter = promotersList[enemy.name]
+        debugger
+        const promoter = attributesList[enemy.name].quality
         let reward =
-            (enemy.maxExp / this.maxExp) *
-            promoter *
-            this.maxExp *
-            percentCause
-        return Number((reward * percentCause).toFixed(2))
+            Number(
+                (enemy.maxExp / this.maxExp) *
+                promoter *
+                this.maxExp *
+                percentCause
+                .toFixed(2)
+            )
+        console.log('reward:', reward)
+
+        return reward
     }
 }
 

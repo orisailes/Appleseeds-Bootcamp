@@ -5,14 +5,14 @@ import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
-import promotersList from '../../utils/classes/Pokemon/promotersList'
+import attributesList from '../../utils/classes/Pokemon/attributesList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonsGenerator.rattata(4)
+    const fakeEnemyPokemon = pokemonsGenerator.makePokemon("rattata",4)
 
     const { user, setUser } = useContext(userContext)
     const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
@@ -54,13 +54,12 @@ function Battle() {
                         newUser.pokemons.find((poke, i) => {
                             if (poke.name === pokemon) {
                                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
-                                debugger
                                 while (result >= poke.maxExp-poke.exp) { //  pokemon level up
                                     levelUpCounters[poke.name] ? levelUpCounters[poke.name]++ : levelUpCounters[poke.name] = 1
                                     newLevels[poke.name] = poke.level
                                     result -=  (poke.maxExp-poke.exp)
                                     newLevels[poke.name]++
-                                    poke = pokemonsGenerator[poke.name](newLevels[poke.name])
+                                    poke = pokemonsGenerator.makePokemon(poke.name,newLevels[poke.name])
                                     newUser.pokemons[i] = poke
                                 }
                                 newUser.pokemons[i].exp = result
@@ -68,8 +67,7 @@ function Battle() {
                         })
                     }
                 }
-
-                const newMoney = Math.floor(promotersList[enemyPokemon.name] * 10 * enemyPokemon.level * (Math.random() * (1 - 0.5) + 0.5))
+                const newMoney = Math.floor(attributesList[enemyPokemon.name].quality * 10 * enemyPokemon.level * (Math.random() * (1 - 0.5) + 0.5))
                 newUser.money += newMoney
                 setEndGameNewLevels(levelUpCounters)
                 console.log('newUser:', newUser)
@@ -243,7 +241,7 @@ function Battle() {
     }
 
     const handlePokemonChoose = (e) => {
-        const pokemonName = e.target.id
+        const pokemonName = e.currentTarget.id
         const pokemon = user.pokemons.find(poke => poke.name === pokemonName)
         pokemon.hp > 0 && setChosenPokemon(pokemon)
         setBattleStarted(true)
@@ -352,11 +350,11 @@ function Battle() {
                                         <div 
                                         onClick={(e) => handlePokemonChoose(e)}
                                         className="pokemon-choose-div"
+                                        id={poke.name}
                                         >
                                             <img src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default}></img>
                                             <Button
                                                 turnIsActive={turnIsActive}
-                                                id={poke.name}
                                                 text={poke.name} />
                                             <small>Lv: {poke.level}</small>
                                             <small>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</small>

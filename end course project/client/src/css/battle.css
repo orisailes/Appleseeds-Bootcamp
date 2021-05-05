@@ -185,7 +185,7 @@
 }
 
 .hider .end-game-individual-pokemon {
-    width: 8%;
+    width: 12vw;
     height: 90%;
     color: whitesmoke;
     font-weight: normal;
@@ -197,6 +197,9 @@
 
 .hider .end-game-individual-pokemon img {
     height: 35vh;
+}
+.hider .end-game-individual-pokemon .exp-bar {
+    width: 90%;
 }
 
 .new-level-recived-span {
@@ -225,9 +228,10 @@
 
 .end-game-pokemons-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     overflow: hidden;
+    width: 100vw;
 }
 
 
