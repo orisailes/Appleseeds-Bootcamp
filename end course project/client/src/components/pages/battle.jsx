@@ -5,6 +5,7 @@ import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
+import promotersList from '../../utils/classes/Pokemon/promotersList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 
@@ -12,7 +13,7 @@ import ExpBar from '../utils/ExpBar'
 function Battle() {
 
     const fakeEnemyPokemon = pokemonsGenerator.rattata(4)
-    //TODO: handle type vs type extra dmg , delete extra xp boost
+
     const { user, setUser } = useContext(userContext)
     const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
     const [whoCauseDamage, setWhoCauseDamage] = useState([])
@@ -39,10 +40,11 @@ function Battle() {
 
 
     useEffect(() => {
-
         const endGameSession = async () => {
-            if (gameOver) {
-                await wait(1000)
+
+            const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
+            if (gameOver && isPokemonLeft) {
+                // await wait(1000)
                 let newUser = _.cloneDeep(user)
                 let newLevels = {}
                 let levelUpCounters = {}
@@ -65,8 +67,12 @@ function Battle() {
                         })
                     }
                 }
+
+                const newMoney = Math.floor(promotersList[enemyPokemon.name] * 10 * enemyPokemon.level * (Math.random() * (1 - 0.5) + 0.5))
+                newUser.money += newMoney
                 setEndGameNewLevels(levelUpCounters)
-               console.log('newUser:', newUser)
+                console.log('newUser:', newUser)
+                console.log(enemyPokemon);
                 setUser(newUser)
             }
         }
@@ -272,25 +278,32 @@ function Battle() {
                 {gameEndHider &&
                     <div className="hider">
                         <Link to="/">HOME</Link>
-                        {user.pokemons.map((poke) => {
-                            let isLeveledUp = Boolean
-                            {Object.keys(endGameNewLevels).includes(poke.name) ? isLeveledUp=true : isLeveledUp=false}
-                            console.log();
-                            return (
-                                <div
-                                    key={poke.name}
-                                    className="end-game-individual-pokemon">
-                                    <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
-                                    <h3
-                                        className={isLeveledUp?"new-level-recived":""}>
-                                        Lv: {poke.level}
-                                        {isLeveledUp && <span className="new-level-recived-span"> (+ {endGameNewLevels[poke.name]})</span>}
-                                    </h3>
-                                    <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
-                                    <ExpBar pokemon={poke} />
-                                </div>
-                            )
-                        })}
+                        <div className="end-game-pokemons-container">
+                            {user.pokemons.map((poke) => {
+                                let isLeveledUp = Boolean
+                                { Object.keys(endGameNewLevels).includes(poke.name) ? isLeveledUp = true : isLeveledUp = false }
+                                return (
+                                    <>
+                                        <div
+                                            key={poke.name}
+                                            className="end-game-individual-pokemon">
+                                            <img src={require(`../../pokemons/img/pokemon-front/${poke.name}.png`).default} alt={poke.name} />
+                                            <h3
+                                                className={isLeveledUp ? "new-level-recived" : ""}>
+                                                Lv: {poke.level}
+                                                {isLeveledUp && <span className="new-level-recived-span"> (+ {endGameNewLevels[poke.name]})</span>}
+                                            </h3>
+                                            <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
+                                            <ExpBar pokemon={poke} />
+                                        </div>
+                                    </>
+                                )
+                            })}
+                        </div>
+                        <div
+                            className="user-money">
+                            <h3>New Money: {user.money} $</h3>
+                        </div>
                     </div>}
                 {
                     isPokemonChangeWanted &&

@@ -1,6 +1,7 @@
 const Pokemon = require('./Pokemon')
 const promotersList = require('./promotersList')
 const hpPromoter = 0.5
+const statsPromoter = 0.75
 //* instroctions:
 // initial stats will be between 10~15 dependes on the pokemon tendency
 // initial maxHp will be always 75
@@ -8,7 +9,7 @@ const hpPromoter = 0.5
 // stats are powered by hpPromoter to make exponential series
 
 const scyther = (level) => {
-    const promoter =promotersList.scyther
+    const promoter = promotersList.scyther - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10 && level <= 15) attacks = ["cut", "punch", "heal"]
@@ -16,286 +17,286 @@ const scyther = (level) => {
     const result = new Pokemon(
         "scyther", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((12 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14.5 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((12 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14.5 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "grass", // type
         attacks, // attacks(array)
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 
 const hitmonlee = (level) => {
-    const promoter =promotersList.hitmonlee
+    const promoter = promotersList.hitmonlee - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["kick", "punch"]
     if (level > 10) attacks = ["kick", "punch", "mega_kick"]
     const result = new Pokemon(
         "hitmonlee", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "fighting", // type
         attacks, // attacks,(array)
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const bulbasaur = (level) => {
-    const promoter =promotersList.bulbasaur
+    const promoter = promotersList.bulbasaur - 1
     let attacks = ["cut"]
     if (level >= 5 && level <= 10) attacks = ["heal", "cut"]
     if (level > 10) attacks = ["heal", "cut", "razor_leaf"]
     const result = new Pokemon(
         "bulbasaur", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "grass", // type
         attacks, // attacks,(array)
-        Number((12 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((12 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const caterpie = (level) => {
-    const promoter =promotersList.caterpie
+    const promoter = promotersList.caterpie - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["cut", "punch", "shield"]
     const result = new Pokemon(
         "caterpie", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const charmander = (level) => {
-    const promoter =promotersList.charmander
+    const promoter = promotersList.charmander - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["slash", "punch"]
     if (level > 10) attacks = ["slash", "punch", "dragon_breath"]
     const result = new Pokemon(
         "charmander", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "fire", // type
         attacks, // attacks,(array)
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const eevee = (level) => {
-    const promoter =promotersList.eevee
+    const promoter = promotersList.eevee - 1
     let attacks = ["tailWhip"]
     if (level >= 5 && level <= 10) attacks = ["sand_attack", "tail_whip"]
     if (level > 10) attacks = ["sand_attack", "tail_whip", "quick_attack"]
     const result = new Pokemon(
         "eevee", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((15 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((15 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "rock", // type
         attacks, // attacks,(array)
-        Number((15 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((15 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const eknas = (level) => {
-    const promoter =promotersList.eknas
+    const promoter = promotersList.eknas - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["sand_attack", "punch"]
     if (level > 10) attacks = ["sand_attack", "punch"]
     const result = new Pokemon(
         "eknas", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const geodude = (level) => {
-    const promoter =promotersList.geodude
+    const promoter = promotersList.geodude - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["rock_attack", "punch"]
     if (level > 10) attacks = ["shield", "punch", "rock_attack"]
     const result = new Pokemon(
         "geodude", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "rock", // type
         attacks, // attacks,(array)
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const metapod = (level) => {
-    const promoter =promotersList.metapod
+    const promoter = promotersList.metapod - 1
     let attacks = ["punch"]
     if (level >= 5) attacks = ["shield", "punch"]
 
     const result = new Pokemon(
         "metapod", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const pidgey = (level) => {
-    const promoter =promotersList.pidgey
+    const promoter = promotersList.pidgey - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["cut", "punch", "tornado"]
     const result = new Pokemon(
         "pidgey", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const pikachu = (level) => {
-    const promoter =promotersList.pikachu
+    const promoter = promotersList.pikachu - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["kick", "punch"]
     if (level > 10) attacks = ["kick", "punch", "lightning"]
     const result = new Pokemon(
         "pikachu", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "electric", // type
         attacks, // attacks,(array)
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const ponyta = (level) => {
-    const promoter =promotersList.ponyta
+    const promoter = promotersList.ponyta - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["dragon_breath", "punch"]
     if (level > 10) attacks = ["dragon_breath", "punch", "mega_kick"]
     const result = new Pokemon(
         "ponyta", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "fire", // type
         attacks, // attacks,(array)
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const psyduck = (level) => {
-    const promoter =promotersList.psyduck
+    const promoter = promotersList.psyduck - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["water_splash", "punch"]
     if (level > 10) attacks = ["water_splash", "punch", "mega_kick"]
     const result = new Pokemon(
         "psyduck", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "water", // type
         attacks, // attacks,(array)
-        Number((15 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((15 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const raticate = (level) => {
-    const promoter =promotersList.raticate
+    const promoter = promotersList.raticate - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["cut", "punch", "heal", "tail_whip"]
     const result = new Pokemon(
         "raticate", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const rattata = (level) => {
-    const promoter =promotersList.rattata
+    const promoter = promotersList.rattata - 1
     let attacks = ["punch"]
     if (level >= 5) attacks = ["cut", "punch"]
 
     const result = new Pokemon(
         "rattata", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((12 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((11 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((12 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((11 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal", // type
         attacks, // attacks,(array)
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const spearow = (level) => {
-    const promoter =promotersList.spearow
+    const promoter = promotersList.spearow - 1
     let attacks = ["kick"]
     if (level >= 5 && level <= 10) attacks = ["tornado", "kick"]
     if (level > 10) attacks = ["tornado", "kick", "quick_attack"]
@@ -303,19 +304,19 @@ const spearow = (level) => {
     const result = new Pokemon(
         "spearow", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "normal,", // type
         attacks, // attacks(array)
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const squirtle = (level) => {
-    const promoter =promotersList.squirtle
+    const promoter = promotersList.squirtle - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["water_splash", "punch"]
     if (level > 10 && level <= 15) attacks = ["water_splash", "punch", "quick_attack"]
@@ -324,19 +325,19 @@ const squirtle = (level) => {
     const result = new Pokemon(
         "squirtle", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((15 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((15 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "water", // type
         attacks, // attacks(array)
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const voltorb = (level) => {
-    const promoter =promotersList.voltorb
+    const promoter = promotersList.voltorb - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["quick_attack", "punch"]
     if (level > 10) attacks = ["punch", "quick_attack", "lightning"]
@@ -344,19 +345,19 @@ const voltorb = (level) => {
     const result = new Pokemon(
         "voltorb", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((14 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((12 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((14 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((12 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "electric", // type
         attacks, // attacks(array)
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const vulpix = (level) => {
-    const promoter =promotersList.vulpix
+    const promoter = promotersList.vulpix - 1
     let attacks = ["cut"]
     if (level >= 5 && level <= 10) attacks = ["quick_attack", "cut"]
     if (level > 10) attacks = ["cut", "quick_attack", "dragon_breath"]
@@ -364,19 +365,19 @@ const vulpix = (level) => {
     const result = new Pokemon(
         "vulpix", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((13 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((13 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "fire", // type
         attacks, // attacks(array)
-        Number((15 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((15 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }
 
 const weedle = (level) => {
-    const promoter =promotersList.weedle
+    const promoter = promotersList.weedle - 1
     let attacks = ["punch"]
     if (level >= 5 && level <= 10) attacks = ["cut", "punch"]
     if (level > 10) attacks = ["punch", "cut", "heal"]
@@ -384,13 +385,13 @@ const weedle = (level) => {
     const result = new Pokemon(
         "weedle", // name
         Math.round((75 * Math.pow(level, hpPromoter)) * promoter), // maxHp
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // defense
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // accurate
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)), // power
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // defense
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // accurate
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)), // power
         level, // level
         "grass", // type
         attacks, // attacks(array)
-        Number((10 * Math.pow(level, 0.75) * promoter).toFixed(2)) // dodge
+        Number((10 * Math.pow(level, statsPromoter) * promoter).toFixed(2)) // dodge
     )
     return result
 }

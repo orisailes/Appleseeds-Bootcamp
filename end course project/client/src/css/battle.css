@@ -108,6 +108,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction:column ;
 }
 
 .user-pokemons-container {
@@ -165,7 +166,7 @@
     height: 35vh;
 }
 
-.new-level-recived-span{
+.new-level-recived-span {
     font-size: small;
 }
 
@@ -174,6 +175,19 @@
     transform: scale(1.2);
     color: #3E7AEB;
 
+}
+
+.user-money {
+    transition: all 0.6s;
+    transform: scale(1.2);
+    color: #57cd4c;
+    margin-top: 3rem;
+}
+
+.end-game-pokemons-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

@@ -6,33 +6,33 @@ const attacks = (attack) => {
     if (attack !== "heal" && attack !== "shield") {
         switch (true) {
             case "punch":
-                return 0.2
+                return 1.2
             case "kick":
-                return 0.3
+                return 1.3
             case "cut":
-                return 0.25
+                return 1.25
             case "water_splash":
-                return 0.3
+                return 1.3
             case "mega_kick":
-                return 0.35
+                return 1.35
             case "tornado":
-                return 0.3
+                return 1.3
             case "razor_leaf":
-                return 0.45
+                return 1.45
             case "slash":
-                return 0.4
+                return 1.4
             case "dragon_breath":
-                return 0.45
+                return 1.45
             case "sand_attack":
-                return 0.35
+                return 1.35
             case "tail_whip":
-                return 0.35
+                return 1.35
             case "quick_attack":
-                return 0.4
+                return 1.4
             case "lightning":
-                return 0.45
+                return 1.45
             default:
-                return 0.25
+                return 1.25
         }
     }
 

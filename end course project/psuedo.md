@@ -31,8 +31,13 @@ Day5 :
  - the pokemon's hp will restored in the DB and in the state.
  - if the user is lose, he will back to map 1 and his hp will restored.(lose exp?)
 
+Day 6:
+* complete maths function 
+* check for bugs 
+* test all edge cases in battle
+* complete todo lists
 
-Day6-7 :
+Day7-8 :
 * make register page that make new users or login to an existing one, use validation so the user cant acces fight or map if he isnt logged in.
 * when user is sign in, he will pick his first pokemon, choose boy/girl character, and begin in map number 1. only after the user pick pokemon and character, he gets a auth token, store all in the DB.
 * learn useContext to store thte user pokemons objects and stats
@@ -43,11 +48,6 @@ Day6-7 :
 * each map will contain different enemies types and levels.
 * before goin to map that is not the main, check if the user got a pokemon
 
-Day 8:
-* fix bugs
-* no bugs ? 
-- add cool movement for the user character (using same video as above)
-- add level up transform(??)
 
 Day 9:
 * add money and pokestore feature. the main map will contain store that the user can buy and choose him as main pokemon. the main pokemon is the only pokemon that can be in battle

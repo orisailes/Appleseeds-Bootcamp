@@ -8,7 +8,6 @@ class Pokemon {
         this.defense = defense
         this.power = power
         this.accurate = accurate
-        this.power = power
         this.level = level
         this.type = type
         this.attacks = attacks
@@ -42,11 +41,53 @@ class Pokemon {
     }
 
     calculateDamage(opponent = "", attack) {
+        const attackerType = this.type
+        const opponentType = opponent.type
+        let addOrDecreaseByType = 1
+        switch (true) {
+
+            case (attackerType === "fire"):
+                if (opponentType === "water" || opponentType === "rock") {
+                    addOrDecreaseByType = attack === "dragon_breath" && 0.9
+                }
+                if (opponentType === "grass") {
+                    addOrDecreaseByType = attack === "dragon_breath" && 1.1
+                }
+
+                break;
+
+            case (attackerType === "water"):
+                if (opponentType === "fire" || opponentType === "grass" || opponentType === "rock") {
+                    addOrDecreaseByType = attack === "water_splash" && 1.1
+                }
+                break;
+
+            case (attackerType === "fighting"):
+                addOrDecreaseByType = (attack === "punch" || attack === "kick" || attack === "mega_kick" || attack === "quick_attack") && 1.07
+                break;
+
+            case (attackerType === "rock"):
+                if (opponentType === "fire") {
+                    addOrDecreaseByType = (attack === "sand_attack") && 1.1
+                }
+                break;
+
+            case (attackerType === "electric"):
+                if (opponentType === "water") {
+                    addOrDecreaseByType = (attack === "lightning") && 1.1
+                }
+                break;
+
+            default:
+                break;
+
+        }
         if (attack !== "heal" && attack !== "shield") {
             return (
                 Math.floor(
-                    attacks(attack) + 1 + this.power *
+                    attacks(attack) + this.power *
                     Math.abs(opponent.defense / 100 - 1) *
+                    addOrDecreaseByType *
                     (Math.random() * (1.25 - 0.75) + 0.75)
                 )
             )
@@ -78,7 +119,7 @@ class Pokemon {
             promoter *
             this.maxExp *
             percentCause
-        return Number((reward * percentCause *10).toFixed(2))
+        return Number((reward * percentCause).toFixed(2))
     }
 }
 
