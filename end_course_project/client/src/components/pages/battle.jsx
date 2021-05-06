@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { userContext } from '../../utils/context/userContext'
-import { Link } from 'react-router-dom'
+import { Link,useHistory } from 'react-router-dom'
 import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
@@ -31,18 +31,21 @@ function Battle() {
     const [message, setMessage] = useState('Battle Start!')
     const userPokemonRef = useRef(null)
     const enemyPokemonRef = useRef(null)
+    const location = useHistory()
 
     const wait = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     useEffect(() => {
+        debugger
         user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
+        console.log(user)
     }, [])
 
 
     useEffect(() => {
-        console.log(window)
+        
         const endGameSession = async () => {
 
             const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
@@ -53,7 +56,6 @@ function Battle() {
                 let newLevels = {}
                 let levelUpCounters = {}
                 for (let pokemon in whoCauseDamage) {
-                    debugger
                     const damagePercentCause = whoCauseDamage[pokemon] / (enemyPokemon.maxHp + enemyHealCharge)
                     if (damagePercentCause) {
                         newUser.pokemons.find((poke, i) => {
@@ -284,6 +286,7 @@ function Battle() {
 
 
     const handleRun = () => {
+        location.push('/map')
         console.log('run!!');
     }
 

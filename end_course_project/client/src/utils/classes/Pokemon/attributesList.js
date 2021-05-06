@@ -82,7 +82,7 @@ const eevee = {
         ["tail_whip", "sand_attack", "quick_attack"]
     ],
 }
-const eknas = {
+const ekans = {
     quality: 1.25,
     defense: 11,
     accurate: 11,
@@ -286,7 +286,7 @@ module.exports = {
     caterpie,
     charmander,
     eevee,
-    eknas,
+    ekans,
     geodude,
     metapod,
     pidgey,
