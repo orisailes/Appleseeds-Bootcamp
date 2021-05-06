@@ -1,0 +1,17 @@
+const express = require("express")
+const router = express.Router()
+// const auth = require('../middleware/auth')
+
+const userController = require('../controller/userController')
+
+router.post('/register', async (req, res) => {
+    const result = await userController.register(req, res)
+    console.log(result);
+    result ? res.send(result) : res.send('couldnt get users')
+})
+router.get('/login', async (req, res) => {
+    let result = await userController.login(req, res)
+    result && res.send(result)
+})
+
+module.exports = router

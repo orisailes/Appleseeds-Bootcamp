@@ -5,6 +5,7 @@ import '../../css/landing.css'
 import Login from '../utils/Login'
 import OpeningSound from '../../sound/opening.mp3'
 import validator from 'validator'
+import axios from 'axios'
 
 const sound = new Audio(OpeningSound)
 
@@ -28,16 +29,14 @@ const Home = () => {
         if (action === "register") {
             if (isEmail && password.length > 6) {
                 setError('')
-                console.log(email);
-                console.log(password);
+               const newUser = axios.post('/api/users/register',{
+                   email,password
+               })
                 // send axios
             } else {
                 password.length < 6 && setError('Invalid password')
                 password.length > 6 && setError('Invalid email or in use')
             }
-        }
-        if(action ==="login"){
-            
         }
     }
 
