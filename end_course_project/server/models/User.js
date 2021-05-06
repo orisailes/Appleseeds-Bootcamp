@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-       
+
     },
 
     password: {
@@ -16,17 +16,17 @@ const userSchema = new mongoose.Schema({
             // if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(value)) {
             //     throw new Error('Invalid password');
             // }
-            if(value.length<6){
+            if (value.length < 6) {
                 throw new Error('Invalid password')
             }
         }
     },
 
-    pokemons:[],
+    pokemons: [],
 
-    money:{
-        type:Number,
-        default:0
+    money: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -39,11 +39,12 @@ userSchema.pre('save', async function (next) {
 })
 
 userSchema.statics.loginByEmail = async (email, password) => {
-    const user = await User.findOne({
+    let user = await User.findOne({
         email
     })
-    if (!user) throw new Error('invalid password or email')
     const isMatch = await bcrypt.compare(password, user.password)
+    if(user) user.password=undefined
+    if (!user) throw new Error('invalid password or email')
     if (!isMatch) throw new Error('invalid password or email')
     return user
 }

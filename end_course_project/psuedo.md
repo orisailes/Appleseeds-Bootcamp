@@ -37,7 +37,7 @@ Day 6:
 * test all edge cases in battle
 * complete todo lists
 
-Day7-8 :
+Day7-9 :
 * make register page that make new users or login to an existing one, use validation so the user cant acces fight or map if he isnt logged in.
 * when user is sign in, he will pick his first pokemon, choose boy/girl character, and begin in map number 1. only after the user pick pokemon and character, he gets a auth token, store all in the DB.
 * learn useContext to store thte user pokemons objects and stats
@@ -49,7 +49,7 @@ Day7-8 :
 * before goin to map that is not the main, check if the user got a pokemon(validation - not hacking the url)
 * add sounds to maps and battle
 
-Day 9:
+Day 10:
 * add money and pokestore feature. the main map will contain store that the user can buy and choose him as main pokemon. the main pokemon is the only pokemon that can be in battle
 * the user can but pokeballs 
 

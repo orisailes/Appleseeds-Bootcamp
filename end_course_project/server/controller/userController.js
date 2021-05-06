@@ -6,7 +6,7 @@ const register = async (req, res) => {
         result = await new User(req.body).save()
     } catch (err) {
         console.log('err:', err.message)
-        res.status(400).send(`error:${err}`)
+        res.status(400).send(err.message)
     }
     return result
 }
@@ -21,9 +21,19 @@ const login = async (req, res) => {
     return user
 }
 
+const updateUser = async (req,res) => {
+    let result
+    try{
+        user = await User.findOneAndUpdate({email:req.params.email},req.body,{new:true,runValidators:true})
+    }catch(err){
+        res.status(400).send(err.message)
+    }
+    return user
+}
 
 module.exports = {
     register,
-    login
+    login,
+    updateUser
 
 }

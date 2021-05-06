@@ -8,11 +8,11 @@ import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
 import attributesList from '../../utils/classes/Pokemon/attributesList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
-
+import axios from 'axios'
 
 function Battle() {
 
-    const fakeEnemyPokemon = pokemonsGenerator.makePokemon("raticate", 40)
+    const fakeEnemyPokemon = pokemonsGenerator.makePokemon("raticate", 5)
 
     const { user, setUser } = useContext(userContext)
     const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
@@ -51,7 +51,7 @@ function Battle() {
             const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
 
             if (gameOver && isPokemonLeft) {
-                // await wait(1000)
+                await wait(1000)
                 let newUser = _.cloneDeep(user)
                 let newLevels = {}
                 let levelUpCounters = {}
@@ -77,9 +77,11 @@ function Battle() {
                 const newMoney = Math.floor(attributesList[enemyPokemon.name].quality * 10 * enemyPokemon.level * (Math.random() * (1 - 0.5) + 0.5))
                 newUser.money += newMoney
                 setEndGameNewLevels(levelUpCounters)
-                console.log('newUser:', newUser)
-                console.log(enemyPokemon);
                 setUser(newUser)
+                await axios.put(`/api/users/${newUser.email}`,{ // axios update new user
+                    money:newUser.money,
+                    pokemons:newUser.pokemons,
+                })
             }
             if (gameOver && isUserLose) {
 
@@ -115,7 +117,7 @@ function Battle() {
                 if (chosenPokemon.hp === 0) { // if user pokemon die
                     const nextPokemon = newUser.pokemons.find((pokemon) => pokemon.hp > 0) // check if some pokemon got hp left and take him
                     userPokemonRef.current.classList.add("user-pokemon-die")
-                    // await wait(1500)
+                    await wait(1500)
                     userPokemonRef.current.classList.remove("user-pokemon-die")
                     if (nextPokemon) {
                         setChosenPokemon(nextPokemon)
@@ -136,9 +138,9 @@ function Battle() {
         const enemyPokemonChanged = async () => {
             if (enemyPokemon.hp <= 0) {
                 setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
-                // await wait(1000)
+                await wait(1000)
                 enemyPokemonRef.current.classList.add("enemy-pokemon-die")
-                // await wait(1500)
+                await wait(1500)
                 setGameOver(true)
             }
         }
@@ -163,19 +165,19 @@ function Battle() {
         let enemyDead = false
         const randomEnemyAttack = enemyPokemon.attacks[Math.floor(Math.random() * enemyPokemon.attacks.length)]
         if (userAttack === "heal" || userAttack === "shield") {
-            // await wait(1250)
+            await wait(1250)
             await handleStatsCharged(chosenPokemon, userAttack)
             userStatsCharged = true
         }
         else {
             userPokemonRef.current.classList.add("user-attacks")
-            // await wait(750)
+            await wait(750)
             userPokemonRef.current.classList.remove("user-attacks")
         }
 
         if (!isUserMiss && !userStatsCharged) {
             enemyPokemonRef.current.classList.add("get-hurt")
-            // await wait(500)
+            await wait(500)
             enemyPokemonRef.current.classList.remove("get-hurt")
             let userDamage = chosenPokemon.calculateDamage(enemyPokemon, userAttack)
             if (enemyHelper.hp < userDamage) userDamage = enemyHelper.hp
@@ -190,40 +192,40 @@ function Battle() {
 
             if (enemyHelper.hp === 0) {
                 setMessage(`${enemyPokemon.name.toUpperCase()} Is DEAD!`)
-                // await wait(1500)
+                await wait(1500)
                 enemyDead = true
                 // using use effect above, to do better rendering job
             }
         }
         if (isUserMiss && !userStatsCharged) {
-            // await wait(500)
+            await wait(500)
             setMessage(`It wasn't very effective...`)
-            // await wait(1500)
+            await wait(1500)
 
         }
 
         // enemy turn from here
         if (!enemyDead) {
             setMessage(`Its ${enemyPokemon.name.toUpperCase()} Turn...`)
-            // await wait(750)
+            await wait(750)
             setMessage(`${enemyPokemon.name.toUpperCase()} Choose ${randomEnemyAttack.replace("_", " ").toUpperCase()}!`)
 
             if (randomEnemyAttack === "heal" || randomEnemyAttack === "shield") {
                 await handleStatsCharged(enemyHelper, randomEnemyAttack)
                 enemyStatsCharged = true
-                // await wait(1500)
+                await wait(1500)
                 setMessage(`Its ${chosenPokemon.name.toUpperCase()} Turn...`)
                 setEnemyPokemon(enemyHelper)
                 setTurnIsActive(false)
             } else {
                 enemyPokemonRef.current.classList.add("enemy-attacks")
-                // await wait(500)
+                await wait(500)
                 enemyPokemonRef.current.classList.remove("enemy-attacks")
             }
 
             if (!isEnemyMiss && !enemyStatsCharged) {
                 userPokemonRef.current.classList.add("get-hurt")
-                // await wait(500)
+                await wait(500)
                 userPokemonRef.current.classList.remove("get-hurt")
 
                 let enemyDamage = enemyPokemon.calculateDamage(chosenPokemon, randomEnemyAttack)
@@ -232,17 +234,17 @@ function Battle() {
                 if (userHelper.hp < 0) {
                     userHelper.hp = 0
                     setMessage(`${userHelper.name.toUpperCase()} DEAD!`)
-                    // await wait(1500)
+                    await wait(1500)
 
                 }
                 setChosenPokemon(userHelper)
-                // await wait(500)
+                await wait(500)
             }
 
             if (isEnemyMiss && !enemyStatsCharged) {
-                // await wait(500)
+                await wait(500)
                 setMessage(`It wasn't very effective...`)
-                // await wait(1500)
+                await wait(1500)
                 setMessage(`Its ${chosenPokemon.name.toUpperCase()} Turn...`)
                 setTurnIsActive(false)
             }

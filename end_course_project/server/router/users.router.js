@@ -13,5 +13,9 @@ router.get('/login', async (req, res) => {
     let result = await userController.login(req, res)
     result && res.send(result)
 })
+router.put('/:email', async (req, res) => {
+    let result = await userController.updateUser(req,res)
+    result && res.send(result)
+})
 
 module.exports = router
