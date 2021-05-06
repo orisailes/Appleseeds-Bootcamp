@@ -21,9 +21,9 @@ const hitmonlee = {
     type: "fighting",
     attacks: [
         ["punch"],
-        ["punc", "cut"],
-        ["punc", "cut", "mega_kick"],
-        ["punc", "cut", "mega_kick", "shield"]
+        ["punch", "cut"],
+        ["punch", "cut", "mega_kick"],
+        ["punch", "cut", "mega_kick", "shield"]
     ],
 }
 const bulbasaur = {

@@ -42,6 +42,7 @@ function Battle() {
 
 
     useEffect(() => {
+        console.log(window)
         const endGameSession = async () => {
 
             const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)

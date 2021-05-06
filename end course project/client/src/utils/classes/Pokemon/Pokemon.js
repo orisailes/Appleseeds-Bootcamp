@@ -55,9 +55,8 @@ class Pokemon {
                 if (opponentType === "grass") {
                     addOrDecreaseByType = attack === "dragon_breath" && 1.1
                 }
-
                 break;
-
+                
             case (attackerType === "water"):
                 if (opponentType === "fire" || opponentType === "grass" || opponentType === "rock") {
                     addOrDecreaseByType = attack === "water_splash" && 1.1
@@ -85,7 +84,7 @@ class Pokemon {
 
         }
         if (attack !== "heal" && attack !== "shield") {
-            
+
             const test =
                 Math.floor(
                     (attacks(attack) * this.power) * // power multip by attack 'quality'
@@ -124,7 +123,7 @@ class Pokemon {
     }
 
     calculateExp(enemy, percentCause) {
-        
+
         const promoter = attributesList[enemy.name].quality
         let reward =
             Number(
