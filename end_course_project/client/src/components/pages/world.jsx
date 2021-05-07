@@ -15,7 +15,6 @@ const World = () => {
             className="world"
         >
             <Map />
-
         </div>
     )
 }
