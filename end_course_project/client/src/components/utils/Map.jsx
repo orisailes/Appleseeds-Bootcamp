@@ -64,10 +64,8 @@ const Map = () => {
             onKeyDown={(e) => handleKeyDown(e)}
             className="map"
             style={{
-                // height:`${MapSize.height}px`,
-                // width:`${MapSize.width}px`,
                 width: `${Math.floor((MapSize.width / window.innerWidth)*100)}vw`,//1536 || 1229 /// mapsize.width 910
-                height: `${Math.floor((MapSize.height / window.innerHeight)*100)}vh`, //775 || 603 /// mapsize.heit 510
+                height: `${Math.floor((MapSize.height / window.innerHeight)*100)}vh`, //775 || 603 /// mapsize.heigt 510
             }}
         >
             <Player position={playerPosition} />
