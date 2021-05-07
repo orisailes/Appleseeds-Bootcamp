@@ -64,16 +64,11 @@ const Home = () => {
                 const newUser = await axios.post('/api/users/login', {
                     email, password
                 })
-                debugger
                 let helper = new Pokemon('helper')
                 for(let i=0;i<newUser.data.pokemons.length;i++){
-                    // helper = {...newUser.data.pokemons[i]}
                     Object.setPrototypeOf(newUser.data.pokemons[i],helper)
                     console.log(newUser.data.pokemons[i].calculateDamage);
                 }
-                // newUser.data.pokemons.forEach((poke) => {
-                //    poke.__proto__ = helper.__proto__ // object hell
-                // })
                 setUser(newUser.data)
                 setIsUserLoggedIn(true)
                 console.log(newUser);
@@ -102,12 +97,12 @@ const Home = () => {
         helper.pokemons.push(newPokemon)
         setUser(helper)
         console.log(helper.pokemons);
-        location.push('/battle')
+        location.push('/world')
     }
 
     const startGame = () => {
         sound.pause()
-        location.push('/battle')
+        location.push('/world')
     }
 
     return (
@@ -132,6 +127,7 @@ const Home = () => {
                                         error={error}
                                     />
                                     <Link to="/battle">battle</Link>
+                                    <Link to="/map">map</Link>
                                     {isMusicPlaying &&
                                         <i
                                             className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}

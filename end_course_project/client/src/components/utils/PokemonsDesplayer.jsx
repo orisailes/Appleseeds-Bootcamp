@@ -29,7 +29,13 @@ const PokemonsDisplayer = ({ initialPokemonChoose }) => {
         <>
             <div className="pokemons-desplayer">
                 <div className="heading">
-                    <img className="pokemons-desplayer-pokeball" src={require('../../img/home/pokeball.png').default}></img>
+                    <img 
+                    className="pokemons-desplayer-pokeball" 
+                    src={require('../../img/home/pokeball.png').default}
+                    alt="pokeball"
+                    >
+
+                    </img>
                     <h2 style={{ color: "white" }}>CHOOSE POKEMON</h2>
                 </div>
                 <div className="content">
@@ -42,6 +48,7 @@ const PokemonsDisplayer = ({ initialPokemonChoose }) => {
                                     key={pokemon}>
                                     <img
                                         src={require(`../../img/pokemon-front/gif/${pokemon}.gif`).default}
+                                        alt={pokemon}
                                     >
                                     </img>
                                     <small

@@ -41,9 +41,9 @@ function Battle() {
     }
 
     useEffect(() => {
-
         initialSound.play()
-        user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
+        user && user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
+        // !user && setMessage('PLEASE LOGIN')
         console.log(user)
     }, [])
 
@@ -51,9 +51,7 @@ function Battle() {
     useEffect(() => {
 
         const endGameSession = async () => {
-            debugger
-            const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
-
+            const isPokemonLeft = user && user.pokemons.find((pokemon) => pokemon.hp > 0)
             if (gameOver && isPokemonLeft) {
                 initialSound.pause()
                 winningSound.play()
@@ -98,8 +96,7 @@ function Battle() {
     }, [gameEndHider])
 
     useEffect(() => {
-
-        const isPokemonLeft = user.pokemons.find((pokemon) => pokemon.hp > 0)
+        const isPokemonLeft = user && user.pokemons.find((pokemon) => pokemon.hp > 0)
         if (gameOver && isPokemonLeft) {
             setGameEndHider(true)
         }
@@ -294,7 +291,7 @@ function Battle() {
 
 
     const handleRun = () => {
-        location.push('/map')
+        location.push('/world')
         console.log('run!!');
     }
 
@@ -388,6 +385,7 @@ function Battle() {
                 className="message-box-container" // 30% of the lower side screen
             >
                 {
+                    user !== null ?
                     isBattleWanted ? //* first user "chatting" -> choose between run and battle
                         battleStarted === false &&
                         <div className="message-box">{user.pokemons.map((poke) => {
@@ -398,7 +396,11 @@ function Battle() {
                                         className="pokemon-choose-div"
                                         id={poke.name}
                                     >
-                                        <img src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default}></img>
+                                        <img
+                                         src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default}
+                                         alt={poke.name}
+                                         >
+                                         </img>
                                         <Button
                                             turnIsActive={turnIsActive}
                                             text={poke.name} />
@@ -426,6 +428,11 @@ function Battle() {
                                         text="battle" />
 
                                 </div>
+                            </div>
+                            :
+                            <div style={{textAlign:"center"}}>
+                                <h1 >Please Login</h1>
+                                <Link to="/">Home page</Link>
                             </div>
                 }
                 {
