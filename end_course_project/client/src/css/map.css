@@ -1,5 +1,9 @@
 .map {
-    background-color: cornsilk;
-    position: absolute;
+    outline: none;
+    position: relative;
     transition: all 0.3s;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    height: 85vh;
 }

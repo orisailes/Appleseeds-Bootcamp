@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import '../../css/map.css'
 import Player from '../utils/Player'
-import { SpriteSize, MapSize } from '../../utils/constants/constants'
+import MapTile from './MapTile'
+import { TileSize } from '../../utils/constants/constants'
 
-const Map = () => {
+const Map = ({ tiles }) => {
 
-    const [playerPosition, setPlayerPosition] = useState([0, 0])
-    const [initialSize, setInitialSize] = useState({})
-    useEffect(() => {
-        // debugger
-        const width =
-            MapSize.width < window.innerWidth ?
-                MapSize.width / window.innerWidth
-                :
-                window.innerWidth / MapSize.width
-
-
-        const height =
-            MapSize.height < window.innerHeight ?
-                MapSize.height / window.innerHeight
-                :
-                window.innerHeight / MapSize.height
-
-        const helper = { width: width * 100, height: height * 100 }
-        console.log(helper);
-        setInitialSize(helper)
-    }, [])
+const [playerPosition, setPlayerPosition] = useState([0, 0])
 
     const handleKeyDown = (e) => {
         e.preventDefault()
+        debugger
+        console.log(e.currentTarget);
         let direction =
             (e.keyCode === 37 || e.keyCode === 65) ?
                 'WEST' //left
@@ -43,57 +26,67 @@ const Map = () => {
                             'SOUTH'
                             :
                             null
+
         if (direction === "WEST") {
-            const newPosition = [playerPosition[0] - SpriteSize.width, playerPosition[1]]
-            newPosition[0] < -window.innerWidth/2+32 ?
-                setPlayerPosition(playerPosition)
-                :
-                setPlayerPosition(newPosition)
-
-        }
-        if (direction === "NORTH") {
-            const newPosition = [playerPosition[0], playerPosition[1] - SpriteSize.height]
-            newPosition[1] < -window.innerHeight/2+32 ?
-                setPlayerPosition(playerPosition)
-                :
-                setPlayerPosition(newPosition)
-        }
-        if (direction === "EAST") {
-
-            const newPosition = [playerPosition[0] + SpriteSize.width, playerPosition[1]]
-            newPosition[0] >= window.innerWidth/2 ?
+            const newPosition = [playerPosition[0] - TileSize.width, playerPosition[1]]
+            newPosition[0] < -48 ?
                 setPlayerPosition(playerPosition)
                 :
                 setPlayerPosition(newPosition)
             console.log('window.innerWidth: ', window.innerWidth);
             console.log('newPosition:', newPosition)
+            console.log('TileSize.width:', TileSize.width)
+
         }
-        if (direction === "SOUTH") {
-            const newPosition = [playerPosition[0], playerPosition[1] + SpriteSize.height]
-            newPosition[1] >= window.innerHeight/2 ?
+        if (direction === "NORTH") {
+            console.log('tiles:', tiles)
+            const newPosition = [playerPosition[0], playerPosition[1] - TileSize.height]
+            newPosition[1] < -40 ?
                 setPlayerPosition(playerPosition)
                 :
                 setPlayerPosition(newPosition)
             console.log('window.innerHeight: ', window.innerHeight);
             console.log('newPosition:', newPosition)
+            console.log('TileSize.height:', TileSize.height)
+        }
+        if (direction === "EAST") {
+
+            const newPosition = [playerPosition[0] + TileSize.width, playerPosition[1]]
+            newPosition[0] >= 45 ?
+                setPlayerPosition(playerPosition)
+                :
+                setPlayerPosition(newPosition)
+            console.log('window.innerWidth: ', window.innerWidth);
+            console.log('newPosition:', newPosition)
+            console.log('TileSize.width:', TileSize.width)
+        }
+        if (direction === "SOUTH") {
+            const newPosition = [playerPosition[0], playerPosition[1] + TileSize.height]
+            newPosition[1] >= 40 ?
+                setPlayerPosition(playerPosition)
+                :
+                setPlayerPosition(newPosition)
+            console.log('window.innerHeight: ', window.innerHeight);
+            console.log('newPosition:', newPosition)
+            console.log('TileSize.height:', TileSize.height)
         }
     }
+
     return (
         <div
             tabIndex="0"
             onKeyDown={(e) => handleKeyDown(e)}
             className="map"
             style={{
-                // width: `${initialSize.width}vw`,
-                // height: `${initialSize.height}vh`,
-                height:"100vh",
-                width:"100vw",
+                height: "100vh",
+                width: "100vw",
                 top: -playerPosition[1],
                 left: -playerPosition[0],
             }}
 
         >
-            <Player initialSize={initialSize} position={playerPosition} />
+            {tiles.map(row => row.map(tile => <MapTile tile={tile}/>))}
+            <Player position={playerPosition} />
         </div>
     )
 }

@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { userContext } from '../../utils/context/userContext'
 import Map from '../utils/Map'
+import tilesDefiner from './maps/index'
 import '../../css/world.css'
+
 const World = () => {
     const { user, setUser } = useContext(userContext)
 
@@ -9,12 +11,11 @@ const World = () => {
         console.log(user)
     }, [])
 
-    // const [map, setMap] = useState([])
     return (
         <div
             className="world"
         >
-            <Map />
+            <Map tiles={tilesDefiner.one} />
         </div>
     )
 }
