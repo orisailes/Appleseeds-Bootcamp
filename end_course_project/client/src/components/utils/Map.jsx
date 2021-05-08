@@ -7,6 +7,7 @@ import { TileSize } from '../../utils/constants/constants'
 const Map = ({ tiles }) => {
 
     const [playerPosition, setPlayerPosition] = useState([0, 0])
+    const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19])
     const playerRef = useRef()
     const obstaclesRefs = useRef([])
     const enemyGrassRefs = useRef([])
@@ -15,7 +16,6 @@ const Map = ({ tiles }) => {
     const handleKeyDown = (e) => {
         e.preventDefault()
 
-        console.log(e.currentTarget);
         let direction =
             (e.keyCode === 37 || e.keyCode === 65) ?
                 'WEST' //left
@@ -31,49 +31,90 @@ const Map = ({ tiles }) => {
                             :
                             null
 
+
         if (direction === "WEST") {
-            const newPosition = [playerPosition[0] - TileSize.width, playerPosition[1]]
-            newPosition[0] < -48 ?
-                setPlayerPosition(playerPosition)
-                :
-                setPlayerPosition(newPosition)
-            console.log('window.innerWidth: ', window.innerWidth);
-            console.log('newPosition:', newPosition)
-            console.log('TileSize.width:', TileSize.width)
+            const isValid = changePlayerArrayPositionifValid(direction)
+            if (isValid) {
+                const newPosition = [playerPosition[0] - TileSize.width, playerPosition[1]]
+                newPosition[0] < -48 ?
+                    setPlayerPosition(playerPosition)
+                    :
+                    setPlayerPosition(newPosition)
+            }
+            // console.log('window.innerWidth: ', window.innerWidth);
+            // console.log('newPosition:', newPosition)
+            // console.log('TileSize.width:', TileSize.width)
 
         }
         if (direction === "NORTH") {
-            console.log('tiles:', tiles)
-            const newPosition = [playerPosition[0], playerPosition[1] - TileSize.height]
-            newPosition[1] < -40 ?
-                setPlayerPosition(playerPosition)
-                :
-                setPlayerPosition(newPosition)
-            console.log('window.innerHeight: ', window.innerHeight);
-            console.log('newPosition:', newPosition)
-            console.log('TileSize.height:', TileSize.height)
+            const isValid = changePlayerArrayPositionifValid(direction)
+            if (isValid) {
+                const newPosition = [playerPosition[0], playerPosition[1] - TileSize.height]
+                newPosition[1] < -40 ?
+                    setPlayerPosition(playerPosition)
+                    :
+                    setPlayerPosition(newPosition)
+            }
+            // console.log('window.innerHeight: ', window.innerHeight);
+            // console.log('newPosition:', newPosition)
+            // console.log('TileSize.height:', TileSize.height)
         }
         if (direction === "EAST") {
-
-            const newPosition = [playerPosition[0] + TileSize.width, playerPosition[1]]
-            newPosition[0] >= 45 ?
-                setPlayerPosition(playerPosition)
-                :
-                setPlayerPosition(newPosition)
-            console.log('window.innerWidth: ', window.innerWidth);
-            console.log('newPosition:', newPosition)
-            console.log('TileSize.width:', TileSize.width)
+            const isValid = changePlayerArrayPositionifValid(direction)
+            if (isValid) {
+                const newPosition = [playerPosition[0] + TileSize.width, playerPosition[1]]
+                newPosition[0] >= 45 ?
+                    setPlayerPosition(playerPosition)
+                    :
+                    setPlayerPosition(newPosition)
+            }
+            // console.log('window.innerWidth: ', window.innerWidth);
+            // console.log('newPosition:', newPosition)
+            // console.log('TileSize.width:', TileSize.width)
         }
         if (direction === "SOUTH") {
-            const newPosition = [playerPosition[0], playerPosition[1] + TileSize.height]
-            newPosition[1] >= 40 ?
-                setPlayerPosition(playerPosition)
-                :
-                setPlayerPosition(newPosition)
-            console.log('window.innerHeight: ', window.innerHeight);
-            console.log('newPosition:', newPosition)
-            console.log('TileSize.height:', TileSize.height)
+            const isValid = changePlayerArrayPositionifValid(direction)
+            if (isValid) {
+                const newPosition = [playerPosition[0], playerPosition[1] + TileSize.height]
+                newPosition[1] >= 40 ?
+                    setPlayerPosition(playerPosition)
+                    :
+                    setPlayerPosition(newPosition)
+            }
+            // console.log('window.innerHeight: ', window.innerHeight);
+            // console.log('newPosition:', newPosition)
+            // console.log('TileSize.height:', TileSize.height)
         }
+        // console.log('playerArrayPosition:', playerArrayPosition)
+    }
+
+    const changePlayerArrayPositionifValid = (direction) => {
+        debugger
+        let helper = [...playerArrayPosition]
+        direction === "SOUTH" ? helper[0]++ :
+            direction === "NORTH" ? helper[0]-- :
+                direction === "WEST" ? helper[1]-- :
+                    direction === "EAST" && helper[1]++
+        switch (tiles[helper[0]][helper[1]]) {
+            case 4:
+                return false
+            case 7:
+                return false
+            case 1:
+                return false
+            case (-1):
+                return false
+            case 2:
+                return false
+            case (-2):
+                return false
+            default:
+                setPlayerArrayPosition(helper)
+                break;
+        }
+        console.log('tiles[helper[0],helper[1]]:', tiles[helper[0]][helper[1]])
+
+        return true
     }
 
     const forwardedRef = (ref) => {
@@ -87,12 +128,6 @@ const Map = ({ tiles }) => {
     }
 
 
-    // const isNotObstacle = (newPosition) => {
-    //     const playerPosY = playerRef.current.offsetTop
-    //     const playerPosX = playerRef.current.offsetLeft
-    // // document.elementFromPoint(x,y)
-    //     return true
-    // }
 
     console.log(playerPosition);
     return (
