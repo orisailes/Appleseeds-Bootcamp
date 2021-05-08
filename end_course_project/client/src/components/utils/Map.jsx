@@ -6,11 +6,12 @@ import { TileSize } from '../../utils/constants/constants'
 
 const Map = ({ tiles }) => {
 
-    const [playerPosition, setPlayerPosition] = useState([0, 0])
-    const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19])
+    const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
+    const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
     const playerRef = useRef()
-    const obstaclesRefs = useRef([])
-    const enemyGrassRefs = useRef([])
+
+
+    //TODO: prevent trolling with arrow keys, handle enemy meeting!
 
 
     const handleKeyDown = (e) => {
@@ -31,7 +32,6 @@ const Map = ({ tiles }) => {
                             :
                             null
 
-
         if (direction === "WEST") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -41,11 +41,8 @@ const Map = ({ tiles }) => {
                     :
                     setPlayerPosition(newPosition)
             }
-            // console.log('window.innerWidth: ', window.innerWidth);
-            // console.log('newPosition:', newPosition)
-            // console.log('TileSize.width:', TileSize.width)
-
         }
+
         if (direction === "NORTH") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -55,10 +52,8 @@ const Map = ({ tiles }) => {
                     :
                     setPlayerPosition(newPosition)
             }
-            // console.log('window.innerHeight: ', window.innerHeight);
-            // console.log('newPosition:', newPosition)
-            // console.log('TileSize.height:', TileSize.height)
         }
+
         if (direction === "EAST") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -68,10 +63,8 @@ const Map = ({ tiles }) => {
                     :
                     setPlayerPosition(newPosition)
             }
-            // console.log('window.innerWidth: ', window.innerWidth);
-            // console.log('newPosition:', newPosition)
-            // console.log('TileSize.width:', TileSize.width)
         }
+
         if (direction === "SOUTH") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -81,15 +74,11 @@ const Map = ({ tiles }) => {
                     :
                     setPlayerPosition(newPosition)
             }
-            // console.log('window.innerHeight: ', window.innerHeight);
-            // console.log('newPosition:', newPosition)
-            // console.log('TileSize.height:', TileSize.height)
         }
-        // console.log('playerArrayPosition:', playerArrayPosition)
+
     }
 
     const changePlayerArrayPositionifValid = (direction) => {
-        debugger
         let helper = [...playerArrayPosition]
         direction === "SOUTH" ? helper[0]++ :
             direction === "NORTH" ? helper[0]-- :
@@ -108,23 +97,14 @@ const Map = ({ tiles }) => {
                 return false
             case (-2):
                 return false
+            case 6:
+                //! handle enemy meeting
+                break;
             default:
-                setPlayerArrayPosition(helper)
+                setPlayerArrayPosition(helper) // in case user make valid move, new position saved
                 break;
         }
-        console.log('tiles[helper[0],helper[1]]:', tiles[helper[0]][helper[1]])
-
         return true
-    }
-
-    const forwardedRef = (ref) => {
-        ref &&
-            (
-                (ref.className === "rock" || ref.className === "tree") ? obstaclesRefs.current.push(ref) :
-                    (ref.className === "enemy-grass") && enemyGrassRefs.current.push(ref)
-            )
-        console.log('obstacleRefs:', obstaclesRefs)
-        console.log('enemyGrassRefs:', enemyGrassRefs)
     }
 
 
@@ -141,12 +121,8 @@ const Map = ({ tiles }) => {
                 top: -playerPosition[1],
                 left: -playerPosition[0],
             }}
-
         >
-
-
-            <MapView forwardedRef={forwardedRef} tiles={tiles} />
-
+            <MapView tiles={tiles} />
             <Player forwardedRef={playerRef} position={playerPosition} />
         </div>
     )

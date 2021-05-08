@@ -2,14 +2,10 @@ import React from 'react'
 import { TileSize } from '../../utils/constants/constants'
 import '../../css/mapTile.css'
 
-const Tile =  ({ tile, forwardedRef }) => {
+const Tile =  ({ tile }) => {
 
     let className = ''
-   const refChecker = (ref) => {
-        if (tile === 4 || tile === 7 || tile === 6) {
-            forwardedRef(ref)
-        }
-    }
+  
  
     switch (tile) {
         case 1:
@@ -52,7 +48,6 @@ const Tile =  ({ tile, forwardedRef }) => {
                 width: `${TileSize.width}vw`,
                 display: "inline-flex"
             }}
-            ref={(ref) => refChecker(ref)}
         >
 
         </div>
