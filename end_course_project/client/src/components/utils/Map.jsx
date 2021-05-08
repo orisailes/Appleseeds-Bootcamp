@@ -13,10 +13,17 @@ const Map = ({ tiles }) => {
 
     //TODO: prevent trolling with arrow keys, handle enemy meeting!
 
-
-    const handleKeyDown = (e) => {
+    const wait = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+ 
+    const handleKeyDown = async (e) => {
         e.preventDefault()
-
+        debugger
+      
+        if (e.repeat) {
+            await wait(75)
+        }
         let direction =
             (e.keyCode === 37 || e.keyCode === 65) ?
                 'WEST' //left
