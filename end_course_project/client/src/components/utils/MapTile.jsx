@@ -2,10 +2,15 @@ import React from 'react'
 import { TileSize } from '../../utils/constants/constants'
 import '../../css/mapTile.css'
 
-const MapTile = ({ tile }) => {
+const MapTile = React.memo(function MapTile({ tile, forwardedRef })  {
 
     let className = ''
 
+    const refChecker = (ref) => {
+        if (tile === 4 || tile === 7 || tile === 6) {
+            forwardedRef(ref)
+        }
+    }
 
     switch (tile) {
         case 1:
@@ -32,6 +37,9 @@ const MapTile = ({ tile }) => {
         case 6:
             className = "enemy-grass"
             break;
+        case 7:
+            className = "tree"
+            break;
 
         default:
             break;
@@ -45,10 +53,11 @@ const MapTile = ({ tile }) => {
                 width: `${TileSize.width}vw`,
                 display: "inline-flex"
             }}
+            ref={(ref) => refChecker(ref)}
         >
 
         </div>
     )
-}
+})
 
 export default MapTile

@@ -33,3 +33,7 @@ html{
 .left-side-fence {
     background: url('../img/map/left-side-fence.png') no-repeat center left/contain;
 }
+
+.tree{
+    background: url('../img/map/tree.png') no-repeat center center/cover;
+}

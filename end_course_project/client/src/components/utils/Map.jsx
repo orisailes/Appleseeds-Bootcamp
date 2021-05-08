@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import '../../css/map.css'
 import Player from '../utils/Player'
 import MapTile from './MapTile'
@@ -6,11 +6,15 @@ import { TileSize } from '../../utils/constants/constants'
 
 const Map = ({ tiles }) => {
 
-const [playerPosition, setPlayerPosition] = useState([0, 0])
+    const [playerPosition, setPlayerPosition] = useState([0, 0])
+    const playerRef = useRef()
+    const obstaclesRefs = useRef([])
+    const enemyGrassRefs = useRef([])
+
 
     const handleKeyDown = (e) => {
         e.preventDefault()
-        debugger
+
         console.log(e.currentTarget);
         let direction =
             (e.keyCode === 37 || e.keyCode === 65) ?
@@ -72,6 +76,23 @@ const [playerPosition, setPlayerPosition] = useState([0, 0])
         }
     }
 
+    // const isNotObstacle = (newPosition) => {
+    //     const playerPosY = playerRef.current.offsetTop
+    //     const playerPosX = playerRef.current.offsetLeft
+    // // document.elementFromPoint(x,y)
+    //     return true
+    // }
+
+    const forwardedRef = (ref) => {
+        ref &&
+            (
+                (ref.className === "rock" || ref.className === "tree") ? obstaclesRefs.current.push(ref) :
+                    (ref.className === "enemy-grass") && enemyGrassRefs.current.push(ref)
+            )
+        console.log('obstacleRefs:', obstaclesRefs)
+        console.log('enemyGrassRefs:', enemyGrassRefs)
+    }
+
     return (
         <div
             tabIndex="0"
@@ -85,8 +106,11 @@ const [playerPosition, setPlayerPosition] = useState([0, 0])
             }}
 
         >
-            {tiles.map(row => row.map(tile => <MapTile tile={tile}/>))}
-            <Player position={playerPosition} />
+            
+            {
+                tiles.map(row => row.map(tile => <MapTile forwardedRef={forwardedRef} tile={tile} />))
+            }
+            <Player forwardedRef={playerRef} position={playerPosition} />
         </div>
     )
 }

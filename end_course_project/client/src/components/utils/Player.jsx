@@ -3,7 +3,7 @@ import '../../css/player.css'
 import WalkSprites from '../../img/character/movement/maleBigger.png'
 import { SpriteSize } from '../../utils/constants/constants'
 
-const Player = ({ position }) => {
+const Player = ({ position,forwardedRef }) => {
 
 
     const y = 50
@@ -21,6 +21,7 @@ const Player = ({ position }) => {
                 width: `${SpriteSize.width}px`,
 
             }}
+            ref={forwardedRef}
             className="player">
 
         </div>

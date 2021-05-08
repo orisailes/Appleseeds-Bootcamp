@@ -127,7 +127,7 @@ const Home = () => {
                                         error={error}
                                     />
                                     <Link to="/battle">battle</Link>
-                                    <Link to="/map">map</Link>
+                                    <Link to="/world">world</Link>
                                     {isMusicPlaying &&
                                         <i
                                             className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
