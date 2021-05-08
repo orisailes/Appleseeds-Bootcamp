@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import '../../css/map.css'
 import Player from '../utils/Player'
-import MapTile from './MapTile'
+import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
 
 const Map = ({ tiles }) => {
@@ -76,13 +76,6 @@ const Map = ({ tiles }) => {
         }
     }
 
-    // const isNotObstacle = (newPosition) => {
-    //     const playerPosY = playerRef.current.offsetTop
-    //     const playerPosX = playerRef.current.offsetLeft
-    // // document.elementFromPoint(x,y)
-    //     return true
-    // }
-
     const forwardedRef = (ref) => {
         ref &&
             (
@@ -93,6 +86,15 @@ const Map = ({ tiles }) => {
         console.log('enemyGrassRefs:', enemyGrassRefs)
     }
 
+
+    // const isNotObstacle = (newPosition) => {
+    //     const playerPosY = playerRef.current.offsetTop
+    //     const playerPosX = playerRef.current.offsetLeft
+    // // document.elementFromPoint(x,y)
+    //     return true
+    // }
+
+    console.log(playerPosition);
     return (
         <div
             tabIndex="0"
@@ -106,10 +108,10 @@ const Map = ({ tiles }) => {
             }}
 
         >
-            
-            {
-                tiles.map(row => row.map(tile => <MapTile forwardedRef={forwardedRef} tile={tile} />))
-            }
+
+
+            <MapView forwardedRef={forwardedRef} tiles={tiles} />
+
             <Player forwardedRef={playerRef} position={playerPosition} />
         </div>
     )

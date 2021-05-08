@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { userContext } from '../../utils/context/userContext'
 import Map from '../utils/Map'
 import tilesDefiner from './maps/index'
 import '../../css/world.css'
 
 const World = () => {
-    const { user, setUser } = useContext(userContext)
+    // const { user, setUser } = useContext(userContext)
 
-    useEffect(() => {
-        console.log(user)
-    }, [])
+
 
     return (
         <div

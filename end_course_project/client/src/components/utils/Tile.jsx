@@ -2,16 +2,15 @@ import React from 'react'
 import { TileSize } from '../../utils/constants/constants'
 import '../../css/mapTile.css'
 
-const MapTile = React.memo(function MapTile({ tile, forwardedRef })  {
+const Tile =  ({ tile, forwardedRef }) => {
 
     let className = ''
-
-    const refChecker = (ref) => {
+   const refChecker = (ref) => {
         if (tile === 4 || tile === 7 || tile === 6) {
             forwardedRef(ref)
         }
     }
-
+ 
     switch (tile) {
         case 1:
             className = "front-fence"
@@ -58,6 +57,6 @@ const MapTile = React.memo(function MapTile({ tile, forwardedRef })  {
 
         </div>
     )
-})
+}
 
-export default MapTile
+export default Tile
