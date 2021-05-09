@@ -147,16 +147,16 @@ const Map = ({ tiles, toggleMap,toggleChat }) => { // get the map matrix
             tiles[up].includes(specialCharacters[0]) ||
             tiles[up].includes(specialCharacters[1])
         ) {
-            if (tiles[up][playerArrayPosition[1]] === -200) toggleChat(true)
-            if (tiles[up][playerArrayPosition[1]] === -101) toggleChat(true)
+            if (tiles[up][playerArrayPosition[1]] === -200) toggleChat('oak')
+            if (tiles[up][playerArrayPosition[1]] === -101) toggleChat('nurse')
         }
         if (
             tiles[down].includes(specialCharacters[0]) ||
             tiles[down].includes(specialCharacters[1])
         ) {
 
-            if (tiles[down][playerArrayPosition[1]] === -200) toggleChat(true)
-            if (tiles[down][playerArrayPosition[1]] === -101) toggleChat(true)
+            if (tiles[down][playerArrayPosition[1]] === -200) toggleChat('oak')
+            if (tiles[down][playerArrayPosition[1]] === -101) toggleChat('nurse')
         }
         if (
             tiles[thisLine].includes(specialCharacters[0]) ||
@@ -164,10 +164,10 @@ const Map = ({ tiles, toggleMap,toggleChat }) => { // get the map matrix
         ) {
             if (
                 (tiles[thisLine][playerArrayPosition[1] - 1] === -200) ||
-                (tiles[thisLine][playerArrayPosition[1] + 1] === -200)) toggleChat(true)
+                (tiles[thisLine][playerArrayPosition[1] + 1] === -200)) toggleChat('oak')
             if (
                 (tiles[thisLine][playerArrayPosition[1] - 1] === -101) ||
-                (tiles[thisLine][playerArrayPosition[1] + 1] === -101)) toggleChat(true)
+                (tiles[thisLine][playerArrayPosition[1] + 1] === -101)) toggleChat('nurse')
 
         }
     }
