@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter,useHistory, Redirect, Route, Switch } from 'react-router-dom'
 import { userContext } from './utils/context/userContext'
 import './css/app.css'
 import './css/normalize.css'
@@ -10,29 +10,30 @@ import pokemonsGenerator from './utils/classes/Pokemon/pokemonsGenerator'
 
 function App() {
   //TODO: handleRun , validat that no more than 8 pokemons, 
+  const location = useHistory()
 
-  // const poke1 = pokemonsGenerator.makePokemon("ponyta", 35)
-  // const poke2 = pokemonsGenerator.makePokemon("voltorb", 35)
-  // const poke3 = pokemonsGenerator.makePokemon("pikachu", 35)
-  // const poke4 = pokemonsGenerator.makePokemon("charmander", 35)
-  // const poke5 = pokemonsGenerator.makePokemon("squirtle", 35)
-  // const poke6 = pokemonsGenerator.makePokemon("scyther", 36)
-  // const poke7 = pokemonsGenerator.makePokemon("vulpix", 35)
-  // const poke8 = pokemonsGenerator.makePokemon("eevee", 35)
-  // const poke9 = pokemonsGenerator.makePokemon("caterpie", 35)
-  // const poke10 = pokemonsGenerator.makePokemon("ekans", 35)
-  // const poke11 = pokemonsGenerator.makePokemon("geodude", 35)
-  // const poke12 = pokemonsGenerator.makePokemon("hitmonlee", 35)
-  // const poke13 = pokemonsGenerator.makePokemon("metapod", 35)
-  // const poke14 = pokemonsGenerator.makePokemon("pidgey", 35)
-  // const poke15 = pokemonsGenerator.makePokemon("psyduck", 35)
-  // const poke16 = pokemonsGenerator.makePokemon("raticate", 35)
-  // const poke17 = pokemonsGenerator.makePokemon("rattata", 35)
-  // const poke18 = pokemonsGenerator.makePokemon("spearow", 35)
-  // const poke19 = pokemonsGenerator.makePokemon("weedle", 35)
-  // const poke20 = pokemonsGenerator.makePokemon("bulbasaur", 35)
 
-  
+  location.listen((newLocation, action) => {
+    if (action === "PUSH") {
+      if (
+        newLocation.pathname !== this.currentPathname ||
+        newLocation.search !== this.currentSearch
+      ) {
+        // Save new location
+        this.currentPathname = newLocation.pathname;
+        this.currentSearch = newLocation.search;
+
+        // Clone location object and push it to history
+        location.push({
+          pathname: newLocation.pathname,
+          search: newLocation.search
+        });
+      }
+    } else {
+      // Send user back if they try to navigate back
+      location.go(1);
+    }
+  })
 
   const [user, setUser] = useState(null)
 
@@ -44,9 +45,10 @@ function App() {
   return (<BrowserRouter >
     <Switch >
       <userContext.Provider value={value} >
+        <Route exact path="/" render={() => <Redirect to="/landing" />} />
         <Route exact path="/battle" component={Battle} />
         <Route exact path="/world" component={World} />
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/landing" component={Landing} />
       </userContext.Provider>
     </Switch>
   </BrowserRouter>

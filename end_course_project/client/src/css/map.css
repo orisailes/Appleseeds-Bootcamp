@@ -7,3 +7,9 @@
     align-content: center;
     height: 85vh;
 }
+
+.world i{
+    position: absolute;
+    top: 5px;
+    left: 49%;
+}

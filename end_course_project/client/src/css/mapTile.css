@@ -37,3 +37,28 @@ html{
 .tree{
     background: url('../img/map/tree.png') no-repeat center center/cover;
 }
+
+.mushroom{
+    background: url('../img/map/mushroom.png') no-repeat center center/cover;
+}
+
+.half-grass{
+    background: url('../img/map/halfGrass.png') no-repeat center center/cover;
+}
+
+.half-grass-on-grass{
+    background: url('../img/map/halfGrass-on-grass.png') no-repeat center center/cover;
+
+}
+.mushroom-on-grass{
+    background: url('../img/map/mushroom-on-grass.png') no-repeat center center/cover;
+
+}
+
+.tree-on-grass{
+    background: url('../img/map/tree-on-grass.png') no-repeat center center/cover;
+}
+
+.rock-on-grass{
+    background: url('../img/map/rock-on-grass.png') no-repeat center center/cover;
+}

@@ -14,6 +14,26 @@
 
 }
 
+.first-hider-battle-page {
+    opacity: 1;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 1235100;
+    top: 0;
+    left: 0;
+    /* background: url('../img/utils/battleZone.png') no-repeat center center/cover; */
+    background-color: black;
+    animation: revealGame 3s forwards linear;
+    animation-delay:1s ;
+}
+
+.battle-page-volume-btn {
+    position: absolute;
+    top: 5px;
+    left: 49%;
+}
+
 .pokemon-choose-div {
     display: flex;
     justify-content: center;
@@ -24,11 +44,12 @@
     width: 12%;
     line-height: 1rem;
 }
+
 .pokemon-choose-div button {
- font-size: smaller;
+    font-size: smaller;
 }
 
-.pokemon-choose-div > button > i {
+.pokemon-choose-div>button>i {
     transition: transform 0.3s;
 }
 
@@ -77,7 +98,9 @@
 }
 
 .enemy-pokemon-img {
+    transform: translateX(35vw);
     animation: revelEnemyPokemon 1s forwards;
+    animation-delay: 4.5s;
 }
 
 .user-pokemon-img {
@@ -201,6 +224,7 @@
 .hider .end-game-individual-pokemon img {
     height: 35vh;
 }
+
 .hider .end-game-individual-pokemon .exp-bar {
     width: 90%;
 }
@@ -237,6 +261,12 @@
     width: 100vw;
 }
 
+
+@keyframes revealGame {
+    to{
+        opacity: 0;
+    }
+}
 
 @keyframes userPokemonDie {
     to {
@@ -326,9 +356,6 @@
 }
 
 @keyframes revelUserPokemon {
-    from {
-        transform: translateX(-35vw);
-    }
 
     to {
         transform: translateX(0);

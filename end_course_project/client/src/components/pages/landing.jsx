@@ -1,18 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory,Link } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
 import '../../css/landing.css'
 import Login from '../utils/Login'
-import OpeningSound from '../../sound/opening.mp3'
 import Pokemon from '../../utils/classes/Pokemon/Pokemon'
 import validator from 'validator'
 import axios from 'axios'
 import PokemonsDesplayer from '../utils/PokemonsDesplayer'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
-
+import OpeningSound from '../../sound/opening.mp3'
 const sound = new Audio(OpeningSound)
 
-const Home = () => {
+const Home = ({history}) => {
 
     //TODO: cant get two pokemons the same
 
@@ -25,7 +24,8 @@ const Home = () => {
     const [error, setError] = useState('')
     const [newUserCreated, setNewUserCreated] = useState(false)
     const location = useHistory()
-
+    console.log('history:', history)
+    console.log('location:', location)
 
     useEffect(() => {
 
@@ -35,7 +35,7 @@ const Home = () => {
 
 
     const onFormSubmit = async (e) => {
-        
+
         e.preventDefault()
         const action = e.target[2].id // get action from e
         const isEmail = validator.isEmail(email)
@@ -45,6 +45,7 @@ const Home = () => {
 
         if (action === "register" && isEmail) {
             setError('')
+            debugger
             try {
                 const newUser = await axios.post('/api/users/register', {
                     email, password
@@ -64,13 +65,12 @@ const Home = () => {
                     email, password
                 })
                 let helper = new Pokemon('helper')
-                for(let i=0;i<newUser.data.pokemons.length;i++){
-                    Object.setPrototypeOf(newUser.data.pokemons[i],helper)
-                    console.log(newUser.data.pokemons[i].calculateDamage);
+                for (let i = 0; i < newUser.data.pokemons.length; i++) {
+                    Object.setPrototypeOf(newUser.data.pokemons[i], helper) // set proto for new user
                 }
                 setUser(newUser.data)
                 setIsUserLoggedIn(true)
-                console.log(newUser);
+                console.log('newUser:', newUser)
             } catch (err) {
                 console.log(err.message)
                 setError("Invalid email or password")
@@ -96,6 +96,8 @@ const Home = () => {
         helper.pokemons.push(newPokemon)
         setUser(helper)
         console.log(helper.pokemons);
+        sound.pause()
+        sound.currentTime = 0
         location.push('/world')
     }
 
@@ -111,7 +113,7 @@ const Home = () => {
                     <div className="login-popup-container" >
 
                         {
-                            (newUserCreated && user === null) ?
+                            newUserCreated ?
                                 <div className="initial-pokemon-choose">
                                     <PokemonsDesplayer initialPokemonChoose={initialPokemonChoose} />
                                 </div>
@@ -125,8 +127,7 @@ const Home = () => {
                                         onFormSubmit={onFormSubmit}
                                         error={error}
                                     />
-                                    <Link to="/battle">battle</Link>
-                                    <Link to="/world">world</Link>
+
                                     {isMusicPlaying &&
                                         <i
                                             className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
