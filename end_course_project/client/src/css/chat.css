@@ -1,0 +1,11 @@
+.chat-box{
+    width: 95vw;
+    height: 35vh;
+    background: whitesmoke;
+    position: absolute;
+    border: 3px solid red;
+  bottom: 2vh;
+  left: 2.5vw;
+  text-align: center;
+  font-size: 1.5rem;
+}

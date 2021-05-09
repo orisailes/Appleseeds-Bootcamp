@@ -62,3 +62,11 @@ html{
 .rock-on-grass{
     background: url('../img/map/rock-on-grass.png') no-repeat center center/cover;
 }
+
+.nurse{
+    background: url('../img/character/nurse/nurse.png')no-repeat center center/cover;
+}
+
+.oak{
+    background: url('../img/character/oak/oak.png')no-repeat center center/cover;
+}

@@ -53,6 +53,12 @@ const Tile = ({ tile }) => {
         case 90:
             className = "mushroom-on-grass"
             break;
+        case -101:
+            className = "nurse"
+            break;
+        case -200:
+            className = "oak"
+            break;
         default:
             break;
     }

@@ -9,9 +9,9 @@ const MapView = React.memo(({tiles}) => {
     )
 
 },(prevProps,newProps)=>{
-    if(prevProps.tiles===newProps){
-        return false
+    if(prevProps.tiles==newProps.tiles){
+        return true
     }
-    return true
+    return false
 })
 export default MapView

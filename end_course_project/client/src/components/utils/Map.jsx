@@ -3,13 +3,14 @@ import { useHistory } from 'react-router-dom'
 import '../../css/map.css'
 import Player from '../utils/Player'
 import MapView from './MapView'
+import Chat from './Chat'
 import { TileSize } from '../../utils/constants/constants'
 import ForestSound from '../../sound/forest.mp3'
 import BattleSound from '../../sound/battle.mp3'
 const initialBattleSound = new Audio(BattleSound)
 const forestSound = new Audio(ForestSound)
 
-const Map = ({ tiles }) => {
+const Map = ({ tiles, toggleMap,toggleChat }) => { // get the map matrix 
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
@@ -35,10 +36,11 @@ const Map = ({ tiles }) => {
 
     const handleKeyDown = async (e) => {
         e.preventDefault()
-
         if (e.repeat) {
             await wait(75)
         }
+
+        e.keyCode === 32 && checkIfTalking()
         let direction =
             (e.keyCode === 37 || e.keyCode === 65) ?
                 'WEST' //left
@@ -53,7 +55,6 @@ const Map = ({ tiles }) => {
                             'SOUTH'
                             :
                             null
-        debugger
         if (direction === "WEST") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -108,26 +109,21 @@ const Map = ({ tiles }) => {
                 direction === "WEST" ? helper[1]-- :
                     direction === "EAST" && helper[1]++
 
+
         switch (true) {
             case (tiles[helper[0]][helper[1]] < 0):
                 return false
-                case(!tiles[helper[0]][helper[1]]):
+            case (!tiles[helper[0]][helper[1]]): // if empty map is changed
+                toggleMap()
                 return false
             case (tiles[helper[0]][helper[1]] === 1):
                 //! handle enemy meeting
                 if (Math.random() > 0.9) {
-                    console.log("busted!!");
                     setUserMeetEnemy(true)
                     forestSound.pause()
                     forestSound.currentTime = 0
-                    // initialBattleSound.play()
-                    // // await wait(3000)
-                    // initialBattleSound.pause()
-                    // initialBattleSound.currentTime = 0
                     location.push('/battle')
-                } else {
-                    console.log("avoide from enemy");
-                }
+                } 
                 setPlayerArrayPosition(helper) //  new position saved
                 break;
             default:
@@ -140,6 +136,40 @@ const Map = ({ tiles }) => {
     const toggleMusic = () => {
         musicOff ? forestSound.play() : forestSound.pause()
         setMusicOff(prev => !prev)
+    }
+
+    const checkIfTalking = () => {
+        const specialCharacters = [-101, -200]
+        const up = playerArrayPosition[0] - 1
+        const down = playerArrayPosition[0] + 1
+        const thisLine = playerArrayPosition[0]
+        if (
+            tiles[up].includes(specialCharacters[0]) ||
+            tiles[up].includes(specialCharacters[1])
+        ) {
+            if (tiles[up][playerArrayPosition[1]] === -200) toggleChat(true)
+            if (tiles[up][playerArrayPosition[1]] === -101) toggleChat(true)
+        }
+        if (
+            tiles[down].includes(specialCharacters[0]) ||
+            tiles[down].includes(specialCharacters[1])
+        ) {
+
+            if (tiles[down][playerArrayPosition[1]] === -200) toggleChat(true)
+            if (tiles[down][playerArrayPosition[1]] === -101) toggleChat(true)
+        }
+        if (
+            tiles[thisLine].includes(specialCharacters[0]) ||
+            tiles[thisLine].includes(specialCharacters[1])
+        ) {
+            if (
+                (tiles[thisLine][playerArrayPosition[1] - 1] === -200) ||
+                (tiles[thisLine][playerArrayPosition[1] + 1] === -200)) toggleChat(true)
+            if (
+                (tiles[thisLine][playerArrayPosition[1] - 1] === -101) ||
+                (tiles[thisLine][playerArrayPosition[1] + 1] === -101)) toggleChat(true)
+
+        }
     }
 
     return (
@@ -156,15 +186,13 @@ const Map = ({ tiles }) => {
                 style={{
                     height: "100vh",
                     width: "100vw",
-                    top: -playerPosition[1]*3,
-                    left: -playerPosition[0]*3,
+                    top: -playerPosition[1] * 6,
+                    left: -playerPosition[0] * 6,
                 }}
             >
-                {
-                    userMeetEnemy && <div className="hider"></div>
-                }
                 <MapView tiles={tiles} />
                 <Player forwardedRef={playerRef} position={playerPosition} />
+               
             </div>
             <i
                 className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
