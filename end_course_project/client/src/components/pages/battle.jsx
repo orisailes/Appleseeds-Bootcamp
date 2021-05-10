@@ -3,16 +3,16 @@ import { userContext } from '../../utils/context/userContext'
 import { Link, useHistory } from 'react-router-dom'
 import '../../css/battle.css'
 import Button from '../utils/Button'
-import Pokemon from '../utils/Pokemon'
+// import Pokemon from '../utils/Pokemon'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
 import attributesList from '../../utils/classes/Pokemon/attributesList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 import axios from 'axios'
+const Pokemon = require('../utils/Pokemon')
 
 function Battle({ sounds }) {
     const { user, setUser } = useContext(userContext)
-
 
     const [enemyPokemon, setEnemyPokemon] = useState(null)
     const [whoCauseDamage, setWhoCauseDamage] = useState([])

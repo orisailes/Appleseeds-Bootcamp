@@ -1,9 +1,13 @@
 const mongoose = require('mongoose')
-let url = require('./keys.js')
-
+var url
+if (process.env.NODE_ENV === 'production') {
+    url = process.env.urlKey
+} else {
+    url = require('./keys')
+}
 mongoose.connect(url, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify:false,
+    useFindAndModify: false,
 })

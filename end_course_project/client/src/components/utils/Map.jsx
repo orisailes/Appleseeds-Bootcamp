@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import '../../css/map.css'
 import Player from '../utils/Player'
 import MapView from './MapView'
@@ -16,8 +16,8 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
 
     const playerRef = useRef()
     const location = useHistory()
-    const data = useLocation()
-    console.log(data.state);
+    debugger
+   
     useEffect(() => {
 
         sounds.homeSound.on()
