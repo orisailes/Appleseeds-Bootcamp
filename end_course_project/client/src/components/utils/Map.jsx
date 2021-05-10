@@ -5,12 +5,14 @@ import Player from '../utils/Player'
 import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
 
-const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,toggleMusic }) => { // get the map matrix 
+const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusicOff, toggleMusic }) => { // get the map matrix 
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
     const [userMeetEnemy, setUserMeetEnemy] = useState(false)
-   
+    const [direction, setDirection] = useState('SOUTH')
+    const [walkIndex, setWalkIndex] = useState(0)
+
     const playerRef = useRef()
     const location = useHistory()
 
@@ -18,7 +20,7 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,
 
         sounds.forestSound.on()
         return () => {
-           sounds.forestSound.off()
+            sounds.forestSound.off()
         }
     }, [])
     //TODO: prevent trolling with arrow keys, handle enemy meeting!
@@ -48,6 +50,10 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,
                             'SOUTH'
                             :
                             null
+        setDirection(direction)
+        let helper = walkIndex
+        helper ++
+        helper < 4 ? setWalkIndex(helper) : setWalkIndex(0)
         if (direction === "WEST") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -116,7 +122,7 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,
                     sounds.forestSound.off()
                     sounds.battleSound.on()
                     location.push('/battle')
-                } 
+                }
                 setPlayerArrayPosition(helper) //  new position saved
                 break;
             default:
@@ -126,7 +132,7 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,
         return true
     }
 
-    
+
 
     const checkIfTalking = () => {
         const specialCharacters = [-101, -200]
@@ -176,17 +182,17 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,
                 style={{
                     height: "100vh",
                     width: "100vw",
-                    top: -playerPosition[1] * 6,
-                    left: -playerPosition[0] * 6,
+                    top: -playerPosition[1] * 4,
+                    left: -playerPosition[0] * 4,
                 }}
             >
                 <MapView tiles={tiles} />
-                <Player forwardedRef={playerRef} position={playerPosition} />
-               
+                <Player walkIndex={walkIndex} direction={direction} forwardedRef={playerRef} position={playerPosition} />
+
             </div>
             <i
                 className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
-                onClick={()=>toggleMusic()}
+                onClick={() => toggleMusic()}
             >
             </i>
         </>
