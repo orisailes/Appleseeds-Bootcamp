@@ -9,12 +9,8 @@ import attributesList from '../../utils/classes/Pokemon/attributesList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 import axios from 'axios'
-import WinningSound from '../../sound/victory.mp3'
-import BattleSound from '../../sound/battle.mp3'
-const initialSound = new Audio(BattleSound)
-const winningSound = new Audio(WinningSound)
 
-function Battle() {
+function Battle({sounds}) {
 
     const fakeEnemyPokemon = pokemonsGenerator.makePokemon("raticate", 1)
 
@@ -44,8 +40,7 @@ function Battle() {
     }
 
     useEffect(() => {
-        debugger
-        initialSound.play()
+        
         user && user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
         // !user && setMessage('PLEASE LOGIN')
         console.log(user)
@@ -55,8 +50,7 @@ function Battle() {
         }
         popGameUp()
         return () => {
-            initialSound.pause()
-            initialSound.currentTime = 0
+            sounds.battleSound.off()
         }
     }, [])
 
@@ -66,8 +60,8 @@ function Battle() {
         const endGameSession = async () => {
             const isPokemonLeft = user && user.pokemons.find((pokemon) => pokemon.hp > 0)
             if (gameOver && isPokemonLeft) {
-                initialSound.pause()
-                winningSound.play()
+                sounds.battleSound.off()
+                sounds.winningSound.on()
                 await wait(1000)
                 let newUser = _.cloneDeep(user)
                 let newLevels = {}
@@ -311,7 +305,7 @@ function Battle() {
     }
 
     const toggleMusic = () => {
-        musicOff ? initialSound.play() : initialSound.pause()
+        musicOff ? sounds.battleSound.on() : sounds.battleSound.pause()
         setMusicOff(prev => !prev)
     }
 
@@ -360,9 +354,8 @@ function Battle() {
                                 </h3>
                             </div>
                             <button text="BACK" onClick={() => {
-                                initialSound.pause()
-                                winningSound.pause()
-                                winningSound.currentTime = 0
+                                sounds.battleSound.off()
+                                sounds.winningSound.off()
                                 location.goBack()
                             }} ><Link to="/world">BACK</Link></button>
                         </div>

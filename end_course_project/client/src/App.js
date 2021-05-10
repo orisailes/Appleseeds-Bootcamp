@@ -1,36 +1,44 @@
 import React, { useState } from 'react';
-import { BrowserRouter,useHistory, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, useHistory, Redirect, Route, Switch } from 'react-router-dom'
 import { userContext } from './utils/context/userContext'
 import './css/app.css'
 import './css/normalize.css'
 import Battle from './components/pages/battle'
 import World from './components/pages/world'
 import Landing from './components/pages/landing'
-import pokemonsGenerator from './utils/classes/Pokemon/pokemonsGenerator'
+import WinningSound from './sound/victory.mp3'
+import ForestSound from './sound/forest.mp3'
+import HealSound from './sound/healing-pokemon-sound.mp3'
+import LandingSound from './sound/opening.mp3'
+import BattleSound from './sound/battle.mp3'
+import HomeSound from './sound/town.mp3'
+
+const winningSound = new Audio(WinningSound)
+const forestSound = new Audio(ForestSound)
+const healSound = new Audio(HealSound)
+const battleSound = new Audio(BattleSound)
+const landingSound = new Audio(LandingSound)
+const homeSound = new Audio(HomeSound)
+
 
 function App() {
   //TODO: handleRun , validat that no more than 8 pokemons, 
   const location = useHistory()
-
-
   location.listen((newLocation, action) => {
     if (action === "PUSH") {
       if (
         newLocation.pathname !== this.currentPathname ||
         newLocation.search !== this.currentSearch
       ) {
-        // Save new location
         this.currentPathname = newLocation.pathname;
         this.currentSearch = newLocation.search;
 
-        // Clone location object and push it to history
         location.push({
           pathname: newLocation.pathname,
           search: newLocation.search
         });
       }
     } else {
-      // Send user back if they try to navigate back
       location.go(1);
     }
   })
@@ -42,13 +50,75 @@ function App() {
     setUser
   }
 
+  const sounds = {
+    landingSound: {
+      on: () => landingSound.play(),
+      pause: () => landingSound.pause(),
+      off: () => {
+        landingSound.pause()
+        landingSound.currentTime = 0
+      },
+    },
+    battleSound: {
+      on: () => battleSound.play(),
+      pause: () => battleSound.pause(),
+      off: () => {
+        battleSound.pause()
+        battleSound.currentTime = 0
+      }
+    },
+    winningSound: {
+      on: () => winningSound.play(),
+      pause: () => winningSound.pause(),
+      off: () => {
+        winningSound.pause()
+        winningSound.currentTime = 0
+      }
+    },
+    healSound: {
+      on: () => healSound.play(),
+      pause: () => healSound.pause(),
+      off: () => {
+        healSound.pause()
+        healSound.currentTime = 0
+      }
+    },
+    forestSound: {
+      on: () => forestSound.play(),
+      pause: () => forestSound.pause(),
+      off: () => {
+        forestSound.pause()
+        forestSound.currentTime = 0
+      }
+    },
+    homeSound:{
+      on:()=> homeSound.play(),
+      pause: ()=> homeSound.pause(),
+      off:()=>{
+        homeSound.pause()
+        homeSound.currentTime = 0
+      }
+    }
+  }
+
   return (<BrowserRouter >
     <Switch >
       <userContext.Provider value={value} >
+
         <Route exact path="/" render={() => <Redirect to="/landing" />} />
-        <Route exact path="/battle" component={Battle} />
-        <Route exact path="/world" component={World} />
-        <Route exact path="/landing" component={Landing} />
+
+        <Route exact path="/battle">
+          <Battle sounds={sounds} />
+        </Route>
+
+        <Route exact path="/landing">
+          <Landing sounds={sounds} />
+        </Route>
+
+        <Route exact path="/world">
+          <World sounds={sounds} />
+        </Route>
+
       </userContext.Provider>
     </Switch>
   </BrowserRouter>

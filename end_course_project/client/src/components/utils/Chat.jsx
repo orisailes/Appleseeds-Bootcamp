@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../css/chat.css'
-const Chat = ({ text,closeStore }) => {
+const Chat = ({ text, closeStore }) => {
 
 
 
@@ -9,9 +9,9 @@ const Chat = ({ text,closeStore }) => {
         <>
             <div
                 className="chat-box">
-                <p>
-                    {text}
-                </p>
+                    <p>
+                        {text}
+                    </p>
             </div>
         </>
     )

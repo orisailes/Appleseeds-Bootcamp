@@ -8,10 +8,10 @@ import validator from 'validator'
 import axios from 'axios'
 import PokemonsDesplayer from '../utils/PokemonsDesplayer'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
-import OpeningSound from '../../sound/opening.mp3'
-const sound = new Audio(OpeningSound)
+// import OpeningSound from '../../sound/opening.mp3'
+// const sound = new Audio(OpeningSound)
 
-const Home = ({history}) => {
+const Home = ({sounds}) => {
 
     //TODO: cant get two pokemons the same
 
@@ -24,12 +24,10 @@ const Home = ({history}) => {
     const [error, setError] = useState('')
     const [newUserCreated, setNewUserCreated] = useState(false)
     const location = useHistory()
-    console.log('history:', history)
-    console.log('location:', location)
 
     useEffect(() => {
-
-        setUser(null) // bug protector(??)
+        
+        setUser(null) // bug protector
 
     }, [])
 
@@ -45,7 +43,6 @@ const Home = ({history}) => {
 
         if (action === "register" && isEmail) {
             setError('')
-            debugger
             try {
                 const newUser = await axios.post('/api/users/register', {
                     email, password
@@ -83,7 +80,7 @@ const Home = ({history}) => {
 
     const playMusic = () => {
         if (!isMusicPlaying) {
-            sound.play()
+            sounds.landingSound.on()
             setIsMusicPlaying(true)
         }
     }
@@ -96,19 +93,19 @@ const Home = ({history}) => {
         helper.pokemons.push(newPokemon)
         setUser(helper)
         console.log(helper.pokemons);
-        sound.pause()
-        sound.currentTime = 0
+        sounds.landingSound.off()
+        
         location.push('/world')
     }
 
     const startGame = () => {
-        sound.pause()
+        sounds.landingSound.off()
         location.push('/world')
     }
 
     return (
         <>
-            {(sound?.HAVE_ENOUGH_DATA) &&
+            {
                 <div onClick={playMusic} className="landing-page">
                     <div className="login-popup-container" >
 
@@ -132,7 +129,7 @@ const Home = ({history}) => {
                                         <i
                                             className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
                                             onClick={() => {
-                                                musicOff ? sound.play() : sound.pause()
+                                                musicOff ? sounds.landingSound.on() : sounds.landingSound.pause()
                                                 setMusicOff(prev => !prev)
                                             }}
                                         >
@@ -145,10 +142,6 @@ const Home = ({history}) => {
                             (isUserLoggedIn && user.pokemons.length > 0) &&
                             startGame()
                         }
-
-
-
-
 
                     </div>
                 </div>

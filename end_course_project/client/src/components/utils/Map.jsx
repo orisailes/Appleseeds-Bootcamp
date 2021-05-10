@@ -3,29 +3,22 @@ import { useHistory } from 'react-router-dom'
 import '../../css/map.css'
 import Player from '../utils/Player'
 import MapView from './MapView'
-import Chat from './Chat'
 import { TileSize } from '../../utils/constants/constants'
-import ForestSound from '../../sound/forest.mp3'
-import BattleSound from '../../sound/battle.mp3'
-const initialBattleSound = new Audio(BattleSound)
-const forestSound = new Audio(ForestSound)
 
-const Map = ({ tiles, toggleMap,toggleChat }) => { // get the map matrix 
+const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome }) => { // get the map matrix 
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
     const [userMeetEnemy, setUserMeetEnemy] = useState(false)
     const [musicOff, setMusicOff] = useState(false)
-    const soundRef = useRef(forestSound)
     const playerRef = useRef()
     const location = useHistory()
 
     useEffect(() => {
 
-        forestSound.play()
+        sounds.forestSound.on()
         return () => {
-            forestSound.pause()
-            forestSound.currentTime = 0
+           sounds.forestSound.off()
         }
     }, [])
     //TODO: prevent trolling with arrow keys, handle enemy meeting!
@@ -120,8 +113,8 @@ const Map = ({ tiles, toggleMap,toggleChat }) => { // get the map matrix
                 //! handle enemy meeting
                 if (Math.random() > 0.9) {
                     setUserMeetEnemy(true)
-                    forestSound.pause()
-                    forestSound.currentTime = 0
+                    sounds.forestSound.off()
+                    sounds.battleSound.on()
                     location.push('/battle')
                 } 
                 setPlayerArrayPosition(helper) //  new position saved
@@ -134,7 +127,12 @@ const Map = ({ tiles, toggleMap,toggleChat }) => { // get the map matrix
     }
 
     const toggleMusic = () => {
-        musicOff ? forestSound.play() : forestSound.pause()
+        if(musicOff){
+            isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
+            
+        }else{
+            isCharacterInHome ? sounds.homeSound.pause() : sounds.forestSound.pause()
+        }
         setMusicOff(prev => !prev)
     }
 
