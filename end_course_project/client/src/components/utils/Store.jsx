@@ -1,7 +1,7 @@
 import React from 'react'
 import pokemonsAttributes from '../../utils/classes/Pokemon/attributesList'
 import '../../css/store.css'
-const Store = ({ closeStore, pokemonBuying }) => {
+const Store = ({ closeStore, pokemonBuying,user }) => {
     const pokemonsNames = [
         "scyther",
         "hitmonlee",
@@ -38,6 +38,7 @@ const Store = ({ closeStore, pokemonBuying }) => {
 
     return (
         <div className="store-wrapper">
+            {!user && <strong style={{color:"red"}}>You have to login in order to buy</strong> }
             <h1>Pokemons Store</h1>
             <img
                 className="pokemons-desplayer-pokeball"

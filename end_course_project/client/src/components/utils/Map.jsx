@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import '../../css/map.css'
 import Player from '../utils/Player'
 import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
+
 
 const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusicOff, toggleMusic }) => { // get the map matrix 
 
@@ -15,10 +16,11 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
 
     const playerRef = useRef()
     const location = useHistory()
-
+    const data = useLocation()
+    console.log(data.state);
     useEffect(() => {
 
-        sounds.forestSound.on()
+        sounds.homeSound.on()
         return () => {
             sounds.forestSound.off()
         }
@@ -50,10 +52,12 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                             'SOUTH'
                             :
                             null
-        setDirection(direction)
-        let helper = walkIndex
-        helper ++
-        helper < 4 ? setWalkIndex(helper) : setWalkIndex(0)
+        if (direction) {
+            setDirection(direction)
+            let helper = walkIndex
+            helper++
+            helper < 4 ? setWalkIndex(helper) : setWalkIndex(0)
+        }
         if (direction === "WEST") {
             const isValid = changePlayerArrayPositionifValid(direction)
             if (isValid) {
@@ -117,7 +121,7 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                 return false
             case (tiles[helper[0]][helper[1]] === 1):
                 //! handle enemy meeting
-                if (Math.random() > 0.1) {
+                if (Math.random() > 0.9) {
                     setUserMeetEnemy(true)
                     sounds.forestSound.off()
                     sounds.battleSound.on()

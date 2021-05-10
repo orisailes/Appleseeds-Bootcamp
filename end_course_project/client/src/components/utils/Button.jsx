@@ -12,7 +12,8 @@ function Button({ text, onClick, className = "", id = "",turnIsActive }) {
       className={`btn ${className}`}
       onClick={onClick}>
 
-      <i className="fas fa-chevron-right "></i> {text.toUpperCase().replace("_"," ")}
+      <i className="fas fa-chevron-right "></i> 
+      {text.toUpperCase().replace("_"," ")}
 
     </button>
   )

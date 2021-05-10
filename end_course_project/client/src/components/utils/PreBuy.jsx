@@ -4,9 +4,6 @@ import '../../css/prebuy.css'
 
 const PreBuy = ({ pokemon, clickToBuy,cancel,preBuyText,user }) => {
 
-    console.log('preBuyText:', preBuyText)
-
-
     return (
         <div
             className="prebuy">

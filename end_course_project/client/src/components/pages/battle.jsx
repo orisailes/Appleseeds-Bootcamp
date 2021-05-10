@@ -10,12 +10,11 @@ import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 import axios from 'axios'
 
-function Battle({sounds}) {
-
-    const fakeEnemyPokemon = pokemonsGenerator.makePokemon("raticate", 1)
-
+function Battle({ sounds }) {
     const { user, setUser } = useContext(userContext)
-    const [enemyPokemon, setEnemyPokemon] = useState(fakeEnemyPokemon)
+
+
+    const [enemyPokemon, setEnemyPokemon] = useState(null)
     const [whoCauseDamage, setWhoCauseDamage] = useState([])
     const [chosenPokemon, setChosenPokemon] = useState({})
     const [endGameNewLevels, setEndGameNewLevels] = useState({})
@@ -35,12 +34,24 @@ function Battle({sounds}) {
     const enemyPokemonRef = useRef(null)
     const location = useHistory()
 
+
+    if (user && enemyPokemon === null) {
+        const allPokes = Object.keys(attributesList)
+        const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length )
+        const pokemonChosen = allPokes[pokemonName]
+        console.log('pokemonChosen:', pokemonChosen)
+        const evilPoke = pokemonsGenerator.makePokemon(pokemonChosen, 5)
+        setEnemyPokemon(evilPoke)
+    } else if (enemyPokemon === null) {
+        setEnemyPokemon(pokemonsGenerator.makePokemon("rattata", 1))
+    }
+
     const wait = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     useEffect(() => {
-        
+
         user && user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
         // !user && setMessage('PLEASE LOGIN')
         console.log(user)
@@ -71,6 +82,7 @@ function Battle({sounds}) {
                     if (damagePercentCause) {
                         newUser.pokemons.find((poke, i) => {
                             if (poke.name === pokemon) {
+                                debugger
                                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
                                 while (result >= poke.maxExp - poke.exp) { //  pokemon level up
                                     levelUpCounters[poke.name] ? levelUpCounters[poke.name]++ : levelUpCounters[poke.name] = 1
@@ -80,7 +92,7 @@ function Battle({sounds}) {
                                     poke = pokemonsGenerator.makePokemon(poke.name, newLevels[poke.name])
                                     newUser.pokemons[i] = poke
                                 }
-                                newUser.pokemons[i].exp = result
+                                newUser.pokemons[i].exp += result
                             }
                         })
                     }
@@ -278,7 +290,6 @@ function Battle({sounds}) {
     const handleStatsCharged = async (pokemon, attack) => {
         switch (true) {
             case (attack === "heal"): // can add in future more
-                debugger
                 if (enemyPokemon.name === pokemon.name) {
                     let hpAdded = pokemon.hp
                     pokemon.hp = pokemon.increseHp(attack)
@@ -312,10 +323,10 @@ function Battle({sounds}) {
     return (
 
         <>
-        <div className="first-hider-battle-page" style={{visibility: `${componentVisible ? "hidden" : "visible"}`}}></div>
+            <div className="first-hider-battle-page" style={{ visibility: `${componentVisible ? "hidden" : "visible"}` }}></div>
             <div
                 className="battle-page" // 70% of the upper side screen
-                
+
             >
                 {gameEndHider ?
                     isUserLose ?
@@ -357,7 +368,7 @@ function Battle({sounds}) {
                                 sounds.battleSound.off()
                                 sounds.winningSound.off()
                                 location.goBack()
-                            }} ><Link to="/world">BACK</Link></button>
+                            }} ><Link to={{ pathname: '/world', state: { userBackFromBattle: true } }}>BACK</Link></button>
                         </div>
                     : null
                 }
@@ -387,10 +398,10 @@ function Battle({sounds}) {
                     </div>
                 }
                 <div
-                style={{
-                    visibility: `${componentVisible ? "visible" : "hidden"}`
-                }}
-                className="pokemons-container">
+                    style={{
+                        visibility: `${componentVisible ? "visible" : "hidden"}`
+                    }}
+                    className="pokemons-container">
                     {
                         user &&
                         <Pokemon forwardedRef={enemyPokemonRef} isUserPokemon={false} pokemon={enemyPokemon} />
@@ -404,7 +415,7 @@ function Battle({sounds}) {
                 </div>
                 <div
                     className="message-box-container" // 30% of the lower side screen
-                    style={{visibility: `${componentVisible ? "visible" : "hidden"}`}}
+                    style={{ visibility: `${componentVisible ? "visible" : "hidden"}` }}
                 >
                     {
                         user !== null ?
@@ -439,10 +450,14 @@ function Battle({sounds}) {
                                     <div className="message-box">
                                         <div className="first-btn">
 
-                                            <Button
-                                                turnIsActive={turnIsActive}
+                                            <button
+                                                className="btn"
+                                                disabled={turnIsActive}
                                                 onClick={() => setIsBattleWanted(false)}
-                                                text="run" />
+                                                text="run" >
+                                                <i className="fas fa-chevron-right "></i>
+                                                <Link to={{ pathname: '/world', state: { userBackFromBattle: true } }}>RUN</Link>
+                                            </button>
 
                                             <Button
                                                 turnIsActive={turnIsActive}
@@ -476,10 +491,6 @@ function Battle({sounds}) {
                                                     }}
                                                     text="fight" />
 
-                                                <Button
-                                                    turnIsActive={turnIsActive}
-                                                    onClick={handleRun}
-                                                    text="run" />
 
                                                 <Button
                                                     turnIsActive={turnIsActive}

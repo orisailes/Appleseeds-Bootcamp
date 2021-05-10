@@ -50,32 +50,32 @@ class Pokemon {
 
             case (attackerType === "fire"):
                 if (opponentType === "water" || opponentType === "rock") {
-                    addOrDecreaseByType = attack === "dragon_breath" && 0.9
+                    addOrDecreaseByType = attack === "dragon_breath" ? 0.9 : 1
                 }
                 if (opponentType === "grass") {
-                    addOrDecreaseByType = attack === "dragon_breath" && 1.1
+                    addOrDecreaseByType = attack === "dragon_breath" ? 1.1 : 1
                 }
                 break;
                 
             case (attackerType === "water"):
                 if (opponentType === "fire" || opponentType === "grass" || opponentType === "rock") {
-                    addOrDecreaseByType = attack === "water_splash" && 1.1
+                    addOrDecreaseByType = attack === "water_splash" ? 1.1 : 1
                 }
                 break;
 
             case (attackerType === "fighting"):
-                addOrDecreaseByType = (attack === "punch" || attack === "kick" || attack === "mega_kick" || attack === "quick_attack") && 1.07
+                addOrDecreaseByType = (attack === "punch" || attack === "kick" || attack === "mega_kick" || attack === "quick_attack") ? 1.0 : 17
                 break;
 
             case (attackerType === "rock"):
                 if (opponentType === "fire") {
-                    addOrDecreaseByType = (attack === "sand_attack") && 1.1
+                    addOrDecreaseByType = (attack === "sand_attack") ? 1.1 : 1
                 }
                 break;
 
             case (attackerType === "electric"):
                 if (opponentType === "water") {
-                    addOrDecreaseByType = (attack === "lightning") && 1.1
+                    addOrDecreaseByType = (attack === "lightning") ? 1.1 : 1
                 }
                 break;
 
@@ -114,7 +114,6 @@ class Pokemon {
     }
 
     calculateExp(enemy, percentCause) {
-
         const promoter = attributesList[enemy.name].quality
         let reward =
             Number(

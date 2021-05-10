@@ -9,6 +9,10 @@
     font-size: larger;
 }
 
+.btn a{
+    color: black;
+    text-decoration: none;
+}
 
 .attack-btn{
     height: 7vh;
