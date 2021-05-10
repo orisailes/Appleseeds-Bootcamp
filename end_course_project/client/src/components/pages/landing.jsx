@@ -8,8 +8,6 @@ import validator from 'validator'
 import axios from 'axios'
 import PokemonsDesplayer from '../utils/PokemonsDesplayer'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
-// import OpeningSound from '../../sound/opening.mp3'
-// const sound = new Audio(OpeningSound)
 
 const Home = ({sounds}) => {
 

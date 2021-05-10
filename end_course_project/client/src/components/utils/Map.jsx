@@ -5,12 +5,12 @@ import Player from '../utils/Player'
 import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
 
-const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome }) => { // get the map matrix 
+const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome,mapMusicOff,toggleMusic }) => { // get the map matrix 
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
     const [userMeetEnemy, setUserMeetEnemy] = useState(false)
-    const [musicOff, setMusicOff] = useState(false)
+   
     const playerRef = useRef()
     const location = useHistory()
 
@@ -111,7 +111,7 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome }) => { // g
                 return false
             case (tiles[helper[0]][helper[1]] === 1):
                 //! handle enemy meeting
-                if (Math.random() > 0.9) {
+                if (Math.random() > 0.1) {
                     setUserMeetEnemy(true)
                     sounds.forestSound.off()
                     sounds.battleSound.on()
@@ -126,15 +126,7 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome }) => { // g
         return true
     }
 
-    const toggleMusic = () => {
-        if(musicOff){
-            isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
-            
-        }else{
-            isCharacterInHome ? sounds.homeSound.pause() : sounds.forestSound.pause()
-        }
-        setMusicOff(prev => !prev)
-    }
+    
 
     const checkIfTalking = () => {
         const specialCharacters = [-101, -200]
@@ -193,8 +185,8 @@ const Map = ({ tiles, toggleMap,toggleChat,sounds,isCharacterInHome }) => { // g
                
             </div>
             <i
-                className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
-                onClick={toggleMusic}
+                className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
+                onClick={()=>toggleMusic()}
             >
             </i>
         </>
