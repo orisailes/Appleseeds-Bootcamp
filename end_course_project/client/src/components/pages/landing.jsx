@@ -3,13 +3,13 @@ import { useHistory, Link } from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
 import '../../css/landing.css'
 import Login from '../utils/Login'
-// import Pokemon from '../../utils/classes/Pokemon/Pokemon'
+import Pokemon from '../../utils/classes/Pokemon/Pokemon'
 import validator from 'validator'
 import axios from 'axios'
 import PokemonsDesplayer from '../utils/PokemonsDesplayer'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
-const Pokemon = require('../utils/Pokemon')
-const Home = ({sounds}) => {
+// const Pokemon = require('../utils/Pokemon')
+const Home = ({ sounds }) => {
 
     //TODO: cant get two pokemons the same
 
@@ -24,7 +24,7 @@ const Home = ({sounds}) => {
     const location = useHistory()
 
     useEffect(() => {
-        
+
         setUser(null) // bug protector
 
     }, [])
@@ -42,6 +42,7 @@ const Home = ({sounds}) => {
         if (action === "register" && isEmail) {
             setError('')
             try {
+
                 const newUser = await axios.post('/api/users/register', {
                     email, password
                 })
@@ -56,6 +57,7 @@ const Home = ({sounds}) => {
         if (action === "login") {
             setError('')
             try {
+                debugger
                 const newUser = await axios.post('/api/users/login', {
                     email, password
                 })
@@ -84,19 +86,23 @@ const Home = ({sounds}) => {
     }
 
 
-    const initialPokemonChoose = (pokemon) => {
+    const initialPokemonChoose = async (pokemon) => {
         console.log(pokemon)
         const newPokemon = pokemonsGenerator.makePokemon(pokemon, 5)
         let helper = { ...user }
         helper.pokemons.push(newPokemon)
         setUser(helper)
+        debugger
+        const test = await axios.put(`/api/users/${user.email}`, helper)
+        console.log(test);
         console.log(helper.pokemons);
         sounds.landingSound.off()
-        
+
         location.push('/world')
     }
 
     const startGame = () => {
+        debugger
         sounds.landingSound.off()
         location.push('/world')
     }
@@ -137,8 +143,12 @@ const Home = ({sounds}) => {
                         }
 
                         {
-                            (isUserLoggedIn && user.pokemons.length > 0) &&
-                            startGame()
+                            (isUserLoggedIn && user.pokemons.length > 0) ?
+                                startGame()
+                                : (isUserLoggedIn && user.pokemons.length === 0) &&
+                                <div className="initial-pokemon-choose">
+                                    <PokemonsDesplayer initialPokemonChoose={initialPokemonChoose} />
+                                </div>
                         }
 
                     </div>

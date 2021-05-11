@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { userContext } from '../../utils/context/userContext'
-import {useLocation} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Map from '../utils/Map'
 import Chat from '../utils/Chat'
 import Store from '../utils/Store'
@@ -17,7 +17,7 @@ const World = ({ sounds }) => {
 
     const data = useLocation()
 
-    const [isCharacterInHome, setIsCharacterInHome] = useState(data.state ? false:true)
+    const [isCharacterInHome, setIsCharacterInHome] = useState(data.state ? data.state.userBackFromBattle ? false : true : true)
     const [isCharacterMoveToForest, setIsCharacterMoveToForest] = useState(false)
     const [store, setStore] = useState(false)
     const [pokemonUserWantToBuy, setPokemonUserWantToBuy] = useState(null)
@@ -66,7 +66,7 @@ const World = ({ sounds }) => {
             }
             else {
                 if (isChatting === "oak") {
-                    setStore(true) 
+                    setStore(true)
                 }
                 if (isChatting === "nurse") {
                     healUserPokemons()
@@ -143,8 +143,8 @@ const World = ({ sounds }) => {
     const toggleInventory = () => {
         setIsInventoryOpen(prev => !prev)
     }
-    console.log(isCharacterInHome);
-    console.log(isCharacterMoveToForest);
+
+
     return (
         <div
             className="world"
@@ -155,7 +155,7 @@ const World = ({ sounds }) => {
                 toggleChat={toggleChat}
                 toggleMap={toggleMap}
                 isCharacterInHome={isCharacterInHome}
-                tiles={(isCharacterInHome && !isCharacterMoveToForest)? tilesDefiner.home : tilesDefiner.forest}
+                tiles={(isCharacterInHome && !isCharacterMoveToForest) ? tilesDefiner.home : tilesDefiner.forest}
                 mapMusicOff={mapMusicOff}
                 toggleMusic={toggleMusic}
             />

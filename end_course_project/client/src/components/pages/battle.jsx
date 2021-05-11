@@ -3,13 +3,13 @@ import { userContext } from '../../utils/context/userContext'
 import { Link, useHistory } from 'react-router-dom'
 import '../../css/battle.css'
 import Button from '../utils/Button'
-// import Pokemon from '../utils/Pokemon'
+import Pokemon from '../utils/Pokemon'
 import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
 import attributesList from '../../utils/classes/Pokemon/attributesList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 import axios from 'axios'
-const Pokemon = require('../utils/Pokemon')
+// const Pokemon = require('../utils/Pokemon')
 
 function Battle({ sounds }) {
     const { user, setUser } = useContext(userContext)
@@ -34,10 +34,9 @@ function Battle({ sounds }) {
     const enemyPokemonRef = useRef(null)
     const location = useHistory()
 
-
     if (user && enemyPokemon === null) {
         const allPokes = Object.keys(attributesList)
-        const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length )
+        const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length)
         const pokemonChosen = allPokes[pokemonName]
         console.log('pokemonChosen:', pokemonChosen)
         const evilPoke = pokemonsGenerator.makePokemon(pokemonChosen, 5)
@@ -82,7 +81,6 @@ function Battle({ sounds }) {
                     if (damagePercentCause) {
                         newUser.pokemons.find((poke, i) => {
                             if (poke.name === pokemon) {
-                                debugger
                                 let result = poke.calculateExp(enemyPokemon, damagePercentCause)
                                 while (result >= poke.maxExp - poke.exp) { //  pokemon level up
                                     levelUpCounters[poke.name] ? levelUpCounters[poke.name]++ : levelUpCounters[poke.name] = 1
@@ -333,6 +331,11 @@ function Battle({ sounds }) {
                         <div className="hider">
                             <div>
                                 <h1>R.I.P</h1>
+                                <button text="BACK" onClick={() => {
+                                    sounds.battleSound.off()
+                                    sounds.winningSound.off()
+                                    location.goBack()
+                                }} ><Link to={{ pathname: '/world', state: { userBackFromBattle: false, healPokemons: true } }}>BACK</Link></button>
                             </div>
                         </div>
                         :

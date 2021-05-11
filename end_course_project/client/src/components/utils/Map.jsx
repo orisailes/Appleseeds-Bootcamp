@@ -16,11 +16,10 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
 
     const playerRef = useRef()
     const location = useHistory()
-    debugger
-   
+    
     useEffect(() => {
 
-        sounds.homeSound.on()
+        isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
         return () => {
             sounds.forestSound.off()
         }
@@ -52,6 +51,8 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                             'SOUTH'
                             :
                             null
+                            
+      
         if (direction) {
             setDirection(direction)
             let helper = walkIndex
