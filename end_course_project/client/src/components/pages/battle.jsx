@@ -32,30 +32,30 @@ function Battle({ sounds }) {
     const enemyPokemonRef = useRef(null)
     const location = useHistory()
 
-    if (user && enemyPokemon === null) { // generate enemy pokemon
-        const allPokes = Object.keys(attributesList)
-        const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length)
-        const pokemonChosen = allPokes[pokemonName]
-        const evilPoke = makePokemon(pokemonChosen, 5)
-        debugger
-        const avgUserPokLevel = 
-        user.pokemons.reduce((sum, pokemon) => {
-            return sum += pokemon.level 
-        }, 0) / user.pokemons.length
-        console.log('avgUserPokLevel:', avgUserPokLevel)
-        setEnemyPokemon(evilPoke)
-    } else if (enemyPokemon === null) {
-        setEnemyPokemon(makePokemon("rattata", 1))
-    }
+
 
     const wait = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    useEffect(() => {
+    if (user && enemyPokemon === null) { // generate enemy pokemon
+        const allPokes = Object.keys(attributesList)
+        const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length)
+        const pokemonChosen = allPokes[pokemonName]
+        const avgUserPokLevel =
+            Math.round(
+                user.pokemons.reduce((sum, pokemon) => {
+                    return sum += pokemon.level
+                }, 0) / user.pokemons.length
+            )
+        const evilPoke = makePokemon(pokemonChosen, avgUserPokLevel)
+        console.log('evilPoke:', evilPoke)
+        setEnemyPokemon(evilPoke)
+    } else if (enemyPokemon === null) {
+        setEnemyPokemon(makePokemon("rattata", 1))
+    }
 
-        user && user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
-        // !user && setMessage('PLEASE LOGIN')
+    useEffect(() => {
 
         const popGameUp = async () => { // make game visible! for better sound performance
             await wait(4000)
@@ -336,7 +336,7 @@ function Battle({ sounds }) {
                         <div className="hider">
                             <div>
                                 <h1>R.I.P</h1>
-                                <button text="BACK" onClick={() => {
+                                <button className="btn" text="BACK" onClick={() => {
                                     sounds.battleSound.off()
                                     sounds.winningSound.off()
                                     location.goBack()
@@ -459,6 +459,7 @@ function Battle({ sounds }) {
                                         <div className="first-btn">
 
                                             <button
+                                                style={{ height: "fit-content" }}
                                                 className="btn"
                                                 disabled={turnIsActive}
                                                 onClick={() => setIsBattleWanted(false)}

@@ -30,7 +30,7 @@ color: black;
     color: whitesmoke;
     display: flex;
     justify-content: center;
-    align-self: center;
+    align-items: center;
     flex-wrap: wrap;
 }
 

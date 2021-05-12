@@ -6,7 +6,7 @@ import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
 
 
-const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusicOff, toggleMusic }) => { // get the map matrix 
+const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusicOff, toggleMusic, forwardedRef }) => {
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
@@ -16,7 +16,7 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
 
     const playerRef = useRef()
     const location = useHistory()
-    
+
     useEffect(() => {
 
         isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
@@ -24,7 +24,7 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
             sounds.forestSound.off()
         }
     }, [])
-    //TODO: prevent trolling with arrow keys, handle enemy meeting!
+
 
     const wait = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -51,8 +51,8 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                             'SOUTH'
                             :
                             null
-                            
-      
+
+
         if (direction) {
             setDirection(direction)
             let helper = walkIndex
@@ -119,8 +119,8 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                 return false
             case (!tiles[helper[0]][helper[1]]): // if empty map is changed
                 toggleMap()
-                setPlayerArrayPosition([7,19])
-                setPlayerPosition([0,0])
+                setPlayerArrayPosition([7, 19])
+                setPlayerPosition([0, 0])
                 return false
             case (tiles[helper[0]][helper[1]] === 1):
                 //! handle enemy meeting
@@ -178,6 +178,8 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
     return (
         <>
             <div
+                ref={forwardedRef}
+                autoFocus 
                 tabIndex="0"
                 onKeyDown={
                     !userMeetEnemy ?
