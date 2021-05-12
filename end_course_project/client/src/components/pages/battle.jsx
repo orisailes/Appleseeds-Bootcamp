@@ -32,12 +32,17 @@ function Battle({ sounds }) {
     const enemyPokemonRef = useRef(null)
     const location = useHistory()
 
-    if (user && enemyPokemon === null) {
+    if (user && enemyPokemon === null) { // generate enemy pokemon
         const allPokes = Object.keys(attributesList)
         const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length)
         const pokemonChosen = allPokes[pokemonName]
-        console.log('pokemonChosen:', pokemonChosen)
         const evilPoke = makePokemon(pokemonChosen, 5)
+        debugger
+        const avgUserPokLevel = 
+        user.pokemons.reduce((sum, pokemon) => {
+            return sum += pokemon.level 
+        }, 0) / user.pokemons.length
+        console.log('avgUserPokLevel:', avgUserPokLevel)
         setEnemyPokemon(evilPoke)
     } else if (enemyPokemon === null) {
         setEnemyPokemon(makePokemon("rattata", 1))
@@ -51,15 +56,17 @@ function Battle({ sounds }) {
 
         user && user.pokemons.forEach((poke) => whoCauseDamage[poke.name] = 0)
         // !user && setMessage('PLEASE LOGIN')
-        console.log(user)
+
         const popGameUp = async () => { // make game visible! for better sound performance
             await wait(4000)
             setComponentVisible(true)
         }
         popGameUp()
+
         return () => {
-            sounds.battleSound.off()
+            sounds.battleSound.off() // cancling the sound when unmount
         }
+
     }, [])
 
 

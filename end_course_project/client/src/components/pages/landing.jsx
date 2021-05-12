@@ -111,7 +111,6 @@ const Home = ({ sounds }) => {
             {
                 <div onClick={playMusic} className="landing-page">
                     <div className="login-popup-container" >
-
                         {
                             newUserCreated ?
                                 <div className="initial-pokemon-choose">
