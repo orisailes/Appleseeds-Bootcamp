@@ -51,8 +51,12 @@ function App() {
   }
 
   const sounds = {
+
     landingSound: {
-      on: () => landingSound.play(),
+      on: () => {
+        landingSound.volume = 0.2
+        landingSound.play()
+      },
       pause: () => landingSound.pause(),
       off: () => {
         landingSound.pause()
@@ -60,7 +64,10 @@ function App() {
       },
     },
     battleSound: {
-      on: () => battleSound.play(),
+      on: () => {
+        battleSound.volume = 0.7
+        battleSound.play()
+      },
       pause: () => battleSound.pause(),
       off: () => {
         battleSound.pause()

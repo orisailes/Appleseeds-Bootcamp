@@ -119,6 +119,8 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                 return false
             case (!tiles[helper[0]][helper[1]]): // if empty map is changed
                 toggleMap()
+                // setPlayerArrayPosition([7,19])
+                // setPlayerPosition([0,0])
                 return false
             case (tiles[helper[0]][helper[1]] === 1):
                 //! handle enemy meeting

@@ -1,4 +1,4 @@
-const Pokemon = require('./Pokemon')
+import Pokemon from './Pokemon'
 const attributesList = require('./attributesList')
 const hpPromoter = 0.6
 const statsPower = 0.75
@@ -34,6 +34,5 @@ const generateStat = (stat,level,attribute) => {
     return Number((stat * Math.pow(level, statsPower) * (attribute.quality - 1)).toFixed(2))
 }
 
-module.exports = {
-    makePokemon
-}
+
+ export default makePokemon

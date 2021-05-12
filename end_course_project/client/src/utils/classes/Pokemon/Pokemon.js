@@ -130,5 +130,4 @@ class Pokemon {
 }
 
 
-
-module.exports = Pokemon
+export default Pokemon

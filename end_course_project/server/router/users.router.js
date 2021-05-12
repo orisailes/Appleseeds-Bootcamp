@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const userController = require('../controller/userController')
 
-
 router.post('/register', async (req, res) => {
         const result = await userController.register(req, res)
         console.log(result);

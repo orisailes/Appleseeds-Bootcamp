@@ -4,16 +4,14 @@ import { Link, useHistory } from 'react-router-dom'
 import '../../css/battle.css'
 import Button from '../utils/Button'
 import Pokemon from '../utils/Pokemon'
-import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
+import makePokemon from '../../utils/classes/Pokemon/pokemonsGenerator'
 import attributesList from '../../utils/classes/Pokemon/attributesList'
 import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 import axios from 'axios'
-// const Pokemon = require('../utils/Pokemon')
 
 function Battle({ sounds }) {
     const { user, setUser } = useContext(userContext)
-
     const [enemyPokemon, setEnemyPokemon] = useState(null)
     const [whoCauseDamage, setWhoCauseDamage] = useState([])
     const [chosenPokemon, setChosenPokemon] = useState({})
@@ -39,10 +37,10 @@ function Battle({ sounds }) {
         const pokemonName = Math.floor(Math.random() * Object.keys(attributesList).length)
         const pokemonChosen = allPokes[pokemonName]
         console.log('pokemonChosen:', pokemonChosen)
-        const evilPoke = pokemonsGenerator.makePokemon(pokemonChosen, 5)
+        const evilPoke = makePokemon(pokemonChosen, 5)
         setEnemyPokemon(evilPoke)
     } else if (enemyPokemon === null) {
-        setEnemyPokemon(pokemonsGenerator.makePokemon("rattata", 1))
+        setEnemyPokemon(makePokemon("rattata", 1))
     }
 
     const wait = (ms) => {
@@ -87,7 +85,7 @@ function Battle({ sounds }) {
                                     newLevels[poke.name] = poke.level
                                     result -= (poke.maxExp - poke.exp)
                                     newLevels[poke.name]++
-                                    poke = pokemonsGenerator.makePokemon(poke.name, newLevels[poke.name])
+                                    poke = makePokemon(poke.name, newLevels[poke.name])
                                     newUser.pokemons[i] = poke
                                 }
                                 newUser.pokemons[i].exp += result

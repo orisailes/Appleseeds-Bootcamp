@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { userContext } from '../../utils/context/userContext'
 import '../../css/landing.css'
 import Login from '../utils/Login'
@@ -7,8 +7,9 @@ import Pokemon from '../../utils/classes/Pokemon/Pokemon'
 import validator from 'validator'
 import axios from 'axios'
 import PokemonsDesplayer from '../utils/PokemonsDesplayer'
-import pokemonsGenerator from '../../utils/classes/Pokemon/pokemonsGenerator'
-// const Pokemon = require('../utils/Pokemon')
+import makePokemon from '../../utils/classes/Pokemon/pokemonsGenerator'
+
+
 const Home = ({ sounds }) => {
 
     //TODO: cant get two pokemons the same
@@ -57,7 +58,6 @@ const Home = ({ sounds }) => {
         if (action === "login") {
             setError('')
             try {
-                debugger
                 const newUser = await axios.post('/api/users/login', {
                     email, password
                 })
@@ -88,11 +88,11 @@ const Home = ({ sounds }) => {
 
     const initialPokemonChoose = async (pokemon) => {
         console.log(pokemon)
-        const newPokemon = pokemonsGenerator.makePokemon(pokemon, 5)
+        console.log('pokemonGenerator:', makePokemon)
+        const newPokemon = makePokemon(pokemon, 5)
         let helper = { ...user }
         helper.pokemons.push(newPokemon)
         setUser(helper)
-        debugger
         const test = await axios.put(`/api/users/${user.email}`, helper)
         console.log(test);
         console.log(helper.pokemons);
@@ -102,7 +102,6 @@ const Home = ({ sounds }) => {
     }
 
     const startGame = () => {
-        debugger
         sounds.landingSound.off()
         location.push('/world')
     }

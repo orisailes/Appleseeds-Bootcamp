@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { userContext } from '../../utils/context/userContext'
 import { useLocation } from 'react-router-dom'
 import Map from '../utils/Map'
@@ -39,6 +39,15 @@ const World = ({ sounds }) => {
     const wait = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+
+    useEffect(() => {
+        if (data.state) {
+            if (data.state.healPokemons) {
+                healUserPokemons()
+            }
+        }
+    }, [])
+
 
     const toggleMap = () => {
         let helper = isCharacterInHome
