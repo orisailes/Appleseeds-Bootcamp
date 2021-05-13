@@ -17,6 +17,9 @@ const World = ({ sounds }) => {
 
     const data = useLocation()
 
+
+    //TODO: fix sound icon bug, impove store,chatting and home character css  
+
     const [isCharacterInHome, setIsCharacterInHome] = useState(data.state ? data.state.userBackFromBattle ? false : true : true)
     const [store, setStore] = useState(false)
     const [pokemonUserWantToBuy, setPokemonUserWantToBuy] = useState(null)
@@ -158,6 +161,7 @@ const World = ({ sounds }) => {
         } else {
             isCharacterInHome ? sounds.homeSound.pause() : sounds.forestSound.pause()
         }
+        mapRef.current.focus()
         setMapMusicOff(prev => !prev)
     }
 
@@ -186,6 +190,12 @@ const World = ({ sounds }) => {
                 toggleInventory={toggleInventory}
                 showInventory={isInventoryOpen}
                 user={user} />
+
+            <i
+                className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
+                onClick={() => toggleMusic()}
+            >
+            </i>
 
             {isChatting &&
                 <Chat

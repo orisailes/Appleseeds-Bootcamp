@@ -6,7 +6,7 @@ import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
 
 
-const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusicOff, toggleMusic, forwardedRef }) => {
+const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, forwardedRef }) => {
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
@@ -199,11 +199,7 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, mapMusic
                 <Player walkIndex={walkIndex} direction={direction} forwardedRef={playerRef} position={playerPosition} />
 
             </div>
-            <i
-                className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
-                onClick={() => toggleMusic()}
-            >
-            </i>
+            
         </>
     )
 }

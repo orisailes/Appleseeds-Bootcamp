@@ -13,7 +13,7 @@ import axios from 'axios'
 function Battle({ sounds }) {
     const { user, setUser } = useContext(userContext)
     const [enemyPokemon, setEnemyPokemon] = useState(null)
-    const [whoCauseDamage, setWhoCauseDamage] = useState([])
+    const [whoCauseDamage, setWhoCauseDamage] = useState({})
     const [chosenPokemon, setChosenPokemon] = useState({})
     const [endGameNewLevels, setEndGameNewLevels] = useState({})
     const [battleStarted, setBattleStarted] = useState(false)
@@ -49,7 +49,6 @@ function Battle({ sounds }) {
                 }, 0) / user.pokemons.length
             )
         const evilPoke = makePokemon(pokemonChosen, avgUserPokLevel)
-        console.log('evilPoke:', evilPoke)
         setEnemyPokemon(evilPoke)
     } else if (enemyPokemon === null) {
         setEnemyPokemon(makePokemon("rattata", 1))
@@ -81,6 +80,7 @@ function Battle({ sounds }) {
                 let newUser = _.cloneDeep(user)
                 let newLevels = {}
                 let levelUpCounters = {}
+                debugger
                 for (let pokemon in whoCauseDamage) {
                     const damagePercentCause = whoCauseDamage[pokemon] / (enemyPokemon.maxHp + enemyHealCharge)
                     if (damagePercentCause) {
@@ -206,12 +206,14 @@ function Battle({ sounds }) {
             enemyPokemonRef.current.classList.add("get-hurt")
             await wait(500)
             enemyPokemonRef.current.classList.remove("get-hurt")
+            debugger
             let userDamage = chosenPokemon.calculateDamage(enemyPokemon, userAttack)
             if (enemyHelper.hp < userDamage) userDamage = enemyHelper.hp
             enemyHelper.hp -= userDamage
-
+            console.log(userDamage * 2);
             const manageCausingDamageHelper = { ...whoCauseDamage }
-            manageCausingDamageHelper[chosenPokemon.name] += userDamage
+           
+            manageCausingDamageHelper[chosenPokemon.name]? manageCausingDamageHelper[chosenPokemon.name] += userDamage : manageCausingDamageHelper[chosenPokemon.name] = userDamage
 
             setWhoCauseDamage(manageCausingDamageHelper)
 
