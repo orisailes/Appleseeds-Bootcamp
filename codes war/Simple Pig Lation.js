@@ -1,11 +1,10 @@
-function pigIt (str) {
+function pigIt(str) {
     const helper = str.split(' ')
-    for(let i=0;i<helper.length;i++){
-        helper[i][helper.length] = helper[i][0]
+    const reg = /[~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=-]/g
+    for (let i = 0; i < helper.length; i++) {
+        let word = helper[i]
+        if(!reg.test(helper[i])) helper[i] += word[0] + "ay"
+        helper[i].length > 1 ? helper[i] = helper[i].slice(1) : null
     }
-    console.log(helper);
-
+    return helper.join(' ')
 }
-
-pigIt('Pig latin is cool'); // igPay atinlay siay oolcay
-pigIt('Hello world !');     // elloHay orldway !
