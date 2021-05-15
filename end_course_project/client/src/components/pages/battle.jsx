@@ -275,11 +275,10 @@ function Battle({ sounds }) {
     }
 
     const handlePokemonChoose = (e) => {
-        debugger
         const pokemonName = e.currentTarget.id
         const pokemon = user.pokemons.find(poke => poke.name === pokemonName)
         pokemon.hp > 0 && setChosenPokemon(pokemon)
-        setBattleStarted(true)
+        pokemon.hp > 0 && setBattleStarted(true)
     }
 
     const handleChangePokemon = () => {
