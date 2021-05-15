@@ -125,16 +125,16 @@ const Home = ({ sounds }) => {
                                         onFormSubmit={onFormSubmit}
                                         error={error}
                                     />
-
-                                    {isMusicPlaying &&
-                                        <i
-                                            className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
-                                            onClick={() => {
-                                                musicOff ? sounds.landingSound.on() : sounds.landingSound.pause()
-                                                setMusicOff(prev => !prev)
-                                            }}
-                                        >
-                                        </i>}
+                                    <i
+                                        style={
+                                            isMusicPlaying ? { visibility: "visible" } : { visibility: "hidden" }}
+                                        className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
+                                        onClick={() => {
+                                            musicOff ? sounds.landingSound.on() : sounds.landingSound.pause()
+                                            setMusicOff(prev => !prev)
+                                        }}
+                                    >
+                                    </i>
                                 </>
 
                         }

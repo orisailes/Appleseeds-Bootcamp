@@ -63,6 +63,7 @@ const World = ({ sounds }) => {
             sounds.forestSound.on()
             sounds.homeSound.off()
         }
+        setMapMusicOff(false)
         setIsCharacterInHome(prev => !prev)
     }
 
@@ -192,7 +193,7 @@ const World = ({ sounds }) => {
                 user={user} />
 
             <i
-                className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"}`}
+                className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} `}
                 onClick={() => toggleMusic()}
             >
             </i>

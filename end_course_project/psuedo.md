@@ -51,7 +51,6 @@ Day7-9 :
 
 Day 10:
 * add money and pokestore feature. the main map will contain store that the user can buy and choose him as main pokemon. the main pokemon is the only pokemon that can be in battle
-* the user can but pokeballs 
 
 Day 10-13 (extra):
 * add maps, different animations, add pokemons, sounds, and the sky is the limit

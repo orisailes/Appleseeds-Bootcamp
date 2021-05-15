@@ -20,6 +20,7 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, forwarde
     useEffect(() => {
 
         isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
+        
         return () => {
             sounds.forestSound.off()
         }
