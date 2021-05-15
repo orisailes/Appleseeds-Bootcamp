@@ -212,8 +212,8 @@ function Battle({ sounds }) {
             enemyHelper.hp -= userDamage
             console.log(userDamage * 2);
             const manageCausingDamageHelper = { ...whoCauseDamage }
-           
-            manageCausingDamageHelper[chosenPokemon.name]? manageCausingDamageHelper[chosenPokemon.name] += userDamage : manageCausingDamageHelper[chosenPokemon.name] = userDamage
+
+            manageCausingDamageHelper[chosenPokemon.name] ? manageCausingDamageHelper[chosenPokemon.name] += userDamage : manageCausingDamageHelper[chosenPokemon.name] = userDamage
 
             setWhoCauseDamage(manageCausingDamageHelper)
 
@@ -496,9 +496,7 @@ function Battle({ sounds }) {
                                             <>
                                                 <Button
                                                     turnIsActive={turnIsActive} onClick={() => {
-                                                        {
-                                                            setDisplayOptions(false)
-                                                        }
+                                                        setDisplayOptions(false)
                                                     }}
                                                     text="fight" />
 
