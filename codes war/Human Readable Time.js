@@ -1,7 +1,6 @@
 function humanReadable(seconds) {
     let hr = 0
     let min = 0
-    let sec = 0
     if (seconds >= 3600) {
         while (seconds >= 3600) {
             seconds -= 3600
