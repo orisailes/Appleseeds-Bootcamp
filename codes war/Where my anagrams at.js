@@ -21,15 +21,26 @@ function anagrams(word, words) {
         const checker = Object.values(helperWord).reduce((total, amount) => {
             return total + amount
         }, 0)
-        checker === 0 && result.push(initWord.join(''))
+        if (checker === 0 && word.length === initWord.length) {
+            result.push(initWord.join(''))
+        }
     }
-   console.log(result)
+    console.log(result)
 }
 
 
 
-anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']) // ['aabb', 'bbaa']
+anagrams('big', ['bid', 'biig', 'dib', 'gig'])
 
-anagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) //  ['carer', 'racer']
-
-anagrams('laser', ['lazing', 'lazy', 'lacer']) //[]
+anagrams('abba', ['aabb',
+    'abab',
+    'abbaa',
+    'abbab',
+    'abbba',
+    'abcd',
+    'baaab',
+    'baab',
+    'baba',
+    'babaa',
+    'bbaa'
+])
