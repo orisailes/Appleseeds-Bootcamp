@@ -15,7 +15,6 @@ function validSolution(board) {
 
     const getRow = (index) => {
         const row = board[index]
-        if (row.find((num) => num === 0)) return false
         return row
     }
 
@@ -24,12 +23,12 @@ function validSolution(board) {
         for (let row = 0; row < board.length; row++) {
             lineArr.push(board[row][index])
         }
-        if (lineArr.find((num) => num === 0)) return false
         return lineArr
     }
 
     const checkForDuplicates = (arr) => {
         const checker = new Set(arr)
+        if(checker.has(0)) return false
         return checker.size === arr.length ? true : false
     }
 
@@ -53,6 +52,8 @@ function validSolution(board) {
         }
 
     }
+
+    //! start checking
 
     for (let i = 0; i < board.length; i++) {
         if (i === 0) {
