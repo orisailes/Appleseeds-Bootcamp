@@ -23,7 +23,7 @@ const homeSound = new Audio(HomeSound)
 
 function App() {
   //TODO: handleRun , validat that no more than 8 pokemons, 
-  
+
   const location = useHistory()
 
   location.listen((newLocation, action) => {
@@ -47,6 +47,8 @@ function App() {
 
 
   const [user, setUser] = useState(null)
+  const [showToturial, setShowToturial] = useState(true)
+
 
   const value = {
     user,
@@ -110,13 +112,13 @@ function App() {
         forestSound.currentTime = 0
       }
     },
-    homeSound:{
-      on:()=> {
+    homeSound: {
+      on: () => {
         homeSound.volume = 0.5
         homeSound.play()
       },
-      pause: ()=> homeSound.pause(),
-      off:()=>{
+      pause: () => homeSound.pause(),
+      off: () => {
         homeSound.pause()
         homeSound.currentTime = 0
       }
@@ -138,7 +140,7 @@ function App() {
         </Route>
 
         <Route exact path="/world">
-          <World sounds={sounds} />
+          <World showToturial={showToturial} setShowToturial={setShowToturial} sounds={sounds} />
         </Route>
 
       </userContext.Provider>
