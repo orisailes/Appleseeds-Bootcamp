@@ -7,6 +7,7 @@ import Store from '../utils/Store'
 import PreBuy from '../utils/PreBuy'
 import Inventory from '../utils/Inventory'
 import Toturial from '../utils/Toturial'
+import PreDisconnect from '../utils/PreDisconnect'
 import tilesDefiner from './maps/index'
 import axios from 'axios'
 import makePokemon from '../../utils/classes/Pokemon/pokemonsGenerator'
@@ -28,9 +29,9 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
     const [preBuyText, setPreBuyText] = useState('')
     const [isInventoryOpen, setIsInventoryOpen] = useState(false)
     let [chatFireLine, setChatFireLine] = useState(0)
+    const [preDisconnect, setPreDisconnect] = useState(false)
     const mapRef = useRef(null)
-
-
+   
 
     const chatInfo = {
         oak: ["Hey folk! Looking for new pokemon?", "There will no discounts for you!"],
@@ -191,29 +192,43 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                 musicOff={musicOff}
                 toggleMusic={toggleMusic}
             />
-        <div className="user-world-options">
-            <Inventory
-                toggleInventory={toggleInventory}
-                showInventory={isInventoryOpen}
-                user={user} />
+            <div className="user-world-options">
+                <Inventory
+                    toggleInventory={toggleInventory}
+                    showInventory={isInventoryOpen}
+                    user={user} />
 
-            <i
-                className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} volume-icon `}
-                onClick={() => toggleMusic()}
-            >
-            </i>
+                <i
+                    className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} volume-icon `}
+                    onClick={() => toggleMusic()}
+                >
+                </i>
 
-            <i
-                className="fas fa-question fa-lg .question-mark-i"
-                onClick={() => setShowToturial(prev=>!prev)}
-            >
-            </i>
+                <i
+                    className="fas fa-question fa-lg .question-mark-i"
+                    onClick={() => setShowToturial(prev => !prev)}
+                >
+                </i>
+                <i
+                    onClick={() => {
+                        setPreDisconnect(true)
+                    }}
+                    className="fas fa-unlink fa-lg">
+
+                </i>
             </div>
             {
                 showToturial &&
                 <Toturial
                     setShowToturial={setShowToturial}
                     mapRef={mapRef}
+                />
+            }
+            {
+                preDisconnect &&
+                <PreDisconnect
+                setPreDisconnect={setPreDisconnect}
+                mapRef={mapRef}
                 />
             }
 

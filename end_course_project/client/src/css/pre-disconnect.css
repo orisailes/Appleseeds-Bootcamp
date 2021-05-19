@@ -1,0 +1,35 @@
+.pre-disconnect {
+    position: absolute;
+    background: url('../img/utils/message-box.png') no-repeat center center/contain;
+    top: 20vh;
+    left: 20vw;
+    height: 60vh;
+    width: 60vw;
+    color: black;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    transform: translateY(20vh);
+    opacity: 0;
+    animation: revel 0.5s forwards;
+    overflow: hidden;
+}
+
+.pre-disconnect-grid {
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    width: 90%;
+    height: 50%;
+    position: relative;
+    margin: auto;
+}
+
+.pre-disconnect-grid .question {
+  grid-column: span 2;
+}
+.pre-disconnect-grid .btn {
+  width: auto;
+}

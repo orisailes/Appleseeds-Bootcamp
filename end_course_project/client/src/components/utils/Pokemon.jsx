@@ -2,7 +2,6 @@ import React from 'react';
 import StatsContainer from './StatsContainer'
 
 function Pokemon({ isUserPokemon, pokemon,forwardedRef }) {
-    debugger
     return (
         <div className={`pokemon  ${isUserPokemon ? "user-pokemon" : "enemy-pokemon"}`}>
             <img

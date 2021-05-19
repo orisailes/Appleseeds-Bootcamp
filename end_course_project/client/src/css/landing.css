@@ -1,4 +1,3 @@
-
 .landing-page {
     height: 100vh;
     width: 100vw;
@@ -33,11 +32,11 @@
     padding: 1rem;
 }
 
-.login-popup .password-input{
+.login-popup .password-input {
     position: relative;
 }
 
-.login-popup .eye-toggle-icon{
+.login-popup .eye-toggle-icon {
     position: absolute;
     right: 5%;
     bottom: 25%;
@@ -51,7 +50,7 @@
     margin: 0;
 }
 
-.login-popup .opt-btn-container footer{
+.login-popup .opt-btn-container footer {
     font-size: 0.5rem;
     text-align: center;
 }
@@ -101,12 +100,13 @@
     align-items: center;
     flex-direction: column;
 }
+
 .pokemons-desplayer .content {
     display: flex;
     align-self: center;
     justify-content: center;
     flex-wrap: wrap;
-    
+
 }
 
 .pokemons-desplayer .pokemon-gif img {
@@ -121,5 +121,35 @@
     text-align: center;
     line-height: 1.5rem;
     cursor: pointer;
-    
+    position: relative;
+}
+
+.pokemons-desplayer .hovered-pokemon {
+    background: whitesmoke;
+    border-radius: 5px;
+    height: 35vh;
+    width: 40vh;
+    text-align: center;
+    z-index: 123123;
+    position: absolute;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows:1fr 1fr 1fr;
+    overflow: hidden;
+}
+.pokemons-desplayer .hovered-pokemon p {
+   font-size: 0.65rem;
+}
+.pokemons-desplayer .hovered-pokemon img {
+    justify-self: center;
+    grid-column: span 2;
+}
+.pokemons-desplayer .hovered-pokemon .attacks {
+    grid-column: span 2;
+    font-size: small;
+}
+.pokemons-desplayer .hovered-pokemon .attacks span span{
+    font-size: 0.65rem;
+    margin: 0 0.2rem;
 }
