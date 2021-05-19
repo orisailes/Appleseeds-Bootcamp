@@ -24,14 +24,14 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
 
     const [isCharacterInHome, setIsCharacterInHome] = useState(data.state ? data.state.userBackFromBattle ? false : true : true)
     const [store, setStore] = useState(false)
-    const [pokemonUserWantToBuy, setPokemonUserWantToBuy] = useState(null)
+    const [productUserWantToBuy, setProductUserWantToBuy] = useState(null)
     const [isChatting, setIsChatting] = useState('')
     const [preBuyText, setPreBuyText] = useState('')
     const [isInventoryOpen, setIsInventoryOpen] = useState(false)
     let [chatFireLine, setChatFireLine] = useState(0)
     const [preDisconnect, setPreDisconnect] = useState(false)
     const mapRef = useRef(null)
-   
+
 
     const chatInfo = {
         oak: ["Hey folk! Looking for new pokemon?", "There will no discounts for you!"],
@@ -117,44 +117,59 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
         mapRef.current.focus()
     }
 
-    const pokemonBuying = (pokemonToBuy) => {
-        setPokemonUserWantToBuy(pokemonToBuy)
+    const storeBuying = (productToBuy) => {
+        setProductUserWantToBuy(productToBuy)
     }
 
-    const clickToBuy = async (pokemon) => {
+    const clickToBuy = async (product) => {
         if (!user) {
             setPreBuyText('You have to login first.')
         } if (user) {
-            let duplicateTest = user.pokemons.every((userPokemon) => userPokemon.name !== pokemon.pokemon)
+            if (product !== "pokeball") {
+                const pokemon = product
+                let duplicateTest = user.pokemons.every((userPokemon) => userPokemon.name !== pokemon.pokemon)
 
-            if (user.money < pokemon.price) { // if user have no cash
-                setPreBuyText('Not enough funds')
+                if (user.money < pokemon.price) { // if user have no cash
+                    setPreBuyText('Not enough funds')
+                }
+
+                if (!duplicateTest) { // if user want to buy the same pokemon twice  
+                    setPreBuyText('You cant have the same pokemon twice')
+                }
+
+                if (user.pokemons.length >= 8) { // if user got 8 pokemons
+                    setPreBuyText('You cant have more than 8 Pokemons!')
+
+                }
+
+                if (user.money >= pokemon.price && duplicateTest && user.pokemons.length < 9) {
+                    let newPokemon = makePokemon(pokemon.pokemon, pokemon.level)
+                    let helper = _.cloneDeep(user)
+                    helper.money -= pokemon.price
+                    helper.pokemons.push(newPokemon)
+                    await axios.put(`/api/users/${user.email}`, helper)
+                    setUser(helper)
+                    setPreBuyText('Pokemon buy succesfully')
+                }
             }
-
-            if (!duplicateTest) { // if user want to buy the same pokemon twice  
-                setPreBuyText('You cant have the same pokemon twice')
-            }
-
-            if (user.pokemons.length >= 8) { // if user got 8 pokemons
-                setPreBuyText('You cant have more than 8 Pokemons!')
-
-            }
-
-            if (user.money >= pokemon.price && duplicateTest && user.pokemons.length < 9) {
-                let newPokemon = makePokemon(pokemon.pokemon, pokemon.level)
-                let helper = _.cloneDeep(user)
-                helper.money -= pokemon.price
-                helper.pokemons.push(newPokemon)
-                await axios.put(`/api/users/${user.email}`, helper)
-                setUser(helper)
-                setPreBuyText('Pokemon buy succesfully')
+            if (product === "pokeball") {
+                if (user.money < 400) setPreBuyText('Not enough funds')
+                if (user.money >= 400) {
+                    let helper = _.cloneDeep(user)
+                    helper.money -= 400
+                    helper.pokeballs += 1
+                    await axios.put(`/api/users/${user.email}`, helper)
+                    setUser(helper)
+                    console.log('helper:', helper)
+                    setPreBuyText('Pokemon buy succesfully')
+                }
             }
         }
     }
 
     const cancelBuy = () => {
         setPreBuyText('')
-        setPokemonUserWantToBuy(null)
+        setProductUserWantToBuy(null)
     }
 
     const toggleMusic = () => {
@@ -192,12 +207,16 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                 musicOff={musicOff}
                 toggleMusic={toggleMusic}
             />
+            <Inventory
+                toggleInventory={toggleInventory}
+                showInventory={isInventoryOpen}
+                user={user} />
             <div className="user-world-options">
-                <Inventory
-                    toggleInventory={toggleInventory}
-                    showInventory={isInventoryOpen}
-                    user={user} />
-
+                <button
+                    onClick={() => toggleInventory(prev => !prev)}
+                    className="inventory-btn">
+                    <img src={require('../../img/utils/backpack.png').default} alt="backpach" ></img>
+                </button>
                 <i
                     className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} volume-icon `}
                     onClick={() => toggleMusic()}
@@ -227,8 +246,8 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
             {
                 preDisconnect &&
                 <PreDisconnect
-                setPreDisconnect={setPreDisconnect}
-                mapRef={mapRef}
+                    setPreDisconnect={setPreDisconnect}
+                    mapRef={mapRef}
                 />
             }
 
@@ -239,18 +258,18 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                 />}
 
             {
-                (store && user) &&
+                store &&
                 <>
                     <Store
-                        pokemonBuying={pokemonBuying}
+                        storeBuying={storeBuying}
                         user={user}
                         closeStore={closeStore} />
 
-                    { (pokemonUserWantToBuy && user) &&
+                    { (productUserWantToBuy && user) &&
                         <PreBuy
                             cancel={cancelBuy}
                             clickToBuy={clickToBuy}
-                            pokemon={pokemonUserWantToBuy}
+                            product={productUserWantToBuy}
                             preBuyText={preBuyText}
                             user={user}
                         />

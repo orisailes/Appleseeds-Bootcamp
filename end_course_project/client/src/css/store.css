@@ -49,3 +49,10 @@
     font-size: large;
     color: #3d9634;
 }
+
+.store-wrapper .pokeball  {
+    cursor: pointer;
+}
+.store-wrapper .pokeball p {
+    margin: 0;
+}

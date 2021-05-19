@@ -16,13 +16,16 @@
 .prebuy-grid{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 3fr 2fr;
     align-items: center;
     text-align: center;
     width: 90%;
     height: 50%;
     position: relative;
     margin: auto;
+}
+
+.prebuy-grid .pokeball-pic{
+    height: 10vh;
 }
 
 .prebuy img {

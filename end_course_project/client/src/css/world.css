@@ -18,7 +18,7 @@
     width: 20%;
     display: flex;
     justify-content: space-evenly;
-    align-items:center ;
+    align-items: center;
 }
 
 .world i {
@@ -30,19 +30,32 @@
     color: black;
 }
 
-.world .inventory-displayer {
+.world .inventory-grid {
+    color: whitesmoke;
     height: 50vh;
     width: 70vw;
-    background: black;
     position: absolute;
     top: 20vh;
-    left: -25vw;
+    left: 15vw;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    background: black;
+    text-align:center ;
+    cursor: pointer;
+}
+
+.world .inventory-displayer {
     overflow: hidden;
     color: whitesmoke;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.world .dollar-sign {
+    font-size: larger;
+    color: #3d9634;
 }
 
 .world .inventory-displayer .inventory-pokemon-div {
@@ -53,4 +66,14 @@
 .world .inventory-displayer .inventory-pokemon-div .exp-bar {
     width: 100%;
     border-radius: none;
+}
+
+.inventory-grid .inventory-text{
+    display: flex;
+    justify-content: space-evenly;
+} 
+
+.inventory-grid .red{
+    color: red;
+    font-size: larger;
 }

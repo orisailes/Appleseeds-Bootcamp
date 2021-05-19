@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     money: {
         type: Number,
         default: 0
+    },
+    pokeballs:{
+        type:Number,
+        default:0
     }
 })
 
