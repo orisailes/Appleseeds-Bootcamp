@@ -22,7 +22,7 @@ const homeSound = new Audio(HomeSound)
 
 
 function App() {
-  //TODO: handleRun , validat that no more than 8 pokemons, inventory focus
+
 
   const location = useHistory()
 
@@ -71,6 +71,10 @@ function App() {
     battleSound: {
       on: () => {
         battleSound.volume = 0.5
+        battleSound.play()
+      },
+      runSilente: () => {
+        battleSound.volume = 0
         battleSound.play()
       },
       pause: () => battleSound.pause(),

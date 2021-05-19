@@ -1,6 +1,5 @@
 .toturial {
     position: absolute;
-    background: rgba(220, 217, 124);
     background: url('../img/utils/message-box.png') no-repeat center center/contain;
     top: 20vh;
     left: 20vw;
@@ -10,15 +9,16 @@
     display: flex;
     justify-items: center;
     align-items: center;
-    transform: translateY(25vh);
+    transform: translateY(20vh);
     opacity: 0;
-    animation: revel 1s forwards;
+    animation: revel 0.5s forwards;
+    overflow: hidden;
 }
 
 .toturial-grid {
     display: grid;
     text-align: center;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 3fr 2fr;
     align-items: center;
     width: 90%;
@@ -27,17 +27,17 @@
     margin: auto;
 }
 
-.toturial-grid img{
-    height: 8vh;
+.toturial-grid img {
+    height: 6vh;
+}
+
+.toturial-grid .to-forest img {
+    height: 9vh;
 }
 
 .toturial .btn {
     margin: auto;
     grid-column: span 4;
-}
-
-.toturial .btn i {
-    display: none;
 }
 
 @keyframes revel {

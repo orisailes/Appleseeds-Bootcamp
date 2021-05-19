@@ -26,7 +26,6 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
     const [pokemonUserWantToBuy, setPokemonUserWantToBuy] = useState(null)
     const [isChatting, setIsChatting] = useState('')
     const [preBuyText, setPreBuyText] = useState('')
-    const [mapMusicOff, setMapMusicOff] = useState(false)
     const [isInventoryOpen, setIsInventoryOpen] = useState(false)
     let [chatFireLine, setChatFireLine] = useState(0)
     const mapRef = useRef(null)
@@ -66,7 +65,6 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                 sounds.homeSound.off()
             }
         }
-        setMapMusicOff(false)
         setIsCharacterInHome(prev => !prev)
     }
 
@@ -191,20 +189,26 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                 isCharacterInHome={isCharacterInHome}
                 tiles={isCharacterInHome ? tilesDefiner.home : tilesDefiner.forest}
                 musicOff={musicOff}
-                setMusicOff={setMusicOff}
                 toggleMusic={toggleMusic}
             />
-
+        <div className="user-world-options">
             <Inventory
                 toggleInventory={toggleInventory}
                 showInventory={isInventoryOpen}
                 user={user} />
 
             <i
-                className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} `}
+                className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} volume-icon `}
                 onClick={() => toggleMusic()}
             >
             </i>
+
+            <i
+                className="fas fa-question fa-lg .question-mark-i"
+                onClick={() => setShowToturial(prev=>!prev)}
+            >
+            </i>
+            </div>
             {
                 showToturial &&
                 <Toturial
@@ -220,7 +224,7 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                 />}
 
             {
-                store &&
+                (store && user) &&
                 <>
                     <Store
                         pokemonBuying={pokemonBuying}
