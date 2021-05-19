@@ -24,6 +24,9 @@ function Battle({ sounds, musicOff, setMusicOff }) {
     const [isUserLose, setIsUserLose] = useState(false)
     const [gameEndHider, setGameEndHider] = useState(false)
     const [componentVisible, setComponentVisible] = useState(false)
+    const [captureFailed, setCaptureFailed] = useState(false)
+    const [prePokeballThrow, setPrePokeballThrow] = useState(false)
+    const [pokeballThrow, setPokeballThrow] = useState(false)
     const [displayOptions, setDisplayOptions] = useState(true)
     const [isBattleWanted, setIsBattleWanted] = useState(null)
     const [enemyHealCharge, setEnemyHealCharge] = useState(0)
@@ -110,12 +113,9 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                     money: newUser.money,
                     pokemons: newUser.pokemons,
                 })
-                await wait(3000)
-                await wait(500)
+                await wait(3500)
             }
-            if (gameOver && isUserLose) {
 
-            }
         }
         endGameSession()
 
@@ -319,9 +319,34 @@ function Battle({ sounds, musicOff, setMusicOff }) {
         setMusicOff(prev => !prev)
     }
 
-    const handlePokeballThrow = () => {
-        console.log(enemyPokemon);
-        console.log(user);
+    const handlePrePokeballThrow = () => {
+        setPrePokeballThrow(true)
+    }
+    const handlePokeballThrow = async () => {
+        setPrePokeballThrow(false)
+        setPokeballThrow(true)
+        setTurnIsActive(true)
+        await wait(6000) // animation running
+        let isCapture = enemyPokemon.isCapture()
+        let newUser = _.cloneDeep(user)
+        isCapture = true
+        newUser.pokeballs -= 1
+        if (isCapture) {
+            newUser.pokemons.push(enemyPokemon)
+            setGameOver(true)
+            setCaptureFailed(true)
+        }
+        if (!isCapture) {
+            setPokeballThrow(false)
+            setCaptureFailed(true)
+            setTurnIsActive(false)
+        }
+        debugger
+        setUser(newUser)
+        const newUserSaved = await axios.put(`/api/users/${newUser.email}`, newUser)
+        await wait(1500)
+        console.log('newUserSaved:', newUserSaved)
+        console.log('newUser:', newUser)
     }
 
     return (
@@ -391,26 +416,51 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                 {
                     isPokemonChangeWanted &&
                     <div className="hider">
-                        <>
-                            <div className="user-pokemons-container">
-                                {user.pokemons.map((poke) => {
-                                    return (
-                                        <div
-                                            key={poke.name}
-                                            onClick={() => {
-                                                setChosenPokemon(poke)
-                                                setIsPokemonChangeWanted(false)
-                                            }}
-                                            className="user-individual-pokemon">
-                                            <img src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default} alt={poke.name} />
-                                            <h3>Lv: {poke.level}</h3>
-                                            <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </>
+                        <div className="user-pokemons-container">
+                            {user.pokemons.map((poke) => {
+                                return (
+                                    <div
+                                        key={poke.name}
+                                        onClick={() => {
+                                            setChosenPokemon(poke)
+                                            setIsPokemonChangeWanted(false)
+                                        }}
+                                        className="user-individual-pokemon">
+                                        <img src={require(`../../img/pokemon-front/gif/${poke.name}.gif`).default} alt={poke.name} />
+                                        <h3>Lv: {poke.level}</h3>
+                                        <h3>HP: {Math.round(poke.hp / poke.maxHp * 100)}%</h3>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
+                }
+                {
+                    prePokeballThrow && // ask for throwing confiirm
+                    <div className="hider">
+                        <div className="throw-confirm">
+                            <h4>Pokeballs left: {user.pokeballs}</h4>
+                            <img src={require('../../img/home/pokeball.png').default} alt="pokeball" />
+                            <div>
+                                <Button
+                                    onClick={() => {
+                                        user.pokeballs > 0 && handlePokeballThrow()
+                                    }}
+                                    text="throw"
+                                />
+                                <Button
+                                    onClick={() => {
+                                        setPrePokeballThrow(false)
+                                    }}
+                                    text="cancel"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                }
+                {
+                    pokeballThrow && //throwing pokeball
+                    <img className="pokeball-throw" src={require('../../img/home/pokeball.png').default} alt="pokeball" />
                 }
                 <div
                     style={{
@@ -419,13 +469,11 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                     className="pokemons-container">
                     {
                         user &&
-                        <Pokemon forwardedRef={enemyPokemonRef} isUserPokemon={false} pokemon={enemyPokemon} />
+                        <Pokemon enemyClassName={pokeballThrow ? "enemy-to-pokeball" : captureFailed ? "enemy-back" : "enemy-pokemon-img"} forwardedRef={enemyPokemonRef} isUserPokemon={false} pokemon={enemyPokemon} />
                     }
                     {
                         battleStarted &&
-                        <>
-                            <Pokemon forwardedRef={userPokemonRef} isUserPokemon={true} pokemon={chosenPokemon} />
-                        </>
+                        <Pokemon forwardedRef={userPokemonRef} isUserPokemon={true} pokemon={chosenPokemon} />
                     }
                 </div>
                 <div
@@ -459,7 +507,7 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                                     )
                                 })}</div>
                                 :
-                                isBattleWanted === false ?
+                                isBattleWanted === false ?    //* user press "run"
                                     handleRun()
                                     :
                                     <div className="message-box">
@@ -537,7 +585,7 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                                                     <Button
                                                         turnIsActive={turnIsActive}
                                                         className="pokemon-switch-btn"
-                                                        onClick={() => handlePokeballThrow()} text="pokeballs" />
+                                                        onClick={() => handlePrePokeballThrow()} text="pokeballs" />
                                                 </div>
                                             </>
                                     }

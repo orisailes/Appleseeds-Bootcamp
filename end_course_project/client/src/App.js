@@ -23,7 +23,7 @@ const homeSound = new Audio(HomeSound)
 
 function App() {
 
-
+//TODO: hadle  pokeball throw
   const location = useHistory()
 
   location.listen((newLocation, action) => {

@@ -11,8 +11,8 @@
     align-items: center;
     transform: translateY(20vh);
     opacity: 0;
-    animation: revel 0.5s forwards;
     overflow: hidden;
+    animation: revel 0.5s forwards;
 }
 
 .toturial-grid {

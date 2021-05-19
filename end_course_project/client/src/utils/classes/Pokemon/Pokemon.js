@@ -56,7 +56,7 @@ class Pokemon {
                     addOrDecreaseByType = attack === "dragon_breath" ? 1.1 : 1
                 }
                 break;
-                
+
             case (attackerType === "water"):
                 if (opponentType === "fire" || opponentType === "grass" || opponentType === "rock") {
                     addOrDecreaseByType = attack === "water_splash" ? 1.1 : 1
@@ -126,6 +126,14 @@ class Pokemon {
         console.log('reward:', reward)
 
         return reward
+    }
+
+    isCapture() {
+        const promoter = attributesList[this.name].quality - 1
+        // 1.3
+        const percent = 0.85 - promoter
+        const result = Math.random() <= percent ? true : false
+        return result
     }
 }
 
