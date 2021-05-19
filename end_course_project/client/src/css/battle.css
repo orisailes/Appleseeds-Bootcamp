@@ -165,6 +165,7 @@
     align-items: center;
     flex-direction: column;
     overflow: hidden;
+    text-align: center;
 }
 
 .user-pokemons-container {
@@ -289,4 +290,12 @@
     align-items: center;
     overflow: hidden;
     width: 100vw;
+}
+
+.battle-btn-container .options-btns .btn {
+    width: 50%;
+}
+
+.battle-btn-container .options-btns {
+    grid-column: span 2;
 }

@@ -319,6 +319,11 @@ function Battle({ sounds, musicOff, setMusicOff }) {
         setMusicOff(prev => !prev)
     }
 
+    const handlePokeballThrow = () => {
+        console.log(enemyPokemon);
+        console.log(user);
+    }
+
     return (
 
         <>
@@ -505,6 +510,7 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                                                     turnIsActive={turnIsActive}
                                                     className="pokemon-switch-btn"
                                                     onClick={() => handleChangePokemon()} text="pokemons" />
+
                                             </>
                                             :
                                             <>
@@ -523,12 +529,16 @@ function Battle({ sounds, musicOff, setMusicOff }) {
                                                         </React.Fragment>
                                                     )
                                                 })}
-
-                                                <Button
-                                                    turnIsActive={turnIsActive}
-                                                    className="pokemon-switch-btn"
-                                                    onClick={() => handleChangePokemon()} text="pokemons" />
-
+                                                <div className="options-btns">
+                                                    <Button
+                                                        turnIsActive={turnIsActive}
+                                                        className="pokemon-switch-btn"
+                                                        onClick={() => handleChangePokemon()} text="pokemons" />
+                                                    <Button
+                                                        turnIsActive={turnIsActive}
+                                                        className="pokemon-switch-btn"
+                                                        onClick={() => handlePokeballThrow()} text="pokeballs" />
+                                                </div>
                                             </>
                                     }
                                 </div>
