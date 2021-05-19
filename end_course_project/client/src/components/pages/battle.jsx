@@ -329,12 +329,10 @@ function Battle({ sounds, musicOff, setMusicOff }) {
         await wait(6000) // animation running
         let isCapture = enemyPokemon.isCapture()
         let newUser = _.cloneDeep(user)
-        isCapture = true
         newUser.pokeballs -= 1
         if (isCapture) {
             newUser.pokemons.push(enemyPokemon)
             setGameOver(true)
-            setCaptureFailed(true)
         }
         if (!isCapture) {
             setPokeballThrow(false)

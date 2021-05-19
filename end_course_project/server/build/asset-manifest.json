@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.b95e0aa1.chunk.css",
-    "main.js": "/static/js/main.bc81a7fb.chunk.js",
-    "main.js.map": "/static/js/main.bc81a7fb.chunk.js.map",
+    "main.css": "/static/css/main.4ba5354a.chunk.css",
+    "main.js": "/static/js/main.b089da98.chunk.js",
+    "main.js.map": "/static/js/main.b089da98.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.a06e69b5.js",
     "runtime-main.js.map": "/static/js/runtime-main.a06e69b5.js.map",
-    "static/js/2.f28c5ded.chunk.js": "/static/js/2.f28c5ded.chunk.js",
-    "static/js/2.f28c5ded.chunk.js.map": "/static/js/2.f28c5ded.chunk.js.map",
+    "static/js/2.37147ebc.chunk.js": "/static/js/2.37147ebc.chunk.js",
+    "static/js/2.37147ebc.chunk.js.map": "/static/js/2.37147ebc.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.b95e0aa1.chunk.css.map": "/static/css/main.b95e0aa1.chunk.css.map",
-    "static/js/2.f28c5ded.chunk.js.LICENSE.txt": "/static/js/2.f28c5ded.chunk.js.LICENSE.txt",
-    "static/js/main.bc81a7fb.chunk.js.LICENSE.txt": "/static/js/main.bc81a7fb.chunk.js.LICENSE.txt",
+    "static/css/main.4ba5354a.chunk.css.map": "/static/css/main.4ba5354a.chunk.css.map",
+    "static/js/2.37147ebc.chunk.js.LICENSE.txt": "/static/js/2.37147ebc.chunk.js.LICENSE.txt",
+    "static/js/main.b089da98.chunk.js.LICENSE.txt": "/static/js/main.b089da98.chunk.js.LICENSE.txt",
     "static/media/backpack.png": "/static/media/backpack.ae360025.png",
     "static/media/battle.3632bbf9.mp3": "/static/media/battle.3632bbf9.mp3",
     "static/media/battle.css": "/static/media/battleZone.832e9e76.png",
@@ -40,6 +40,7 @@
     "static/media/scyther.gif": "/static/media/scyther.2adf4c5a.gif",
     "static/media/spearow.gif": "/static/media/spearow.96e75499.gif",
     "static/media/squirtle.gif": "/static/media/squirtle.3626e707.gif",
+    "static/media/to_forest.png": "/static/media/to_forest.02e76167.png",
     "static/media/town.e8298f1e.mp3": "/static/media/town.e8298f1e.mp3",
     "static/media/victory.37fc75d5.mp3": "/static/media/victory.37fc75d5.mp3",
     "static/media/voltorb.gif": "/static/media/voltorb.f6f5d32f.gif",
@@ -49,8 +50,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.a06e69b5.js",
-    "static/js/2.f28c5ded.chunk.js",
-    "static/css/main.b95e0aa1.chunk.css",
-    "static/js/main.bc81a7fb.chunk.js"
+    "static/js/2.37147ebc.chunk.js",
+    "static/css/main.4ba5354a.chunk.css",
+    "static/js/main.b089da98.chunk.js"
   ]
 }
