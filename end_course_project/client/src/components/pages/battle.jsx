@@ -11,7 +11,7 @@ import _ from 'lodash';
 import ExpBar from '../utils/ExpBar'
 import axios from 'axios'
 
-function Battle({ sounds }) {
+function Battle({ sounds, musicOff, setMusicOff }) {
     const { user, setUser } = useContext(userContext)
     const [enemyPokemon, setEnemyPokemon] = useState(null)
     const [whoCauseDamage, setWhoCauseDamage] = useState({})
@@ -23,7 +23,6 @@ function Battle({ sounds }) {
     const [gameOver, setGameOver] = useState(false)
     const [isUserLose, setIsUserLose] = useState(false)
     const [gameEndHider, setGameEndHider] = useState(false)
-    const [musicOff, setMusicOff] = useState(false)
     const [componentVisible, setComponentVisible] = useState(false)
     const [displayOptions, setDisplayOptions] = useState(true)
     const [isBattleWanted, setIsBattleWanted] = useState(null)
@@ -75,8 +74,10 @@ function Battle({ sounds }) {
         const endGameSession = async () => {
             const isPokemonLeft = user && user.pokemons.find((pokemon) => pokemon.hp > 0)
             if (gameOver && isPokemonLeft) {
-                sounds.battleSound.off()
-                sounds.winningSound.on()
+                if (!musicOff) {
+                    sounds.battleSound.off()
+                    sounds.winningSound.on()
+                }
                 await wait(1000)
                 let newUser = _.cloneDeep(user)
                 let newLevels = {}

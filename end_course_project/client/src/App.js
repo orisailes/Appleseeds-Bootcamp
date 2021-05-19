@@ -22,7 +22,7 @@ const homeSound = new Audio(HomeSound)
 
 
 function App() {
-  //TODO: handleRun , validat that no more than 8 pokemons, 
+  //TODO: handleRun , validat that no more than 8 pokemons, inventory focus
 
   const location = useHistory()
 
@@ -48,7 +48,7 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [showToturial, setShowToturial] = useState(true)
-
+  const [musicOff, setMusicOff] = useState(false)
 
   const value = {
     user,
@@ -132,15 +132,15 @@ function App() {
         <Route exact path="/" render={() => <Redirect to="/landing" />} />
 
         <Route exact path="/battle">
-          <Battle sounds={sounds} />
+          <Battle sounds={sounds} musicOff={musicOff} setMusicOff={setMusicOff} />
         </Route>
 
         <Route exact path="/landing">
-          <Landing sounds={sounds} />
+          <Landing sounds={sounds} musicOff={musicOff} setMusicOff={setMusicOff} />
         </Route>
 
         <Route exact path="/world">
-          <World showToturial={showToturial} setShowToturial={setShowToturial} sounds={sounds} />
+          <World showToturial={showToturial} setShowToturial={setShowToturial} sounds={sounds} musicOff={musicOff} setMusicOff={setMusicOff} />
         </Route>
 
       </userContext.Provider>

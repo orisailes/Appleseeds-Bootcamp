@@ -64,7 +64,7 @@ class Pokemon {
                 break;
 
             case (attackerType === "fighting"):
-                addOrDecreaseByType = (attack === "punch" || attack === "kick" || attack === "mega_kick" || attack === "quick_attack") ? 1.0 : 17
+                addOrDecreaseByType = (attack === "punch" || attack === "kick" || attack === "mega_kick" || attack === "quick_attack") ? 1.1 : 1
                 break;
 
             case (attackerType === "rock"):

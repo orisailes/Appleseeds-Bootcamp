@@ -1,6 +1,5 @@
 import React from 'react';
 import StatsContainer from './StatsContainer'
-import '../../css/pokemon.css';
 
 function Pokemon({ isUserPokemon, pokemon,forwardedRef }) {
     debugger

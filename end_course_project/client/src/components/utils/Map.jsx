@@ -6,7 +6,7 @@ import MapView from './MapView'
 import { TileSize } from '../../utils/constants/constants'
 
 
-const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, forwardedRef }) => {
+const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, forwardedRef,musicOff,setMusicOff }) => {
 
     const [playerPosition, setPlayerPosition] = useState([0, 0]) // moving player in vh&vw
     const [playerArrayPosition, setPlayerArrayPosition] = useState([7, 19]) // moving player in matrix
@@ -19,7 +19,9 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, forwarde
 
     useEffect(() => {
 
-        isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
+        if(!musicOff){
+            isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
+        }
         
         return () => {
             sounds.forestSound.off()
@@ -125,13 +127,13 @@ const Map = ({ tiles, toggleMap, toggleChat, sounds, isCharacterInHome, forwarde
                 return false
             case (tiles[helper[0]][helper[1]] === 1):
                 //! handle enemy meeting
-                if (Math.random() > 0.9) {
+                if (Math.random() > 0.92) {
                     setUserMeetEnemy(true)
-                    sounds.forestSound.off()
-                    sounds.battleSound.on()
+                    !musicOff && sounds.forestSound.off()
+                    !musicOff && sounds.battleSound.on()
                     location.push('/battle')
                 }
-                setPlayerArrayPosition(helper) //  new position saved
+                setPlayerArrayPosition(helper) // new position saved
                 break;
             default:
                 setPlayerArrayPosition(helper) // in case user make valid move, new position saved

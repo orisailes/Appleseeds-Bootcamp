@@ -13,7 +13,7 @@ import makePokemon from '../../utils/classes/Pokemon/pokemonsGenerator'
 import _ from 'lodash'
 import '../../css/world.css'
 
-const World = ({ sounds, showToturial, setShowToturial }) => {
+const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff }) => {
     const { user, setUser } = useContext(userContext)
 
     const data = useLocation()
@@ -56,13 +56,15 @@ const World = ({ sounds, showToturial, setShowToturial }) => {
 
     const toggleMap = () => {
         let helper = isCharacterInHome
-        helper = !helper
-        if (helper) {
-            sounds.forestSound.off()
-            sounds.homeSound.on()
-        } else {
-            sounds.forestSound.on()
-            sounds.homeSound.off()
+        helper = !helper // the opposite from where character was
+        if (!musicOff) {
+            if (helper) {
+                sounds.forestSound.off()
+                sounds.homeSound.on()
+            } else {
+                sounds.forestSound.on()
+                sounds.homeSound.off()
+            }
         }
         setMapMusicOff(false)
         setIsCharacterInHome(prev => !prev)
@@ -94,10 +96,10 @@ const World = ({ sounds, showToturial, setShowToturial }) => {
 
     const healUserPokemons = async () => {
         let helper = _.cloneDeep(user)
-        if (!mapMusicOff) {
+        if (!musicOff) {
             isCharacterInHome ? sounds.homeSound.pause() : sounds.forestSound.pause()
+            sounds.healSound.on()
         }
-        sounds.healSound.on()
         if (user) {
             for (let i = 0; i < helper.pokemons.length; i++) {
                 helper.pokemons[i].hp = helper.pokemons[i].maxHp
@@ -106,7 +108,7 @@ const World = ({ sounds, showToturial, setShowToturial }) => {
             setUser(helper)
         }
         await wait(4500)
-        if (!mapMusicOff) {
+        if (!musicOff) {
             isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
         }
     }
@@ -157,17 +159,21 @@ const World = ({ sounds, showToturial, setShowToturial }) => {
     }
 
     const toggleMusic = () => {
-        if (mapMusicOff) {
+        if (musicOff) {
             isCharacterInHome ? sounds.homeSound.on() : sounds.forestSound.on()
 
-        } else {
+        }
+
+        if (!musicOff) {
             isCharacterInHome ? sounds.homeSound.pause() : sounds.forestSound.pause()
         }
+
         mapRef.current.focus()
-        setMapMusicOff(prev => !prev)
+        setMusicOff(prev => !prev)
     }
 
     const toggleInventory = () => {
+        mapRef.current.focus()
         setIsInventoryOpen(prev => !prev)
     }
 
@@ -184,7 +190,8 @@ const World = ({ sounds, showToturial, setShowToturial }) => {
                 toggleMap={toggleMap}
                 isCharacterInHome={isCharacterInHome}
                 tiles={isCharacterInHome ? tilesDefiner.home : tilesDefiner.forest}
-                mapMusicOff={mapMusicOff}
+                musicOff={musicOff}
+                setMusicOff={setMusicOff}
                 toggleMusic={toggleMusic}
             />
 
@@ -194,15 +201,15 @@ const World = ({ sounds, showToturial, setShowToturial }) => {
                 user={user} />
 
             <i
-                className={`${mapMusicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} `}
+                className={`${musicOff ? "fas fa-volume-mute fa-lg" : "fas fa-volume-up fa-lg"} `}
                 onClick={() => toggleMusic()}
             >
             </i>
             {
                 showToturial &&
-                <Toturial 
-                setShowToturial={setShowToturial}
-                mapRef={mapRef}
+                <Toturial
+                    setShowToturial={setShowToturial}
+                    mapRef={mapRef}
                 />
             }
 
