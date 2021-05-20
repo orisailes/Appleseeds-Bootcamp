@@ -328,14 +328,13 @@ function Battle({ sounds, musicOff, setMusicOff }) {
         setPokeballThrow(true)
         setTurnIsActive(true)
         await wait(6000) // animation running
-        debugger
         let isCapture = enemyPokemon.isCapture()
+        debugger
         let newUser = _.cloneDeep(user)
-        const isDuplicate = newUser.pokemons.find((poke => poke.name !== enemyPokemon.name))
+        const isDuplicate = newUser.pokemons.find((poke => poke.name === enemyPokemon.name))
         if (isDuplicate) isCapture = false // prevent duplicate pokemons at user (bug protector)
         newUser.pokeballs -= 1
         if (isCapture) {
-            //TODO if more than 8 cancle!!
             newUser.pokemons.push(enemyPokemon)
             setGameOver(true)
         }

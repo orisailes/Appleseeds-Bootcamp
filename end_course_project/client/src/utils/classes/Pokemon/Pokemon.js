@@ -115,14 +115,16 @@ class Pokemon {
 
     isCapture() {
         debugger
+
         const promoter = attributesList[this.name].quality - 1
-        // 1.3
-        const percent = 0.85 - promoter
-        const result = Math.random() <= percent ? true : false
+        const capturePercent = 0.85 - promoter
+        const randomize = Math.random()
+        const result = randomize <= capturePercent ? true : false
         return result
     }
 
     calculateExp(enemy, percentCause) {
+        
         const promoter = attributesList[enemy.name].quality
         let reward =
             Number(
