@@ -113,6 +113,15 @@ class Pokemon {
         if (attack !== "shield") return "invalid defense increase"
     }
 
+    isCapture() {
+        debugger
+        const promoter = attributesList[this.name].quality - 1
+        // 1.3
+        const percent = 0.85 - promoter
+        const result = Math.random() <= percent ? true : false
+        return result
+    }
+
     calculateExp(enemy, percentCause) {
         const promoter = attributesList[enemy.name].quality
         let reward =
@@ -123,18 +132,9 @@ class Pokemon {
                 percentCause
                 .toFixed(2)
             )
-        console.log('reward:', reward)
-
         return reward
     }
 
-    isCapture() {
-        const promoter = attributesList[this.name].quality - 1
-        // 1.3
-        const percent = 0.85 - promoter
-        const result = Math.random() <= percent ? true : false
-        return result
-    }
 }
 
 

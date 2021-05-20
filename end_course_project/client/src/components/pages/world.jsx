@@ -142,7 +142,7 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
 
                 }
 
-                if (user.money >= pokemon.price && duplicateTest && user.pokemons.length < 9) {
+                if (user.money >= pokemon.price && duplicateTest && user.pokemons.length < 8) {
                     let newPokemon = makePokemon(pokemon.pokemon, pokemon.level)
                     let helper = _.cloneDeep(user)
                     helper.money -= pokemon.price
@@ -160,7 +160,6 @@ const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff })
                     helper.pokeballs += 1
                     await axios.put(`/api/users/${user.email}`, helper)
                     setUser(helper)
-                    console.log('helper:', helper)
                     setPreBuyText('Pokemon buy succesfully')
                 }
             }

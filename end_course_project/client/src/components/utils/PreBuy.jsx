@@ -4,7 +4,6 @@ import '../../css/prebuy.css'
 
 const PreBuy = ({ product, clickToBuy, cancel, preBuyText, user }) => {
 
-    console.log(product);
 
     return (
         <>

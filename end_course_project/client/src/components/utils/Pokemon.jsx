@@ -3,7 +3,6 @@ import StatsContainer from './StatsContainer'
 
 function Pokemon({ isUserPokemon, pokemon, forwardedRef, enemyClassName }) {
 
-    debugger
     return (
         <div className={`pokemon  ${isUserPokemon ? "user-pokemon" : "enemy-pokemon"}`}>
             <img
