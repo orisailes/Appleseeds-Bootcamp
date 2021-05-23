@@ -4,14 +4,12 @@
 function isUnique(str) {
     let obj = {}
     str = str.split('')
-    for(let letter of str){
+    for (let letter of str) {
         if (obj[letter]) {
             return false
-        }else{
-            obj[letter] = true 
         }
+        obj[letter] = true
     }
-    console.log('obj:', obj)
     return true
 }
 
