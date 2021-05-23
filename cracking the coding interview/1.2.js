@@ -19,6 +19,7 @@ function isPermutation(string1, string2) {
         if(!isPer) return false
         obj[letter] ? obj[letter]-- : isPer = false
     }
+    
     return isPer
 }
 
