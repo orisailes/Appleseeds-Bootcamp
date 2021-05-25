@@ -3,8 +3,8 @@
 function isSink(matrix) {
     let snail = 0
     let sumLine = 0
-    for (let i = 0; i < matrix.length; i++) {
-        const rightElement = matrix[i][i + snail]
+    for (let i = 0; i < matrix.length; i++) { 
+        const rightElement = matrix[i][i + snail] // take right steps to see if all right elements are zero
         if (rightElement === 0 || rightElement === 1) {
             if (rightElement === 1) {
                 snail = 0
@@ -13,10 +13,9 @@ function isSink(matrix) {
                 i--
             }
         } else {
-
             const isAllZeros = matrix[i].slice(0, i).every((num => num === 0)) //check for all previous row 
-            //finally, check for line
-            if (isAllZeros) {
+            
+            if (isAllZeros) { //finally, check for line
                 for (let j = 0; j < matrix.length; j++) {
                     const element = matrix[j][i];
                     sumLine += element
