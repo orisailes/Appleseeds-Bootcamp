@@ -15,8 +15,8 @@ import _ from 'lodash'
 import '../../css/world.css'
 
 const World = ({ sounds, showToturial, setShowToturial, musicOff, setMusicOff }) => {
+    
     const { user, setUser } = useContext(userContext)
-
     const data = useLocation()
 
 

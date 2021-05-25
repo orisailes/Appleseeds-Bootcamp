@@ -8,7 +8,7 @@ const Player = ({ position, forwardedRef,direction,walkIndex }) => {
 
     const y = 50
     const x = 50
-
+    
     let xSpritePos = walkIndex * -1
     let ySpritePos = (direction === "SOUTH" ? 0 : direction === "NORTH" ? 1 : direction === "WEST" ? 2 : direction === "EAST" ? 3 : 0) *-1 
     

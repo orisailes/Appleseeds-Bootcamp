@@ -7,7 +7,6 @@ function isSubstring(string1, string2) {
     string2 = string2.split('')
     for (let i = 0; i < string1.length; i++) {
         if (string1[0] === string2[i]) {
-            debugger
             string1.splice(0, 1)
             string2.splice(i, 1)
             i = -1

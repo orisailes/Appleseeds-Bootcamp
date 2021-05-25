@@ -114,7 +114,6 @@ class Pokemon {
     }
 
     isCapture() {
-        debugger
 
         const promoter = attributesList[this.name].quality - 1
         const capturePercent = 0.85 - promoter
