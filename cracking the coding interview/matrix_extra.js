@@ -7,7 +7,7 @@ function isSink(matrix) {
     for (let i = 0; i < matrix.length; i++) {
         lineSum += matrix[i][zerosRow];
     }
-    return lineSum===5 ? true : false
+    return lineSum === 5 ? true : false
 }
 
 
